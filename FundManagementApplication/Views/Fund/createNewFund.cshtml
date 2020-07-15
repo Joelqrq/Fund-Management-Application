@@ -1,0 +1,204 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>ABC Fund Manager Application</title>
+    <link href="~/lib/bootstrap/dist/css/styles.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/FundManager.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/AddRows.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <script type='text/javascript' src="Fund/js/rows.js"></script>
+
+</head>
+<body class="bg-secondBackground">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <!-- Navbard Header -->
+
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container">
+                        <!-- Logo-->
+                        <a class="navbar-brand" href="/home/index"><img class="Logo" src="~/Logo/ABC_LOGO.png" alt="Logo"></a>
+                        <!-- Navbar Toggler Icon -->
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item active px-3">
+                                    <a class="nav-link" href="/home/index">Dashboard<span class="sr-only">(current)</span></a>
+                                </li>
+
+                                <li class="nav-item dropdown px-3">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Fund
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item active" href="/fund/createNewFund">Create New Fund</a>
+                                        <a class="dropdown-item" href="/fund/editFund">Edit Funds</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item dropdown px-3">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Investor
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="/investor/listOfInvestor">Lists of Investors</a>
+                                        <a class="dropdown-item" href="/investor/createNewInvestor">Create New Investor</a>
+                                        <a class="dropdown-item" href="/investor/editInvestorDetails">Edit Investor Details</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item px-3">
+                                    <a class="nav-link" href="/home/profile">Profile</a>
+                                </li>
+
+                                <li class="nav-item px-3">
+                                    <a class="nav-link" href="/login/login">Logout</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div> <!-- Nav Bar Container-->
+                </nav>
+
+                <!-- Dashboard -->
+                <div class="container">
+                    <div class="row>">
+                        <h4 class="pt-4">Create New Fund</h4>
+                        <hr>
+                        <!-- Funds Selection -->
+                        <h5 class="mt-4">Fund Details</h5>
+                        <form>
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFundName">Fund Name</label>
+                                <input class="form-control py-4" id="inputFundName" type="text" placeholder="Enter Fund Name" />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row>">
+                        <h5 class="pt-2">
+                            Input Share Details</h5>
+                            <hr>
+                            <!-- Funds Selection -->
+
+                            <div class="table-responsive">
+                                <table id="faqs" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <!-- Funds Selection Table Header -->
+                                            <th>Share Name</th>
+                                            <th>ISIN</th>
+                                            <th>Shares Allocation %</th>
+                                            <th class="pl-4">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <form>
+                                        <tbody>
+                                            <tr>
+
+                                                <td>
+                                                    <select class="browser-default custom-select">
+                                                        <option id="selectFund" selected>Share Name</option>
+                                                        <option value="DBS">DBS</option>
+                                                        <option value="Singtel">Singtel</option>
+                                                        <option value="UOB">UOB</option>
+                                                        <option value="OCBC">OCBC</option>
+                                                        <option value="Starhub">Starhub</option>
+                                                        <option value="SIA">SIA</option>
+                                                        <option value="SPH">SPH</option>
+                                                        <option value="Venture">Venture</option>
+                                                        <option value="Comfort Delgro">Comfort Delgro</option>
+                                                        <option value="Citibank">Citibank</option>
+                                                        <option value="JPMorgan">JPMorgan</option>
+                                                        <option value="Google">Google</option>
+                                                        <option value="Microsoft">Microsoft</option>
+                                                        <option value="General Motors">General Motors</option>
+                                                        <option value="General Electrics">GE</option>
+                                                        <option value="IBM">International Business Machines Corporation</option>
+                                                        <option value="Uber">Uber Technologies Inc</option>
+                                                        <option value="Walmart">Walmart Inc</option>
+                                                        <option value="Ford">Ford Industries Inc</option>
+                                                    </select>
+                                                </td>
+
+                                                <td>
+                                                    <select class="browser-default custom-select">
+                                                        <option id="selectISIN" selected>ISIN</option>
+                                                        <option value="D05.SI">D05.SI - DBS</option>
+                                                        <option value="Z74.SI">Z74.SI - Singtel</option>
+                                                        <option value="U11.SI">U11.SI - UOB</option>
+                                                        <option value="O39.SI">O39.SI - OCBC</option>
+                                                        <option value="CC3.SI">CC3.SI - Starhub</option>
+                                                        <option value="C6L.SI">C6L.SI - SIA</option>
+                                                        <option value="T30.SI">T39.SI - SPH</option>
+                                                        <option value="V03.SI">V03.SI - Venture</option>
+                                                        <option value="C52.SI">C52.SI - Comfort Delgro</option>
+                                                        <option value="C">C - Citibank</option>
+                                                        <option value="JPM">JPM - JPMorgan</option>
+                                                        <option value="GOOG">GOOG - Google</option>
+                                                        <option value="MSFT">MSFT - Microsoft</option>
+                                                        <option value="GM">GM - General Motors</option>
+                                                        <option value="GE">GE - General Electrics</option>
+                                                        <option value="IBM">IBM - International Business Machines Corporation</option>
+                                                        <option value="UBER">UBER - Uber Technologies Inc</option>
+                                                        <option value="WMT">WMT - Walmart Inc</option>
+                                                        <option value="FORD">FORD - Ford Industries Inc</option>
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" placeholder="20%" class="form-control"></td>
+                                                <td class="mt-10"><button class="badge badge-danger"><i class="fa fa-trash"></i> Delete</button></td>
+                                            </tr>
+                                        </tbody>
+
+                                    </form>
+                                </table>
+                                <div class="text-center"><button onclick="addRows();" class="badge badge-light"><i class="fa fa-plus"></i> ADD NEW</button></div>
+
+                            </div>
+
+                    </div>
+                    <form>
+                        <div class="form-group d-flex  justify-content-center  mt-5">
+                            <button onclick="submit();" class="btn btn-success btn-block-success-secondary"> Submit</button>
+                        </div>
+                    </form>
+
+                </div>
+            </main>
+        </div>
+        <!-- Footer-->
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 bg-light mt-5">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; FundManager Application 2020</div>
+
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="Fund/js/scripts.js"></script>
+</body>
+</html>
+
+

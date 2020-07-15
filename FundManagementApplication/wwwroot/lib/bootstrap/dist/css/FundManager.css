@@ -1,0 +1,146 @@
+.bg-primary {
+    background-color: #53019A!important;
+  }
+
+  .card-body {
+      background-color: rgb(255, 255, 255);
+  }
+
+  .btn-success {
+    color: #fff;
+    background-color: #58B957;
+    border-color: #58B957;
+    border-radius: 18px;
+    
+  }
+
+  .btn-danger{
+    color: #fff;
+    background-color: #d30e0e;
+    border-color: #d30e0e;
+    border-radius: 18px;
+  }
+
+  .btn-primary{
+    color: #fff;
+    border-radius: 18px;
+    
+  }
+
+  .btn-block-success {
+    display: block; 
+    width: 60%;
+  }
+ /* Go Button - Index Page  */
+  .btn-block-success-secondary {
+    display: block; 
+    width: 19%;
+    
+  }
+
+  .btn-block-danger-secondary {
+    display: block; 
+    width: 19%;
+    
+  }
+
+  .bg-dark {
+    background-color: #232123 !important;
+  }
+
+  .Logo{
+      width: 42.5%;
+  }
+  .Header{
+      color: #53019A;
+  }
+  /* Reset Password Button  */
+  .btn-block-primary{
+    display: block;
+    width: 70%;
+  }
+ 
+  .dropdown:hover>.dropdown-menu {
+    display: block;
+  }
+
+/* Dashboard background  */
+  .bg-secondBackground{
+      background-color:#ffffff;
+  }
+
+    h4{
+    color: #333333;
+  }
+/* Search Button  */
+  .btn-invert {
+    color: #007bff;
+    background-color: #ffffff;
+    border-color: #007bff;
+    border-radius: 18px;
+  }
+  .btn-invert:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+  .btn-invert:focus, .btn-primary.focus {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+  }
+  .btn-invert.disabled, .btn-primary:disabled {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  .btn-invert:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #0062cc;
+    border-color: #005cbf;
+  }
+
+  .btn-invert:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+
+  }
+
+  .btn-block-invert {
+    display: block; 
+    width: 19%;
+  }
+
+ 
+  /*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.datepicker td, .datepicker th {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.85rem;
+}
+
+.datepicker {
+    margin-bottom: 3rem;
+}
+  /*
+*
+* ==========================================
+* EDIT FUNDS TABLE
+* ==========================================
+*
+*/
+table{
+ 
+  background-color:#fff;
+  color:#333;
+}
+.modal-header{
+  background-color:#333;
+  color:#fff;
+}

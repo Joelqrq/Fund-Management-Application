@@ -1,0 +1,294 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>ABC Fund Manager Application</title>
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>ABC Fund Manager Application</title>
+    <link href="~/lib/bootstrap/dist/css/styles.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/FundManager.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/AddRows.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <script type='text/javascript' src="js/rows.js"></script>
+
+</head>
+  <body class="bg-secondBackground">
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                     <!-- Navbard Header -->
+                    
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container">
+                            <!-- Logo-->
+                            <a class="navbar-brand" href="/home/index"><img class="Logo" src="~/Logo/ABC_LOGO.png" alt="Logo"></a>
+                            <!-- Navbar Toggler Icon -->
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item active px-3">
+                                        <a class="nav-link" href="/home/index">Dashboard<span class="sr-only">(current)</span></a>
+                                    </li>
+
+                                    <li class="nav-item dropdown px-3">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Fund
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="/fund/createNewFund">Create New Fund</a>
+                                            <a class="dropdown-item" href="/fund/editFund">Edit Funds</a>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item dropdown px-3">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Investor
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item active" href="/investor/listOfInvestor">Lists of Investors</a>
+                                            <a class="dropdown-item" href="/investor/createNewInvestor">Create New Investor</a>
+                                            <a class="dropdown-item" href="/investor/editInvestorDetails">Edit Investor Details</a>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item px-3">
+                                        <a class="nav-link" href="/home/profile">Profile</a>
+                                    </li>
+
+                                    <li class="nav-item px-3">
+                                        <a class="nav-link" href="/login/login">Logout</a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        </div> <!-- Nav Bar Container-->
+                    </nav>
+                    
+                      <!-- Create New Fund Header -->
+                      <div class="container">
+                        <div class="row>">
+                           <h4 class ="pt-4">Create New Investor</h4>
+                            <hr>
+                            <!-- Investor Name-->
+                            
+                            <form>
+                                <h5 class ="mt-2">Fund Type</h5>
+                            <select class="browser-default custom-select">
+                                <option id="selectFund" selected>Select Funds</option>
+                                <option value="Prestige">ABC Prestige</option>
+                                <option value="Global">ABC Global</option>
+                            </select>
+                                <h5 class ="mt-2">Investor Name</h5>
+                                <input class="form-control py-4" id="inputInvestorName" type="text" placeholder="Enter Investor Name" />
+                                <h5 class ="mt-2">Investor Email Address</h5>
+                                <input class="form-control py-4" id="inputInvestorEmail" type="text" placeholder="Enter Investor Name" /> 
+
+                                <div class="form-group d-flex justify-content-center mt-5 mb-5">
+                                    <button onclick="createNewInvestor();" class="btn btn-success btn-block-success-secondary"> Create</button>
+                                </div>
+                            </form>
+                         
+                        </div>
+                      </div>
+
+                      
+            </main>
+        </div>
+        <!-- Footer-->
+            <div id="layoutAuthentication_footer">
+                <footer class="py-4 bg-light mt-5">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; FundManager Application 2020</div>
+                          
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script> 
+</body>
+</html>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <script type='text/javascript' src="js/rows.js"></script>
+
+</head>
+<body class="bg-secondBackground">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <!-- Navbard Header -->
+
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container">
+                        <!-- Logo-->
+                        <a class="navbar-brand" href="/home/index"><img class="Logo" src="~/Logo/ABC_LOGO.png" alt="Logo"></a>
+                        <!-- Navbar Toggler Icon -->
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item  px-3">
+                                    <a class="nav-link" href="/home/index">Dashboard</a>
+                                </li>
+
+                                <li class="nav-item dropdown px-3">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Fund <span class="sr-only">(current)</span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item " href="/fund/createNewFund">Create New Fund</a>
+                                        <a class="dropdown-item" href="/fund/editFund">Edit Funds</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item active dropdown px-3">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Investor<span class="sr-only">(current)</span>
+                                    </a>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item active" href="/investor/listOfInvestor">Lists of Investors</a>
+                                        <a class="dropdown-item" href="/investor/createNewInvestor">Create New Investor</a>
+                                        <a class="dropdown-item" href="/investor/editInvestorDetails">Edit Investor Details</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item px-3">
+                                    <a class="nav-link" href="profile.html">Profile</a>
+                                </li>
+
+                                <li class="nav-item px-3">
+                                    <a class="nav-link" href="login.html">Logout</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div> <!-- Nav Bar Container-->
+                </nav>
+
+                <!-- Create New Fund Header -->
+                <div class="container">
+                    <div class="row>">
+                        <h4 class="pt-4">List of Investors</h4>
+                        <hr>
+                        <!-- Investor Name-->
+
+                        <form>
+                            <h5 class="mt-2">Fund Name</h5>
+                            <select class="browser-default custom-select">
+                                <option id="selectFund" selected>Select Funds</option>
+                                <option value="Prestige">ABC Prestige</option>
+                                <option value="Global">ABC Global</option>
+                            </select>
+                            <h5 class="mt-2">Investor Name</h5>
+                            <input class="form-control py-4" id="inputInvestorName" type="text" placeholder="Enter Investor Name" />
+                            <h5 class="mt-2">Investor Email Address</h5>
+                            <input class="form-control py-4" id="inputEmailAddress" type="text" placeholder="Enter Investor Name" />
+
+                            <div class="form-group d-flex  justify-content-center mt-4 mb-2">
+                                <a class="btn btn-invert btn-block-invert" onclick="searchInvestors();" href="#">Search</a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row>">
+                        <h5 class="pt-0">
+                            Search Results</h4>
+                            <hr>
+
+                            <!-- Fund Details Table -->
+
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Investor Name</th>
+                                                <th>Email</th>
+                                                <th>Fund</th>
+                                                <th>Edit Details</th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <form>
+                                            <tbody>
+                                                <tr id="int1">
+                                                    <td>G01</td>
+                                                    <td id="name1">John Pinsker</td>
+                                                    <td id="email1">Johnpinsker@live.com</td>
+                                                    <td id="fund1">ABC Global Fund</td>
+                                                    <td class="mt-2"><button class="badge badge-warning" onclick="editInvestor"><i class="far fa-edit"></i> Edit</button></td>
+
+                                                </tr>
+
+                                                <tr id="int2">
+                                                    <td>G02</td>
+                                                    <td id="name2">John Pinsker</td>
+                                                    <td id="email2">Johnpinsker@live.com</td>
+                                                    <td id="fund2">ABC Global Fund</td>
+                                                    <td class="mt-2"><button class="badge badge-warning" onclick="editInvestor"><i class="far fa-edit"></i> Edit</button></td>
+
+                                                    <!-- <td><button type="button" data-toggle="modal" data-target="#edit" data-uid="2" class="update btn btn-warning btn-sm"><i class="far fa-edit"></i> </button></td> -->
+
+                                                </tr>
+
+
+
+                                            </tbody>
+                                        </form>
+                                    </table>
+                                </div>
+                            </div>   <!-- Funds Selection -->
+
+
+
+                    </div>
+            </main>
+        </div>
+        <!-- Footer-->
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 bg-light mt-5">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; FundManager Application 2020</div>
+
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,166 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>ABC Fund Manager Application</title>
+    <link href="~/lib/bootstrap/dist/css/styles.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/FundManager.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/AddRows.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+
+
+</head>
+<body class="bg-secondBackground">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <!-- Navbard Header -->
+
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container">
+                        <!-- Logo-->
+                        <a class="navbar-brand" href="/home/index"><img class="Logo" src="~/Logo/ABC_LOGO.png" alt="Logo"></a>
+                        <!-- Navbar Toggler Icon -->
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item  px-3">
+                                    <a class="nav-link" href="/home/index">Dashboard<span class="sr-only">(current)</span></a>
+                                </li>
+
+                                <li class="nav-item active dropdown px-3">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Fund<span class="sr-only">(current)</span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="/fund/createNewFund">Create New Fund</a>
+                                        <a class="dropdown-item active" href="/fund/editFund">Edit Funds</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item dropdown px-3">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Investor
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item active" href="/investor/listOfInvestor">Lists of Investors</a>
+                                        <a class="dropdown-item" href="/investor/createNewInvestor">Create New Investor</a>
+                                        <a class="dropdown-item" href="/investor/editInvestorDetails">Edit Investor Details</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item px-3">
+                                    <a class="nav-link" href="/home/profile">Profile</a>
+                                </li>
+
+                                <li class="nav-item px-3">
+                                    <a class="nav-link" href="/login/login">Logout</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div> <!-- Nav Bar Container-->
+                </nav>
+
+                <!-- Edit Fund Header-->
+                <div class="container">
+                    <div class="row>">
+                        <h4 class="pt-4">Edit Fund</h4>
+                        <hr>
+                        <!-- Funds Selection -->
+                        <h5 class="mt-4">Fund Name</h5>
+                        <select class="browser-default custom-select">
+                            <option id="selectFund" selected>Select Funds</option>
+                            <option value="Prestige">ABC Prestige</option>
+                            <option value="Global">ABC Global</option>
+                        </select>
+                    </div>
+
+                    <h5 class="mt-4">Share Details</h5>
+                    <hr>
+                </div>
+                <!-- Fund Details Table -->
+                <div class="container">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>SHARE NAME</th>
+                                        <th>ISIN</th>
+                                        <th>SHARE ALLOCATION%</th>
+                                        <th>INPUT NEW SHARE ALLOCATION</th>
+
+
+                                    </tr>
+                                </thead>
+                                <form>
+                                    <tbody>
+                                        <tr id="d1">
+                                            <td>1</td>
+                                            <td id="f1">DBS</td>
+                                            <td id="l1">D05.SI</td>
+                                            <td id="m1">20%</td>
+
+                                            <td><input type="text" id="inputAllocation2" placeholder="Enter New Allocation" class="form-control"></td>
+
+
+
+                                        </tr>
+                                        <tr id="d2">
+                                            <td>2</td>
+                                            <td id="f2">Singtel</td>
+                                            <td id="l2">Z74.SI</td>
+                                            <td id="m2">5%</td>
+                                            <td><input type="text" id="inputAllocation2" placeholder="Enter New Allocation" class="form-control"></td>
+
+                                        </tr>
+                                    </tbody>
+                                </form>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Go Button -->
+                    <div class="form-group d-flex justify-content-center mt-5 mb-5">
+                        <button onclick="updateFundAllocation();" class="btn btn-success btn-block-success-secondary"> Update!</button>
+                    </div>
+                </div>
+
+
+
+
+
+            </main>
+        </div>
+        <!-- Footer-->
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 bg-light mt-5">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; FundManager Application 2020</div>
+
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
+
+
