@@ -1,4 +1,5 @@
-﻿
+﻿@model FundManagementApplication.Models.LoginViewModel
+
 @{
     Layout = null;
 }
@@ -32,18 +33,20 @@
                                 <div class="card-header"><h3 class="text-left font-weight-normal my-3 Header">Sign In</h3></div>
                                 <div class="card-body">
                                     <form>
-                                        <div class="form-group"><label class="small mb-1" for="inputEmailAddress">Email</label><input class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" /></div>
-                                        <div class="form-group"><label class="small mb-1" for="inputPassword">Password</label><input class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" /></div>
+                                        <div class="form-group"><label class="small mb-1" for="inputEmailAddress">Email</label>
+                                        <input class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" asp-for="Email"/></div>
+                                        <div class="form-group"><label class="small mb-1" for="inputPassword">Password</label>
+                                        <input class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" asp-for="Password"/></div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input" id="rememberPasswordCheck" type="checkbox" />
-                                                <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
+                                                <input class="custom-control-input" id="rememberCheckBox" type="checkbox" asp-for="IsRemember"/>
+                                                <label class="custom-control-label" for="rememberCheckBox">Remember password</label>
                                                 <a class="small float-right" href="/login/resetPassword">Forget Password?</a>
                                             </div>
 
                                         </div>
                                         <div class="form-group d-flex  justify-content-center mt-5 mb-5">
-                                            <a class="btn btn-success btn-block-success" onclick="chkUserLogin();" href="/home/index">Login</a>
+                                            <button type="submit" class="btn btn-success btn-block-success" asp-controller="Login" asp-action="Login" formmethod="post">Login</button>
                                         </div>
 
                                     </form>

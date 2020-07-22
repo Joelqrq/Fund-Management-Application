@@ -50,6 +50,7 @@ namespace FundManagementApplication.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Logout() {
             HttpContext.Response.Cookies.Delete("JWToken");
             return RedirectToAction("Login");
