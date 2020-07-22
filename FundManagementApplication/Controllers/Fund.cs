@@ -8,6 +8,7 @@ namespace FundManagementApplication.Controllers
 {
     public class Fund : Controller
     {
+
         public IActionResult createNewFund()
         {
             return View();

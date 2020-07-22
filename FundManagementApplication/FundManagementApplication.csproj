@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="ViewModels\" />
     <Folder Include="Views\Fund\js\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
