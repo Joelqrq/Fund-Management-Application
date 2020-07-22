@@ -3,6 +3,8 @@
     Layout = null;
 }
 
+@model FundManagementApplication.Models.Funds
+
 <!doctype html>
 <html>
 <head>
@@ -85,49 +87,31 @@
 
                 <!-- Dashboard -->
                 <div class="container">
-                    <div class="row>">
-                        <h4 class="pt-4">Dashboard</h4>
-                        <hr>
-                        <!-- Funds Selection -->
-                        <h5 class="mt-4">Fund Name</h5>
-                        <select class="browser-default custom-select">
-                            <option id="selectFund" selected>Select Funds</option>
-                            <option value="Prestige">ABC Prestige</option>
-                            <option value="Global">ABC Global</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Dates -->
-                <div class="container mt-4 mb-0">
-                    <!-- Date Selection -->
-                    <div class="row>">
-                        <h5 class="pt-0">Select Date Range</h5>
-                    </div>
-                </div>
-
-
-                <div class="container pt-5">
                     <form autocomplete="off">
-                        <div class="row">
+                        <div class="row>">
+                            <h4 class="pt-4">Dashboard</h4>
+                            <hr>
+                            <!-- Funds Selection -->
+                            <h5 class="mt-4">Fund Name</h5>
+                            <select class="browser-default custom-select">
+                                <option id="selectFund" selected>Select Funds</option>
+                                <option value="Prestige">ABC Prestige</option>
+                                <option value="Global">ABC Global</option>
+                            </select>
+                        </div>
+                        <div class="row mt-5">
                             <!-- Date Range Input - Fund End Date-->
-                            <div class="input-group input-daterange col-sm-4 pb-2">
-                                <input type="text" id="fundEndDate" class="form-control text-left ">
-                                <label class="ml-0 form-control-placeholder" id="fundEndDateLabel">Fund End Date</label>
+                            <div class="input-group input-daterange col-sm-4 ">
+                                <input type="text" id="fundEndDate" class="form-control text-left " asp-for="DateSelect">
+                                <label class="ml-0 form-control-placeholder" id="fundEndDateLabel">Select Date Range</label>
                                 <span class="fa fa-calendar" id="fa-2" aria-hidden="true"></span>
 
-                                <!-- Date Range Input - End Date-->
-                                <!-- <input type="text" id="fundEndDate" class="form-control text-left ml-4" >
-                                <label class="ml-2 form-control-placeholder" id="end-p" for="end">Fund End Date</label>
-                                <span class="fa fa-calendar" id="fa-2" aria-hidden="true"></span>  -->
                             </div>
                         </div>
-                        <!-- Search Button-->
                         <div class="form-group d-flex  justify-content-left mt-4 mb-4">
-                            <a class="btn btn-invert btn-block-invert" onclick="searchFund();" href="/home/index">Search</a>
+                            <button class="btn btn-invert btn-block-invert" asp-controller="home" asp-action="search" formmethod="post">Search</button>
                         </div>
                     </form>
-
                 </div> <!-- Date Range Container-->
                 <!-- Fund Oveview -->
                 <div class="container pt-2">
@@ -143,7 +127,8 @@
                                     <div class="row">
                                         <div class="col">
                                             <h6 class="card-title text-uppercase mb-2">Fund Nav</h6>
-                                            <span class="h6 font-weight-bold mb-0" id="fundNav">$98,000</span>
+                                            <span class="h6 font-weight-bold mb-0" id="fundNav">@Model.FundNav</span>
+
                                         </div>
                                         <div class="col-auto">
                                             <!-- Fund NAV Icon -->
@@ -160,7 +145,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <h6 class="card-title text-uppercase mb-2">Bid-Bid</h6>
-                                            <span class="h5 font-weight-bold mb-0" id="bidToBid">29.64%</span>
+                                            <span class="h5 font-weight-bold mb-0" id="bidToBid">@Model.BidBid</span>
                                         </div>
                                         <div class="col-auto">
                                             <!-- Bid-Bid Icon -->
@@ -178,7 +163,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <h6 class="card-title text-uppercase mb-2">Bid-Offer</h6>
-                                            <span class="h5 font-weight-bold mb-0" id="bidToOffer">23.16%</span>
+                                            <span class="h5 font-weight-bold mb-0" id="bidToOffer">@Model.BidOffer</span>
                                         </div>
                                         <div class="col-auto">
                                             <!-- Bid - Offer Icon -->
@@ -196,8 +181,9 @@
                                     <div class="row">
                                         <div class="col">
                                             <h6 class="card-title text-uppercase mb-2">
-                                                Benchmark</h6>
-                                                <span class="h5 font-weight-bold mb-0" id="benchMark">20.00%</span>
+                                                Benchmark
+                                            </h6>
+                                            <span class="h5 font-weight-bold mb-0" id="benchMark">@Model.BenchMark</span>
                                         </div>
                                         <div class="col-auto">
                                             <!-- Benchmark Icon -->
@@ -219,15 +205,15 @@
 
                     <div class="row">
                         <div class="form-check form-check-inline col-xl-3 col-xs-2 ml-2">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" asp-for="SelectAction">
                             <label class="form-check-label" for="inlineRadio1">Send Factsheet</label>
                         </div>
                         <div class="form-check form-check-inline col-xl-3 ml-2">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" asp-for="SelectAction">
                             <label class="form-check-label" for="inlineRadio2">Download Factsheet</label>
                         </div>
                         <div class="form-check form-check-inline col-xl-3 ml-2">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3" asp-for="SelectAction">
                             <label class="form-check-label" for="inlineRadio3">Preview Factsheet</label>
                         </div>
 
