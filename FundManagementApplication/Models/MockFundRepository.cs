@@ -8,19 +8,19 @@ namespace FundManagementApplication.Models
 {
     public class MockFundRepository : IFundRepository
     {
-        private List<Funds>_fundList;
+        private List<DashboardViewModel>_fundList;
 
 
         public MockFundRepository()
         {
-            _fundList = new List<Funds>()
+            _fundList = new List<DashboardViewModel>()
             {
-                new Funds() { FundNav = 10, BidBid = 20, BidOffer = 30, BenchMark = 40, DateSelect = DateTime.Now, SelectAction = 2 }
+                new DashboardViewModel() { FundNav = 10, BidBid = 20, BidOffer = 30, BenchMark = 40, DateSelect = DateTime.Now, SelectAction = 2 }
             };
         }
 
 
-        public Funds GetFund(int FundNav)
+        public DashboardViewModel GetFund(int FundNav)
         {
             return _fundList[FundNav];
             

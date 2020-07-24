@@ -8,6 +8,6 @@ namespace FundManagementApplication.Models
 {
     public interface IFundRepository
     {
-        Funds GetFund(int FundNav);
+        DashboardViewModel GetFund(int FundNav);
     }
 }

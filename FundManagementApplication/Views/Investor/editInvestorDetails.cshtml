@@ -1,4 +1,5 @@
-﻿
+﻿@model FundManagementApplication.Models.InvestorViewModel
+
 @{
     Layout = null;
 }
@@ -120,12 +121,12 @@
 
                                 <label for="inputNewInvestorName" class="col-sm-2 col-form-label mb-3s">Investor Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control mb-3" id="newInvestorName" placeholder="New Investor Name">
+                                    <input class="form-control mb-3" id="newInvestorName" type="text" placeholder="New Investor Name" asp-for="newInvestorName">
                                 </div>
 
                                 <label for="inputNewInvestorEmail" class="col-sm-2 col-form-label">Investor Email</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="newInvestorEmail" placeholder="New Investor Email">
+                                    <input class="form-control" id="newInvestorEmail" type="email" placeholder="New Investor Email" asp-for="newInvestorEmail">
                                 </div>
                             </div>
 

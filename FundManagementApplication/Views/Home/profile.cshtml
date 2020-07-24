@@ -1,4 +1,5 @@
-﻿
+﻿@model FundManagementApplication.Models.ProfileViewModel
+
 @{
     Layout = null;
 }
@@ -109,12 +110,12 @@
 
                                 <label for="inputNewManagerName" class="col-sm-2 col-form-label mb-3s">Manager Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control mb-3" id="newManagerName" placeholder="New Manager Name">
+                                    <input type="text" class="form-control mb-3" id="newManagerName" placeholder="New Manager Name" asp-for="newManagerName">
                                 </div>
 
                                 <label for="inputNewManagerEmail" class="col-sm-2 col-form-label">Manager Email</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="newManagerEmail" placeholder="New Manager Email">
+                                    <input type="email" class="form-control" id="newManagerEmail" placeholder="New Manager Email" asp-for="newManagerEmail">
                                 </div>
                             </div>
 

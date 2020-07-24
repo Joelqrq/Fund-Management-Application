@@ -1,4 +1,5 @@
-﻿
+﻿@model FundManagementApplication.Models.InvestorViewModel
+
 @{
     Layout = null;
 }
@@ -9,26 +10,26 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>ABC Fund Manager Application</title>
-<!doctype html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>ABC Fund Manager Application</title>
-    <link href="~/lib/bootstrap/dist/css/styles.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/FundManager.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/AddRows.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-    <script type='text/javascript' src="js/rows.js"></script>
+    <!doctype html>
+    <html>
+    <head>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <title>ABC Fund Manager Application</title>
+        <link href="~/lib/bootstrap/dist/css/styles.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap/dist/css/FundManager.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap/dist/css/AddRows.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script type='text/javascript' src="js/rows.js"></script>
 
-</head>
-  <body class="bg-secondBackground">
+    </head>
+    <body class="bg-secondBackground">
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
-                     <!-- Navbard Header -->
-                    
+                    <!-- Navbard Header -->
+
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         <div class="container">
                             <!-- Logo-->
@@ -78,59 +79,59 @@
                             </div>
                         </div> <!-- Nav Bar Container-->
                     </nav>
-                    
-                      <!-- Create New Fund Header -->
-                      <div class="container">
+
+                    <!-- Create New Fund Header -->
+                    <div class="container">
                         <div class="row>">
-                           <h4 class ="pt-4">Create New Investor</h4>
+                            <h4 class="pt-4">Create New Investor</h4>
                             <hr>
                             <!-- Investor Name-->
-                            
+
                             <form>
-                                <h5 class ="mt-2">Fund Type</h5>
-                            <select class="browser-default custom-select">
-                                <option id="selectFund" selected>Select Funds</option>
-                                <option value="Prestige">ABC Prestige</option>
-                                <option value="Global">ABC Global</option>
-                            </select>
-                                <h5 class ="mt-2">Investor Name</h5>
+                                <h5 class="mt-2">Fund Type</h5>
+                                <select class="browser-default custom-select">
+                                    <option id="selectFund" selected>Select Funds</option>
+                                    <option value="Prestige">ABC Prestige</option>
+                                    <option value="Global">ABC Global</option>
+                                </select>
+                                <h5 class="mt-2">Investor Name</h5>
                                 <input class="form-control py-4" id="inputInvestorName" type="text" placeholder="Enter Investor Name" />
-                                <h5 class ="mt-2">Investor Email Address</h5>
-                                <input class="form-control py-4" id="inputInvestorEmail" type="text" placeholder="Enter Investor Name" /> 
+                                <h5 class="mt-2">Investor Email Address</h5>
+                                <input class="form-control py-4" id="inputInvestorEmail" type="text" placeholder="Enter Investor Name" />
 
                                 <div class="form-group d-flex justify-content-center mt-5 mb-5">
                                     <button onclick="createNewInvestor();" class="btn btn-success btn-block-success-secondary"> Create</button>
                                 </div>
                             </form>
-                         
-                        </div>
-                      </div>
 
-                      
-            </main>
-        </div>
-        <!-- Footer-->
+                        </div>
+                    </div>
+
+
+                </main>
+            </div>
+            <!-- Footer-->
             <div id="layoutAuthentication_footer">
                 <footer class="py-4 bg-light mt-5">
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; FundManager Application 2020</div>
-                          
+
                         </div>
                     </div>
                 </footer>
             </div>
         </div>
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="js/scripts.js"></script> 
-</body>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+    </body>
 </html>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-    <script type='text/javascript' src="js/rows.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+<script type='text/javascript' src="js/rows.js"></script>
 
 </head>
 <body class="bg-secondBackground">
@@ -205,9 +206,9 @@
                                 <option value="Global">ABC Global</option>
                             </select>
                             <h5 class="mt-2">Investor Name</h5>
-                            <input class="form-control py-4" id="inputInvestorName" type="text" placeholder="Enter Investor Name" />
+                            <input class="form-control py-4" id="inputInvestorName" type="text" placeholder="Enter Investor Name" asp-for="investorName" />
                             <h5 class="mt-2">Investor Email Address</h5>
-                            <input class="form-control py-4" id="inputEmailAddress" type="text" placeholder="Enter Investor Name" />
+                            <input class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter Email Address" asp-for="investorEmail" />
 
                             <div class="form-group d-flex  justify-content-center mt-4 mb-2">
                                 <a class="btn btn-invert btn-block-invert" onclick="searchInvestors();" href="#">Search</a>

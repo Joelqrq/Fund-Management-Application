@@ -15,14 +15,15 @@ namespace FundManagementApplication.Controllers {
         {
             MockFundRepository mockFundRepository = new MockFundRepository();
 
-            Funds model = mockFundRepository.GetFund(0);
+            DashboardViewModel model = mockFundRepository.GetFund(0);
             return View(model);
         }
 
-        public IActionResult Search(Funds model)
+        public IActionResult Search(DashboardViewModel model)
         {
             return View(model);
         }
+
 
         [HttpGet]
         public IActionResult Profile()

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace FundManagementApplication.Models {
-    public class Funds 
+    public class DashboardViewModel 
     {
         public int FundNav { get; set; }
         public float BidBid { get; set; }
