@@ -3,7 +3,7 @@
     Layout = null;
 }
 
-@model FundManagementApplication.Models.Funds
+@model FundManagementApplication.Models.DashboardViewModel
 
 <!doctype html>
 <html>
@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script type='text/javascript'>
-    $(document).ready(function () {
+        $(document).ready(function () {
 
             $('.input-daterange').datepicker({
                 format: 'dd-mm-yyyy',
@@ -34,7 +34,6 @@
         <div id="layoutAuthentication_content">
             <main>
                 <!-- Navbard Header -->
-
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container">
                         <!-- Logo-->
@@ -87,7 +86,7 @@
 
                 <!-- Dashboard -->
                 <div class="container">
-                    <form autocomplete="off">
+                    <form autocomplete="off" asp-controller="home" asp-action="search" method="post">
                         <div class="row>">
                             <h4 class="pt-4">Dashboard</h4>
                             <hr>
@@ -109,7 +108,7 @@
                             </div>
                         </div>
                         <div class="form-group d-flex  justify-content-left mt-4 mb-4">
-                            <button class="btn btn-invert btn-block-invert" asp-controller="home" asp-action="search" formmethod="post">Search</button>
+                            <button class="btn btn-invert btn-block-invert">Search</button>
                         </div>
                     </form>
                 </div> <!-- Date Range Container-->

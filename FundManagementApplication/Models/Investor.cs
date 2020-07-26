@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FundManagementApplication.Models {
-    public class Investor {
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public Funds[] Funds { get; set; }
+namespace FundManagementApplication.Models
+{
+    public partial class Investor
+    {
+        public string PkInvestorId { get; set; }
+        public string InvestorName { get; set; }
+        public string InvestorEmail { get; set; }
+        public DateTime InvestorDate { get; set; }
     }
 }

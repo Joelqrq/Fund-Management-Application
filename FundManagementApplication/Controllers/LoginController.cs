@@ -1,52 +1,76 @@
-﻿using System.Threading.Tasks;
-using FundManagementApplication.Data;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using FundManagementApplication.DataAccess;
 using FundManagementApplication.Interfaces;
 using FundManagementApplication.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace FundManagementApplication.Controllers
-{
-    public class LoginController : Controller
-    {
+namespace FundManagementApplication.Controllers {
+    public class LoginController : Controller {
         public IConfiguration Configuration { get; }
         public IJWTAuthenticationManager JwtAuthentication { get; }
-        public UserAccountContext UAContext { get; }
+        public AzureDbContext AzureDb { get; }
 
-        public LoginController(IConfiguration configuration, IJWTAuthenticationManager jwtAuthentication, UserAccountContext userAccountContext) {
+        public LoginController(IConfiguration configuration, IJWTAuthenticationManager jwtAuthentication, AzureDbContext azureDb) {
             Configuration = configuration;
             JwtAuthentication = jwtAuthentication;
-            UAContext = userAccountContext;
+            AzureDb = azureDb;
         }
 
         [HttpGet]
-        public IActionResult Login()
-        {
+        public IActionResult Login() {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromForm]LoginViewModel model) {
+        public IActionResult Login([FromForm]LoginViewModel model) {
 
-            //UserAccount userAccount = null;
-            //userAccount = await UAContext.UserAccounts.FindAsync(model.Email);
+            if(ModelState.IsValid) {
 
-            //if(userAccount.Password != model.Password) return Unauthorized();
+                //FundManager userAccount = AzureDb.FundManager.AsNoTracking()
+                //                                              .Single(fm => fm.Email == model.Email);
 
-            //var token = JwtAuthentication.Authenticate(userAccount.Email);
-            var token = JwtAuthentication.Authenticate("joel@gmail.com");
+                //if(userAccount == null || userAccount.Password != model.Password) {
+                //    ModelState.AddModelError("", $"Email or password is invalid.");
+                //    return View();
+                //}
 
-            if(token == null) return Unauthorized();
+                //var token = JwtAuthentication.GenerateToken(userAccount.Email);
 
-            HttpContext.Response.Cookies.Append("JWToken", token);
+                var token = JwtAuthentication.GenerateToken("joel@gmail.com");
 
-            return Redirect("~/Home/Index");
+                HttpContext.Response.Cookies.Append("JWToken", token);
+
+                return Redirect("~/Home/Index");
+            }
+
+            return View();
         }
 
         [HttpGet]
-        public IActionResult ResetPassword()
-        {
+        public IActionResult ResetPassword() {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ResetPassword([FromForm]ResetPasswordViewModel model) {
+
+            if(ModelState.IsValid) {
+
+                //var user = AzureDb.FundManager.AsNoTracking()
+                //                               .Single(fm => fm.Email == model.Email);
+
+                //if(user == null) {
+                //    ModelState.AddModelError(string.Empty, $"Email {model.Email} does not exist.");
+                //    return View();
+                //}
+                //else
+                return RedirectToAction("Login");
+            }
+
             return View();
         }
 

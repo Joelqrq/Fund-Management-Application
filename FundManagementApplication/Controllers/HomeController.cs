@@ -2,24 +2,32 @@
 using Microsoft.AspNetCore.Mvc;
 using FundManagementApplication.Models;
 using Microsoft.AspNetCore.Authorization;
+using FundManagementApplication.DataAccess;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace FundManagementApplication.Controllers {
 
     [Authorize]
     public class HomeController : Controller {
+        public AzureDbContext AzureDb { get; }
 
-        public HomeController() { }
+        public HomeController(AzureDbContext azureDb) {
+            AzureDb = azureDb;
+        }
 
         [HttpGet]
         public IActionResult Index()
         {
-            MockFundRepository mockFundRepository = new MockFundRepository();
-
-            Funds model = mockFundRepository.GetFund(0);
+            //var model = AzureDb.StocksOverview.Include(so => so.SharesWeightage)
+            //            .Where(sw => sw.StocksOverviewFundId == "string");
+            var model = new DashboardViewModel();
             return View(model);
+            //return View();
         }
 
-        public IActionResult Search(Funds model)
+        [HttpPost]
+        public IActionResult Search(DashboardViewModel model)
         {
             return View(model);
         }

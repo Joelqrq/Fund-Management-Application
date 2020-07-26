@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FundManagementApplication.Models {
-    public class FundManager : UserAccount {
-        public Investor[] Investors { get; set; }
+namespace FundManagementApplication.Models
+{
+    public partial class FundManager
+    {
+        public string PkFundManagerId { get; set; }
+        public string FundManagerName { get; set; }
+        public string FundManagerEmail { get; set; }
+        public string FundManagerPassword { get; set; }
     }
 }

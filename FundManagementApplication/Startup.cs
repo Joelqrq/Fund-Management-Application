@@ -1,12 +1,12 @@
 using System;
 using System.Text;
-using FundManagementApplication.Data;
+using FundManagementApplication.DataAccess;
 using FundManagementApplication.Interfaces;
 using FundManagementApplication.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,10 +45,15 @@ namespace FundManagementApplication {
                     };
                 });
 
-            //DbContext
-            services.AddDbContext<UserAccountContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQL")));
             services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey));
-            services.AddControllersWithViews();
+            
+            //DbContext
+            services.AddDbContextPool<AzureDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQL")));
+
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

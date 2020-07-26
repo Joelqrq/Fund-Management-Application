@@ -14,7 +14,7 @@ namespace FundManagementApplication.Services {
             this.tokenKey = tokenKey;
         }
 
-        public string Authenticate(string email) {
+        public string GenerateToken(string email) {
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor {

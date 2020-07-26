@@ -5,6 +5,6 @@ using System.Threading.Tasks;
 
 namespace FundManagementApplication.Interfaces {
     public interface IJWTAuthenticationManager {
-        string Authenticate(string email);
+        string GenerateToken(string email);
     }
 }

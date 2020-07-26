@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FundManagementApplication.Models {
-    public class Funds 
+namespace FundManagementApplication.Models
+{
+    public partial class Funds
     {
-        public int FundNav { get; set; }
-        public float BidBid { get; set; }
-        public float BidOffer { get; set; }
-        public float BenchMark{ get; set; }
-        public DateTime DateSelect { get; set; }
-        public int SelectAction { get; set; }
+        public Funds()
+        {
+            StocksOverview = new HashSet<StocksOverview>();
+        }
+
+        public string PkFundId { get; set; }
+        public string FundName { get; set; }
+        public string FundManagerId { get; set; }
+        public decimal FundFee { get; set; }
+
+        public virtual ICollection<StocksOverview> StocksOverview { get; set; }
     }
-
-
 }
