@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FundManagementApplication.Models {
     public class DashboardViewModel {
-
         public int FundNav { get; set; }
         public float BidBid { get; set; }
         public float BidOffer { get; set; }

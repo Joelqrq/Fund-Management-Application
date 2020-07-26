@@ -1,4 +1,5 @@
-﻿
+﻿@model FundManagementApplication.Models.InvestorViewModel
+
 @{
     Layout = null;
 }
@@ -88,9 +89,9 @@
                                 <option value="Global">ABC Global</option>
                             </select>
                             <h5 class="mt-2">Investor Name</h5>
-                            <input class="form-control py-4" id="inputInvestorName" type="text" placeholder="Enter Investor Name" />
+                            <input class="form-control py-4" id="inputInvestorName" type="text" placeholder="Enter Investor Name" asp-for="investorName" />
                             <h5 class="mt-2">Investor Email Address</h5>
-                            <input class="form-control py-4" id="inputInvestorEmail" type="text" placeholder="Enter Investor Name" />
+                            <input class="form-control py-4" id="inputInvestorEmail" type="email" placeholder="Enter email address" asp-for="investorEmail" />
 
                             <div class="form-group d-flex justify-content-center mt-5 mb-5">
                                 <button onclick="createNewInvestor();" class="btn btn-success btn-block-success-secondary"> Create</button>

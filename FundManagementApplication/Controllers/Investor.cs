@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FundManagementApplication.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace FundManagementApplication.Controllers
 {
@@ -22,6 +24,17 @@ namespace FundManagementApplication.Controllers
         {
             return View();
         }
-        
+
+        [HttpPost]
+        public async Task<IActionResult> Investor1([FromForm] InvestorViewModel model)
+        {
+
+            return Redirect("~/Investor/createNewInvestor");
+        }
+
+        public IActionResult Search(Investor model)
+        {
+            return View(model);
+        }
     }
 }

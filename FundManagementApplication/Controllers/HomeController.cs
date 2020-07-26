@@ -17,30 +17,29 @@ namespace FundManagementApplication.Controllers {
         }
 
         [HttpGet]
-        public IActionResult Index()
-        {
+        public IActionResult Index() {
+
             //var model = AzureDb.StocksOverview.Include(so => so.SharesWeightage)
             //            .Where(sw => sw.StocksOverviewFundId == "string");
             var model = new DashboardViewModel();
+
             return View(model);
             //return View();
         }
 
         [HttpPost]
-        public IActionResult Search(DashboardViewModel model)
-        {
+        public IActionResult Search(DashboardViewModel model) {
             return View(model);
         }
 
+
         [HttpGet]
-        public IActionResult Profile()
-        {
+        public IActionResult Profile() {
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
+        public IActionResult Error() {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
