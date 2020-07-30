@@ -3,7 +3,7 @@
     Layout = null;
 }
 
-@model FundManagementApplication.Models.DashboardViewModel
+@model FundManagementApplication.ViewModels.DashboardViewModel
 
 <!doctype html>
 <html>
@@ -92,16 +92,14 @@
                             <hr>
                             <!-- Funds Selection -->
                             <h5 class="mt-4">Fund Name</h5>
-                            <select class="browser-default custom-select">
+                            <select class="browser-default custom-select" name="SelectedFund" asp-items=Model.Funds>
                                 <option id="selectFund" selected>Select Funds</option>
-                                <option value="Prestige">ABC Prestige</option>
-                                <option value="Global">ABC Global</option>
                             </select>
                         </div>
                         <div class="row mt-5">
                             <!-- Date Range Input - Fund End Date-->
                             <div class="input-group input-daterange col-sm-4 ">
-                                <input type="text" id="fundEndDate" class="form-control text-left " asp-for="DateSelect">
+                                <input type="text" id="fundEndDate" class="form-control text-left " asp-for="SelectedDate">
                                 <label class="ml-0 form-control-placeholder" id="fundEndDateLabel">Select Date Range</label>
                                 <span class="fa fa-calendar" id="fa-2" aria-hidden="true"></span>
 
@@ -201,27 +199,28 @@
                     </div>
 
                     <!-- Funds Selection -->
+                    <form asp-controller="Home" asp-action="ExecuteFactSheet" method="post">
+                        <div class="row">
+                            <div class="form-check form-check-inline col-xl-3 col-xs-2 ml-2">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" asp-for="SelectAction">
+                                <label class="form-check-label" for="inlineRadio1">Send Factsheet</label>
+                            </div>
+                            <div class="form-check form-check-inline col-xl-3 ml-2">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" asp-for="SelectAction">
+                                <label class="form-check-label" for="inlineRadio2">Download Factsheet</label>
+                            </div>
+                            <div class="form-check form-check-inline col-xl-3 ml-2">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3" asp-for="SelectAction">
+                                <label class="form-check-label" for="inlineRadio3">Preview Factsheet</label>
+                            </div>
 
-                    <div class="row">
-                        <div class="form-check form-check-inline col-xl-3 col-xs-2 ml-2">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" asp-for="SelectAction">
-                            <label class="form-check-label" for="inlineRadio1">Send Factsheet</label>
-                        </div>
-                        <div class="form-check form-check-inline col-xl-3 ml-2">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" asp-for="SelectAction">
-                            <label class="form-check-label" for="inlineRadio2">Download Factsheet</label>
-                        </div>
-                        <div class="form-check form-check-inline col-xl-3 ml-2">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3" asp-for="SelectAction">
-                            <label class="form-check-label" for="inlineRadio3">Preview Factsheet</label>
                         </div>
 
-                    </div>
-
-                    <!-- Go Button -->
-                    <div class="form-group d-flex justify-content-left mt-5 mb-5">
-                        <button onclick="factSheetFunction();" class="btn btn-success btn-block-success-secondary"> Go!</button>
-                    </div>
+                        <!-- Go Button -->
+                        <div class="form-group d-flex justify-content-left mt-5 mb-5">
+                            <button class="btn btn-success btn-block-success-secondary">Go!</button>
+                        </div>
+                    </form>
                 </div> <!-- Fund Oveview Container-->
 
 

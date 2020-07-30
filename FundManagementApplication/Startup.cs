@@ -12,28 +12,27 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Rotativa.AspNetCore;
 
 namespace FundManagementApplication {
     public class Startup {
-        public Startup(IConfiguration configuration) {
+        public Startup(IConfiguration configuration, IWebHostEnvironment env) {
             Configuration = configuration;
+            Env = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Env { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(60);
-            });
 
             //Authentication
             var tokenKey = Configuration.GetValue<string>("TokenKey");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {
-                    opt.RequireHttpsMetadata = false;
+                    opt.RequireHttpsMetadata = !Env.IsDevelopment();
                     opt.SaveToken = true;
                     opt.TokenValidationParameters = new TokenValidationParameters {
                         ValidateIssuerSigningKey = true,
@@ -45,10 +44,13 @@ namespace FundManagementApplication {
                     };
                 });
 
+
             services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey));
-            
+
             //DbContext
             services.AddDbContextPool<AzureDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQL")));
+
+            services.AddSingleton<FundFactSheetGenerator>();
 
             services.AddControllersWithViews(options =>
             {
@@ -69,7 +71,6 @@ namespace FundManagementApplication {
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseRouting();
 
             //Add JWToken to all incoming HTTP Request Header
@@ -79,6 +80,7 @@ namespace FundManagementApplication {
                 if(!string.IsNullOrEmpty(JWToken)) {
                     context.Request.Headers.Add("Authorization", "Bearer " + JWToken);
                 }
+
                 await next();
             });
 
@@ -91,6 +93,9 @@ namespace FundManagementApplication {
                     name: "default",
                     pattern: "{controller=Login}/{action=Login}");
             });
+
+            //PDF plugin
+            RotativaConfiguration.Setup(env.WebRootPath);
         }
     }
 }
