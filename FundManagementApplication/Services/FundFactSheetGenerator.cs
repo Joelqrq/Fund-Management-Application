@@ -18,15 +18,15 @@ namespace FundManagementApplication.Services {
             FundFactSheetDto fundFactSheetModel = new FundFactSheetDto();
 
             //Retrieve information in database according to given date.
-            fundFactSheetModel.Holdings = await ArrangeHoldings(azureDb.SharesWeightage, fund);
-            fundFactSheetModel.Sectors = await ArrangeSectors(azureDb.StocksOverview, fund);
+            fundFactSheetModel.Holdings = await RetrieveHoldingsData(azureDb.SharesWeightage, fund);
+            fundFactSheetModel.Sectors = await RetrieveSectorData(azureDb.StocksOverview, fund);
 
-            return null;
+            return fundFactSheetModel;
         }
 
-        private async Task<IEnumerable<HoldingsDto>> ArrangeHoldings(DbSet<SharesWeightage> sharesWeightage, string fund) {
+        private async Task<IEnumerable<HoldingsDto>> RetrieveHoldingsData(DbSet<SharesWeightage> sharesWeightage, string fund) {
 
-            //Retrieve from database
+            //Retrieve data from database
             var weightages = await sharesWeightage.AsNoTracking()
                                                   .Where(sw => sw.SharesWeightageFundId == fund)
                                                   .ToListAsync();
@@ -41,16 +41,20 @@ namespace FundManagementApplication.Services {
                              .TurnIntoHoldingsDto();
         }
 
-        private async Task<IEnumerable<SectorDto>> ArrangeSectors(DbSet<StocksOverview> stocksOverviews, string fund) {
+        private async Task<IEnumerable<SectorDto>> RetrieveSectorData(DbSet<StocksOverview> stocksOverviews, string fund) {
 
+            //Retrieve data from database
             var industryList = await stocksOverviews.AsNoTracking()
                                                     .Where(so => so.StocksOverviewFundId == fund)
                                                     .ToListAsync();
 
+            //Sort and convert industry into percentage
             return industryList.GroupBy(so => so.StocksOverviewIndustry, (key, result) => new SectorDto {
                 Name = key,
-                Percentage = result.Count() * 100 / industryList.Count()
+                Percentage = (result.Count() * 100 / industryList.Count()).ToString("0.##")
             }).OrderByDescending(so => so.Percentage);
         }
+
+        //private async Task<IEnumerable<>>
     }
 }

@@ -11,12 +11,11 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>ABC Fund Manager Application</title>
     <link href="~/lib/bootstrap/dist/css/styles.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/FundManager.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/DatePicker.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-    <script type='text/javascript' src="js/rows.js"></script>
-
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <body class="bg-secondBackground">
     <div id="layoutAuthentication">
@@ -61,7 +60,7 @@
                                 </li>
 
                                 <li class="nav-item px-3">
-                                    <a class="nav-link" href="/home/profile">Profile</a>
+                                    <a class="nav-link" asp-controller="Profile" asp-action="Profile">Profile</a>
                                 </li>
 
                                 <li class="nav-item px-3">
@@ -81,53 +80,50 @@
                         <hr>
                         <!-- Current Manager Details-->
 
-                        <form>
-                            <h5 class="mt-2">Current Manager Details</h5>
+                        <h5 class="mt-2">Current Manager Details</h5>
 
-                            <div class="form-group row mt-2">
-                                <label for="currentManagerID" class="col-sm-2 col-form-label"> Manager ID: </label>
-                                <div class="col-sm-10">
-                                    <input type="text" readonly class="form-control-plaintext" id="currentInvestorID" value="G01">
-                                </div>
-
-                                <label for="currentManagerName" class="col-sm-2 col-form-label"> Manager Name: </label>
-                                <div class="col-sm-10">
-                                    <input type="text" readonly class="form-control-plaintext" id="currentManagerName" value="Megan Lim">
-                                </div>
-
-                                <label for="currentManagerEmail" class="col-sm-2 col-form-label"> Manager Email: </label>
-                                <div class="col-sm-10">
-                                    <input type="text" readonly class="form-control-plaintext" id="currentManagerEmail" value="Megan@live.com">
-                                </div>
-
-
+                        <div class="form-group row mt-2">
+                            <label for="currentManagerID" class="col-sm-2 col-form-label"> Manager ID: </label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext" id="currentInvestorID" value=@Model.ManagerID>
                             </div>
-                            <hr>
-                            <!-- New Investor Details-->
-                            <h5 class="mt-2">New Manager Details</h5>
 
+                            <label for="currentManagerName" class="col-sm-2 col-form-label"> Manager Name: </label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext" id="currentManagerName" value=@Model.ManagerName>
+                            </div>
+
+                            <label for="currentManagerEmail" class="col-sm-2 col-form-label"> Manager Email: </label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext" id="currentManagerEmail" value=@Model.ManagerEmail>
+                            </div>
+
+
+                        </div>
+                        <hr>
+                        <!-- New Investor Details-->
+                        <h5 class="mt-2">New Manager Details</h5>
+
+                        <form asp-controller="Profile">
                             <div class="form-group row mt-2">
 
                                 <label for="inputNewManagerName" class="col-sm-2 col-form-label mb-3s">Manager Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control mb-3" id="newManagerName" placeholder="New Manager Name" asp-for="newManagerName">
+                                    <input type="text" class="form-control mb-3" id="newManagerName" placeholder="New Manager Name" name="name">
                                 </div>
 
                                 <label for="inputNewManagerEmail" class="col-sm-2 col-form-label">Manager Email</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="newManagerEmail" placeholder="New Manager Email" asp-for="newManagerEmail">
+                                    <input type="email" class="form-control" id="newManagerEmail" placeholder="New Manager Email" name="email">
                                 </div>
                             </div>
 
 
                             <div class="form-group d-flex justify-content-center mt-5 mb-5">
-                                <a href="/home/profile" class="btn btn-danger btn-block-danger-secondary mx-5" role="button">Cancel</a>
-                                <button onclick="UpdateManagerProfile();" class="btn btn-success btn-block-success-secondary mx-5"> Update</button>
+                                <button class="btn btn-danger btn-block-danger-secondary mx-5" asp-action="Cancel">Cancel</button>
+                                <button class="btn btn-success btn-block-success-secondary mx-5" asp-action="Update" formmethod="post"> Update</button>
                             </div>
-
-
                         </form>
-
                     </div>
                 </div><!-- End of Container -->
 

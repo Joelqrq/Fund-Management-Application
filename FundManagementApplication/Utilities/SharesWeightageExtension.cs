@@ -24,7 +24,7 @@ namespace FundManagementApplication.Utilities {
                 yield return new HoldingsDto {
                     Name = sw.SharesWeightageStockName,
                     Ticker = sw.SharesWeightageTicker,
-                    Weight = sw.SharesWeightageWeight
+                    Weight = sw.SharesWeightageWeight.ToString("0.##")
                 };
             }
         }

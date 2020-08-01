@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
     Layout = null;
 }
 
@@ -37,7 +37,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container">
                         <!-- Logo-->
-                        <a class="navbar-brand" href="/home/index"><img class="Logo" src="~/Logo/ABC_LOGO.png" alt="Logo"></a>
+                        <a class="navbar-brand" asp-controller="Dashboard" asp-action="Dashboard"><img class="Logo" src="~/Logo/ABC_LOGO.png" alt="Logo"></a>
                         <!-- Navbar Toggler Icon -->
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -71,7 +71,7 @@
                                 </li>
 
                                 <li class="nav-item px-3">
-                                    <a class="nav-link" href="/home/profile">Profile</a>
+                                    <a class="nav-link" asp-controller="Profile" asp-action="Profile">Profile</a>
                                 </li>
 
                                 <li class="nav-item px-3">
@@ -86,7 +86,7 @@
 
                 <!-- Dashboard -->
                 <div class="container">
-                    <form autocomplete="off" asp-controller="home" asp-action="search" method="post">
+                    <form autocomplete="off" asp-controller="Dashboard" asp-action="Search" method="post">
                         <div class="row>">
                             <h4 class="pt-4">Dashboard</h4>
                             <hr>
@@ -199,7 +199,7 @@
                     </div>
 
                     <!-- Funds Selection -->
-                    <form asp-controller="Home" asp-action="ExecuteFactSheet" method="post">
+                    <form asp-controller="Dashboard" asp-action="ExecuteFactSheet" method="post">
                         <div class="row">
                             <div class="form-check form-check-inline col-xl-3 col-xs-2 ml-2">
                                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" asp-for="SelectAction">

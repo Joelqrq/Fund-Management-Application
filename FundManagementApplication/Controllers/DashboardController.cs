@@ -11,17 +11,17 @@ using Rotativa.AspNetCore;
 namespace FundManagementApplication.Controllers {
 
     [Authorize]
-    public class HomeController : Controller {
+    public class DashboardController : Controller {
         public AzureDbContext AzureDb { get; }
         public FundFactSheetGenerator FundFactSheetGenerator { get; }
 
-        public HomeController(AzureDbContext azureDb, FundFactSheetGenerator fundFactSheetGenerator) {
+        public DashboardController(AzureDbContext azureDb, FundFactSheetGenerator fundFactSheetGenerator) {
             AzureDb = azureDb;
             FundFactSheetGenerator = fundFactSheetGenerator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> Dashboard() {
 
             //Setup fund list
             var model = new DashboardViewModel() { 
@@ -47,7 +47,7 @@ namespace FundManagementApplication.Controllers {
 
             var model = new DashboardViewModel();
 
-            //You can access this method by typing Home/FactSheet
+            //You can access this method by typing Dashboard/FactSheet
             //The Index is the index.cshtml. You can change to your .cshtml to test it.
             return new ViewAsPdf("Index", model);
 
