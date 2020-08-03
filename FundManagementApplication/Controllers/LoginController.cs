@@ -7,16 +7,13 @@ using FundManagementApplication.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace FundManagementApplication.Controllers {
     public class LoginController : Controller {
-        public IConfiguration Configuration { get; }
         public IJWTAuthenticationManager JwtAuthentication { get; }
         public AzureDbContext AzureDb { get; }
 
-        public LoginController(IConfiguration configuration, IJWTAuthenticationManager jwtAuthentication, AzureDbContext azureDb) {
-            Configuration = configuration;
+        public LoginController(IJWTAuthenticationManager jwtAuthentication, AzureDbContext azureDb) {
             JwtAuthentication = jwtAuthentication;
             AzureDb = azureDb;
         }
@@ -25,7 +22,7 @@ namespace FundManagementApplication.Controllers {
         public IActionResult Login() {
 
             if(JWTAuthenticationManager.IsUserLoggedIn(Request)) {
-                return Redirect("~/Home/Index");
+                return RedirectToAction("Dashboard", "Dashboard");
             }
 
             return View();
@@ -54,7 +51,7 @@ namespace FundManagementApplication.Controllers {
                     cookieOpt.Expires = DateTime.Now.AddDays(365);
 
                 Response.Cookies.Append("JWToken", token, cookieOpt);
-                return Redirect("~/Home/Index");
+                return RedirectToAction("Dashboard", "Dashboard");
             }
 
             return View();

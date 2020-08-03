@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 namespace FundManagementApplication.ViewModels {
     public class ProfileViewModel
     {
-        public string newManagerName { get; set; }
-        public string newManagerEmail { get; set; }
+        public string ManagerID { get; set; }
+        public string ManagerName { get; set; }
+        public string ManagerEmail { get; set; }
     }
 }
