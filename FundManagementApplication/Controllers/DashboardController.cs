@@ -49,7 +49,7 @@ namespace FundManagementApplication.Controllers {
 
             //You can access this method by typing Dashboard/FactSheet
             //The Index is the index.cshtml. You can change to your .cshtml to test it.
-            return new ViewAsPdf("Index", model);
+            return new ViewAsPdf("Dashboard", model);
 
             //var model = new DashboardViewModel() {
             //    Funds = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken())
@@ -68,11 +68,6 @@ namespace FundManagementApplication.Controllers {
             //}
 
             //return View();
-        }
-
-        [HttpGet]
-        public IActionResult Profile() {
-            return View();
         }
     }
 }

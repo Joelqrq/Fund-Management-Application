@@ -50,6 +50,7 @@ namespace FundManagementApplication.Models {
         public decimal ThreeMonth { get; set; }
         public decimal SixMonth { get; set; }
         public decimal OneYear { get; set; }
+        public decimal YearToDate { get; set; }
         public decimal SinceInception { get; set; }
     }
 }

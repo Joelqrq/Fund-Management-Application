@@ -41,7 +41,7 @@ namespace FundManagementApplication.Controllers {
             model.ManagerEmail = email;
             model.ManagerName = name;
 
-            return View(model);
+            return View("Profile",model);
         }
 
         /// <summary>
