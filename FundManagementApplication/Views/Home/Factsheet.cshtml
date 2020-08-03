@@ -1,0 +1,310 @@
+﻿
+@{
+    ViewData["Title"] = "FactSheet";
+    Layout = null;
+}
+
+
+@model FundManagementApplication.Models.FundFactSheetDto
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Daily FactSheet</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/FundManager.css" rel="stylesheet" />
+
+
+</head>
+<body class="bg-secondBackground">
+    <div class="FSHeaderContainer">
+        <div class="container">
+            <div class="row">
+                <h3 style="margin-top: 3.75rem; margin-bottom: 1rem;color: white;">
+                    ABC Prestige Fund
+                </h3>
+                <img class="FSLogo ml-auto img-fluid" style="max-width: 22%" src="Logo/ABC_LOGO-HORIZONTAL.png"></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 1 -->
+    <div class="container">
+        <div class="row">
+            <h5 class="pt-4">About The Fund</h5>
+            <hr class="hrHalf">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            </p>
+
+        </div>
+    </div>
+    <!-- Row 2 -->
+    <div class="container">
+        <div class="row">
+            <div class="col pl-0">
+                <h5 class="pt-4">Top 10 Holdings </h5>
+                <hr class="hrHalf">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>%</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var holding in Model)
+            <tr>
+                <td>DBS: </td>
+                <td>0.36 </td>
+            </tr>
+                        <tr>
+                            <td>Singtel: </td>
+                            <td>0.36</td>
+
+                        </tr>
+                        <tr>
+                            <td>UOB: </td>
+                            <td>0.36</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>OCBC:</td>
+                            <td>0.36</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Starhub:</td>
+                            <td>0.36</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>SIA:</td>
+                            <td>0.36</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>SPH:</td>
+                            <td>0.36</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Venture</td>
+                            <td>0.36</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Comfort Delgro</td>
+                            <td>0.36</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>CapitalLand</td>
+                            <td>0.36</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Total number of holdings: </td>
+                            <td>0.36</td>
+
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col pr-0 ml-5">
+                <h5 class="pt-4">Sector Allocation</h5>
+                <hr class="hrHalf">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>%</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Finance </td>
+                            <td>0.36 </td>
+                        </tr>
+                        <tr>
+                            <td>Telecommunication </td>
+                            <td>0.36</td>
+
+                        </tr>
+                        <tr>
+                            <td>Transport </td>
+                            <td>0.36</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Airlines</td>
+                            <td>0.36</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Real Estates</td>
+                            <td>0.36</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Others</td>
+                            <td>0.36</td>
+
+                        </tr>
+
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Row 3 -->
+    <div class="container">
+        <div class="row">
+            <div class="col pl-0">
+                <h5 class="pt-4">Performance Overiew </h5>
+                <hr class="hrHalf">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                </p>
+            </div>
+
+            <div class="col pr-0 ml-5">
+                <h5 class="pt-4">Funds Details</h5>
+                <hr class="hrHalf">
+                <table class="table ">
+
+                    <tbody>
+                        <tr>
+                            <td>Benchmark: </td>
+                            <td>Straits Time Index (STI) </td>
+                        </tr>
+                        <tr>
+                            <td>Fund Manager Name: </td>
+                            <td>Angie Ng</td>
+
+                        </tr>
+                        <tr>
+                            <td>Fund Size: </td>
+                            <td>SGD: 100.00m</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Base Currency:</td>
+                            <td>SGD</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Number of Holdings:</td>
+                            <td>10</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Initial Fee:</td>
+                            <td>1%</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Inception Date:</td>
+                            <td>02/01/2019</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Annualize Returns:</td>
+                            <td>0.36</td>
+
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Row 4 -->
+
+    <div class="container">
+        <div class="row">
+            <h5 class="pt-4">Performance as at 31 May 2020</h5>
+            <hr class="hrHalf">
+            <table class="table ">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Matrix</th>
+                        <th>1 mth</th>
+                        <th>3 mth</th>
+                        <th>6 mth</th>
+                        <th>1 year (p.a)</th>
+                        <th>Year To Date</th>
+                        <th>Since Launch</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bid to Bid%</td>
+                        <td>5.2</td>
+                        <td>11.73</td>
+                        <td>27.6</td>
+                        <td>15.8</td>
+                        <td>15.8</td>
+                        <td>7.4</td>
+                    </tr>
+                    <tr>
+                        <td>Offer to Bid%</td>
+                        <td>5.2</td>
+                        <td>11.73</td>
+                        <td>27.6</td>
+                        <td>15.8</td>
+                        <td>15.8</td>
+                        <td>7.4</td>
+                    </tr>
+                    <tr>
+                        <td>Benchmark%</td>
+                        <td>5.2</td>
+                        <td>11.73</td>
+                        <td>27.6</td>
+                        <td>15.8</td>
+                        <td>15.8</td>
+                        <td>7.4</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</body>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+
+</html> 
