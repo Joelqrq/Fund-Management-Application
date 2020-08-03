@@ -1856,9 +1856,9 @@
     "restore": {
       "projectUniqueName": "global_dailymovement",
       "projectName": "global_dailymovement",
-      "projectPath": "C:\\Users\\ngjin\\Documents\\UiPath\\global_dailymovement\\.local",
+      "projectPath": "C:\\Users\\ngjin\\Desktop\\UiPath\\dailymovement\\global_dailymovement\\.local",
       "packagesPath": "C:\\Users\\ngjin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ngjin\\Documents\\UiPath\\global_dailymovement\\.local"
+      "outputPath": "C:\\Users\\ngjin\\Desktop\\UiPath\\dailymovement\\global_dailymovement\\.local"
     },
     "frameworks": {
       "net461": {
