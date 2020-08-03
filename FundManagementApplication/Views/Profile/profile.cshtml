@@ -1,150 +1,60 @@
 ﻿@model FundManagementApplication.ViewModels.ProfileViewModel
 
-@{
-    Layout = null;
-}
-
-<!doctype html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>ABC Fund Manager Application</title>
-    <link href="~/lib/bootstrap/dist/css/styles.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+@section Scripts{
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-</head>
-<body class="bg-secondBackground">
-    <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content">
-            <main>
-                <!-- Navbard Header -->
+}
 
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container">
-                        <!-- Logo-->
-                        <a class="navbar-brand" href="/home/index"><img class="Logo" src="~/Logo/ABC_LOGO.png" alt="Logo"></a>
-                        <!-- Navbar Toggler Icon -->
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
+<!-- Edit Manager Header -->
+<div class="container">
+    <div class="row>">
+        <h4 class="pt-4">Edit Manager Profile</h4>
+        <hr>
+        <!-- Current Manager Details-->
 
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item active px-3">
-                                    <a class="nav-link" href="/home/index">Dashboard<span class="sr-only">(current)</span></a>
-                                </li>
+        <h5 class="mt-2">Current Manager Details</h5>
 
-                                <li class="nav-item dropdown px-3">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Fund
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/fund/createNewFund">Create New Fund</a>
-                                        <a class="dropdown-item" href="/fund/editFund">Edit Funds</a>
-                                    </div>
-                                </li>
+        <div class="form-group row mt-2">
+            <label for="currentManagerID" class="col-sm-2 col-form-label"> Manager ID: </label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="currentInvestorID" value=@Model.ManagerID>
+            </div>
 
-                                <li class="nav-item dropdown px-3">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Investor
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/investor/listOfInvestor">Lists of Investors</a>
-                                        <a class="dropdown-item" href="/investor/createNewInvestor">Create New Investor</a>
-                                        <a class="dropdown-item" href="/investor/editInvestorDetails">Edit Investor Details</a>
-                                    </div>
-                                </li>
+            <label for="currentManagerName" class="col-sm-2 col-form-label"> Manager Name: </label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="currentManagerName" value=@Model.ManagerName>
+            </div>
 
-                                <li class="nav-item px-3">
-                                    <a class="nav-link" asp-controller="Profile" asp-action="Profile">Profile</a>
-                                </li>
-
-                                <li class="nav-item px-3">
-                                    <a class="nav-link" href="/Login/login">Logout</a>
-                                </li>
-
-                            </ul>
-
-                        </div>
-                    </div> <!-- Nav Bar Container-->
-                </nav>
-
-                <!-- Edit Manager Header -->
-                <div class="container">
-                    <div class="row>">
-                        <h4 class="pt-4">Edit Manager Profile</h4>
-                        <hr>
-                        <!-- Current Manager Details-->
-
-                        <h5 class="mt-2">Current Manager Details</h5>
-
-                        <div class="form-group row mt-2">
-                            <label for="currentManagerID" class="col-sm-2 col-form-label"> Manager ID: </label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext" id="currentInvestorID" value=@Model.ManagerID>
-                            </div>
-
-                            <label for="currentManagerName" class="col-sm-2 col-form-label"> Manager Name: </label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext" id="currentManagerName" value=@Model.ManagerName>
-                            </div>
-
-                            <label for="currentManagerEmail" class="col-sm-2 col-form-label"> Manager Email: </label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext" id="currentManagerEmail" value=@Model.ManagerEmail>
-                            </div>
+            <label for="currentManagerEmail" class="col-sm-2 col-form-label"> Manager Email: </label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="currentManagerEmail" value=@Model.ManagerEmail>
+            </div>
 
 
-                        </div>
-                        <hr>
-                        <!-- New Investor Details-->
-                        <h5 class="mt-2">New Manager Details</h5>
-
-                        <form asp-controller="Profile">
-                            <div class="form-group row mt-2">
-
-                                <label for="inputNewManagerName" class="col-sm-2 col-form-label mb-3s">Manager Name</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control mb-3" id="newManagerName" placeholder="New Manager Name" name="name">
-                                </div>
-
-                                <label for="inputNewManagerEmail" class="col-sm-2 col-form-label">Manager Email</label>
-                                <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="newManagerEmail" placeholder="New Manager Email" name="email">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group d-flex justify-content-center mt-5 mb-5">
-                                <button class="btn btn-danger btn-block-danger-secondary mx-5" asp-action="Cancel">Cancel</button>
-                                <button class="btn btn-success btn-block-success-secondary mx-5" asp-action="Update" formmethod="post"> Update</button>
-                            </div>
-                        </form>
-                    </div>
-                </div><!-- End of Container -->
-
-
-            </main>
         </div>
-        <!-- Footer-->
-        <div id="layoutAuthentication_footer">
-            <footer class="py-4 bg-light mt-5">
-                <div class="container-fluid">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; FundManager Application 2020</div>
+        <hr>
+        <!-- New Investor Details-->
+        <h5 class="mt-2">New Manager Details</h5>
 
-                    </div>
+        <form asp-controller="Profile">
+            <div class="form-group row mt-2">
+
+                <label for="inputNewManagerName" class="col-sm-2 col-form-label mb-3s">Manager Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control mb-3" id="newManagerName" placeholder="New Manager Name" name="name">
                 </div>
-            </footer>
-        </div>
+
+                <label for="inputNewManagerEmail" class="col-sm-2 col-form-label">Manager Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="newManagerEmail" placeholder="New Manager Email" name="email">
+                </div>
+            </div>
+
+
+            <div class="form-group d-flex justify-content-center mt-5 mb-5">
+                <button class="btn btn-danger btn-block-danger-secondary mx-5" asp-action="Cancel">Cancel</button>
+                <button class="btn btn-success btn-block-success-secondary mx-5" asp-action="Update" formmethod="post"> Update</button>
+            </div>
+        </form>
     </div>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
-</body>
-</html>
-
+</div><!-- End of Container -->
