@@ -1,4 +1,4 @@
-﻿@model FundManagementApplication.Models.LoginViewModel
+﻿@model LoginViewModel
 
 @{
     Layout = null;
@@ -13,7 +13,11 @@
     <title>ABC Fund Manager Application</title>
     <link href="~/lib/bootstrap/dist/css/styles.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/FundManager.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/ValidationStyle.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <body class="bg-primary">
     <div id="layoutAuthentication">
@@ -32,21 +36,27 @@
                             <div class="card shadow-lg border-0 mt-5">
                                 <div class="card-header"><h3 class="text-left font-weight-normal my-3 Header">Sign In</h3></div>
                                 <div class="card-body">
-                                    <form>
-                                        <div class="form-group"><label class="small mb-1" for="inputEmailAddress">Email</label>
-                                        <input class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" asp-for="Email"/></div>
-                                        <div class="form-group"><label class="small mb-1" for="inputPassword">Password</label>
-                                        <input class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" asp-for="Password"/></div>
+                                    <form asp-controller="Login" asp-action="Login" method="post">
+                                        <div class="form-group">
+                                            <label class="small mb-1" for="inputEmailAddress">Email</label>
+                                            <input class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" asp-for="Email" />
+                                            <span asp-validation-for="Email" class="small text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="small mb-1" for="inputPassword">Password</label>
+                                            <input class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" asp-for="Password" />
+                                            <span asp-validation-for="Password" class="small text-danger"></span>
+                                            <div asp-validation-summary="ModelOnly" class="small validation-summary-errors"></div>
+                                        </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input" id="rememberCheckBox" type="checkbox" asp-for="IsRemember"/>
+                                                <input class="custom-control-input" id="rememberCheckBox" type="checkbox" asp-for="IsRemember" />
                                                 <label class="custom-control-label" for="rememberCheckBox">Remember password</label>
-                                                <a class="small float-right" href="/login/resetPassword">Forget Password?</a>
+                                                <a class="small float-right" asp-controller="Login" asp-action="ResetPassword">Forget Password?</a>
                                             </div>
-
                                         </div>
                                         <div class="form-group d-flex  justify-content-center mt-5 mb-5">
-                                            <button type="submit" class="btn btn-success btn-block-success" asp-controller="Login" asp-action="Login" formmethod="post">Login</button>
+                                            <button type="submit" class="btn btn-success btn-block-success">Login</button>
                                         </div>
 
                                     </form>

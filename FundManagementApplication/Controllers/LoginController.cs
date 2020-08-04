@@ -1,58 +1,90 @@
-﻿using System.Threading.Tasks;
-using FundManagementApplication.Data;
+﻿using System;
+using System.Threading.Tasks;
+using FundManagementApplication.DataAccess;
 using FundManagementApplication.Interfaces;
-using FundManagementApplication.Models;
+using FundManagementApplication.Services;
+using FundManagementApplication.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
-namespace FundManagementApplication.Controllers
-{
-    public class LoginController : Controller
-    {
-        public IConfiguration Configuration { get; }
+namespace FundManagementApplication.Controllers {
+    public class LoginController : Controller {
         public IJWTAuthenticationManager JwtAuthentication { get; }
-        public UserAccountContext UAContext { get; }
+        public AzureDbContext AzureDb { get; }
 
-        public LoginController(IConfiguration configuration, IJWTAuthenticationManager jwtAuthentication, UserAccountContext userAccountContext) {
-            Configuration = configuration;
+        public LoginController(IJWTAuthenticationManager jwtAuthentication, AzureDbContext azureDb) {
             JwtAuthentication = jwtAuthentication;
-            UAContext = userAccountContext;
+            AzureDb = azureDb;
         }
 
         [HttpGet]
-        public IActionResult Login()
-        {
+        public IActionResult Login() {
+
+            if(JWTAuthenticationManager.IsUserLoggedIn(Request)) {
+                return RedirectToAction("Dashboard", "Dashboard");
+            }
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Login([FromForm]LoginViewModel model) {
 
-            //UserAccount userAccount = null;
-            //userAccount = await UAContext.UserAccounts.FindAsync(model.Email);
+            if(ModelState.IsValid) {
 
-            //if(userAccount.Password != model.Password) return Unauthorized();
+                //Search for account in database
+                var userAccount = await AzureDb.FundManager.AsNoTracking()
+                                                           .SingleOrDefaultAsync(fm => fm.FundManagerEmail == model.Email);
 
-            //var token = JwtAuthentication.Authenticate(userAccount.Email);
-            var token = JwtAuthentication.Authenticate("joel@gmail.com");
+                if(userAccount == null || userAccount.FundManagerPassword != model.Password) {
+                    ModelState.AddModelError("", $"Email or password is invalid.");
+                    return View();
+                }
 
-            if(token == null) return Unauthorized();
+                //Generate JWToken
+                var token = JwtAuthentication.GenerateToken(userAccount);
 
-            HttpContext.Response.Cookies.Append("JWToken", token);
+                var cookieOpt = new CookieOptions() { HttpOnly = true, Secure = true };
+                //Make cookie persist for a year
+                if(model.IsRemember)
+                    cookieOpt.Expires = DateTime.Now.AddDays(365);
 
-            return Redirect("~/Home/Index");
+                Response.Cookies.Append("JWToken", token, cookieOpt);
+                return RedirectToAction("Dashboard", "Dashboard");
+            }
+
+            return View();
         }
 
         [HttpGet]
-        public IActionResult ResetPassword()
-        {
+        public IActionResult ResetPassword() {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword([FromForm]ResetPasswordViewModel model) {
+
+            if(ModelState.IsValid) {
+
+                //Search for account in database
+                var userAccount = await AzureDb.FundManager.AsNoTracking()
+                                                           .SingleOrDefaultAsync(fm => fm.FundManagerEmail == model.Email);
+
+                if(userAccount == null) {
+                    ModelState.AddModelError(string.Empty, $"Email {model.Email} does not exist.");
+                    return View();
+                }
+                else
+                    return RedirectToAction("Login");
+            }
+
             return View();
         }
 
         [HttpGet]
         public IActionResult Logout() {
-            HttpContext.Response.Cookies.Delete("JWToken");
+            Response.Cookies.Delete("JWToken");
             return RedirectToAction("Login");
         }
     }

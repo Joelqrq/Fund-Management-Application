@@ -1,48 +1,85 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FundManagementApplication</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="~/lib/bootstrap/dist/css/styles.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/FundManager.css" rel="stylesheet" />
+    @RenderSection("Style", required: false)
+    <title>@ViewBag.Title</title>
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FundManagementApplication</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+<body class="bg-secondBackground">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <!-- Navbard Header -->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container">
+                        <!-- Logo-->
+                        <a class="navbar-brand" asp-controller="Dashboard" asp-action="Dashboard"><img class="Logo" src="~/Logo/ABC_LOGO.png" alt="Logo"></a>
+                        <!-- Navbar Toggler Icon -->
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - FundManagementApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item active px-3">
+                                    <a class="nav-link" asp-controller="Dashboard" asp-action="Dashboard">Dashboard<span class="sr-only">(current)</span></a>Need to fix this
+                                </li>
+                                
+                                <li class="nav-item dropdown px-3">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Fund
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="/fund/createNewFund">Create New Fund</a>
+                                        <a class="dropdown-item" href="/fund/editFund">Edit Funds</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item dropdown px-3">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Investor
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="/investor/listOfInvestor">Lists of Investors</a>
+                                        <a class="dropdown-item" href="/investor/createNewInvestor">Create New Investor</a>
+                                        <a class="dropdown-item" href="/investor/editInvestorDetails">Edit Investor Details</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item px-3">
+                                    <a class="nav-link" asp-controller="Profile" asp-action="Profile">Profile</a>
+                                </li>
+
+                                <li class="nav-item px-3">
+                                    <a class="nav-link" asp-controller="Login" asp-action="Logout">Logout</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div> <!-- Nav Bar Container-->
+                </nav>
+                @RenderBody()
+            </main>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <!-- Footer-->
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 bg-light mt-5">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; FundManager Application 2020</div>
+
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

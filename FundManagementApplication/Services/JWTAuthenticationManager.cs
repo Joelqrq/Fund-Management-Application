@@ -1,4 +1,7 @@
 ﻿using FundManagementApplication.Interfaces;
+using FundManagementApplication.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,21 +17,32 @@ namespace FundManagementApplication.Services {
             this.tokenKey = tokenKey;
         }
 
-        public string Authenticate(string email) {
+        public string GenerateToken(FundManager account) {
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, email)
+                    new Claim(ClaimTypes.Email, account.FundManagerEmail),
+                    new Claim(ClaimTypes.Name, account.FundManagerName),
+                    new Claim(ClaimTypes.NameIdentifier, account.PkFundManagerId)
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(2),
+                Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenKey)),
                     SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        /// <summary>
+        /// Check if user was logged in previously.
+        /// </summary>
+        /// <param name="request">HttpRequest</param>
+        /// <returns></returns>
+        public static bool IsUserLoggedIn(HttpRequest request) {
+            return !string.IsNullOrEmpty(request.Cookies["JWToken"]);
         }
     }
 }
