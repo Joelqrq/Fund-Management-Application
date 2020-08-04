@@ -37,6 +37,8 @@ namespace FundManagementApplication.Models {
         public decimal AnnualizeReturns { get; set; }
         public string StockCurrency { get; set; }
         public string BenchmarkName { get; set; }
+        public decimal TotalHoldings { get; set; }
+        public string FundName { get; set; }
     }
 
     public class PerformanceTableDto {
