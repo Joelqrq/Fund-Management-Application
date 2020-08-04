@@ -17,7 +17,7 @@ namespace FundManagementApplication.Services {
             this.tokenKey = tokenKey;
         }
 
-        public string GenerateToken(FundManager account) {
+        public string GenerateToken(Fund_Manager account) {
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor {
@@ -25,7 +25,7 @@ namespace FundManagementApplication.Services {
                 {
                     new Claim(ClaimTypes.Email, account.FundManagerEmail),
                     new Claim(ClaimTypes.Name, account.FundManagerName),
-                    new Claim(ClaimTypes.NameIdentifier, account.PkFundManagerId)
+                    new Claim(ClaimTypes.NameIdentifier, account.PK_FundManager_ID)
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(

@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FundManagementApplication.Models
 {
-    public partial class Goog
+    public partial class GOOG
     {
+        [Key]
+        [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
+        [Required]
+        [StringLength(45)]
         public string Ticker { get; set; }
+        [Column(TypeName = "decimal(6, 2)")]
         public decimal Price { get; set; }
-        public decimal Dr { get; set; }
+        [Column(TypeName = "decimal(11, 10)")]
+        public decimal DR { get; set; }
 
-        public virtual SharesWeightage TickerNavigation { get; set; }
+        [ForeignKey(nameof(Ticker))]
+        [InverseProperty(nameof(Shares_Weightage.GOOG))]
+        public virtual Shares_Weightage TickerNavigation { get; set; }
     }
 }

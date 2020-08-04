@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace FundManagementApplication.Utilities {
     public static class SharesWeightageExtension {
 
-        public static IEnumerable<SharesWeightage> ConvertToPercentage(this IEnumerable<SharesWeightage> sharesWeightages, decimal totalWeight) {
-            foreach(SharesWeightage sw in sharesWeightages) {
-                sw.SharesWeightageWeight *= 100 / totalWeight;
+        public static IEnumerable<Shares_Weightage> ConvertToPercentage(this IEnumerable<Shares_Weightage> sharesWeightages, decimal totalWeight) {
+            foreach(var sw in sharesWeightages) {
+                sw.Shares_Weightage_Weight *= 100 / totalWeight;
                 yield return sw;
             }
         }
@@ -18,13 +18,13 @@ namespace FundManagementApplication.Utilities {
         /// </summary>
         /// <param name="sws"></param>
         /// <returns></returns>
-        public static IEnumerable<HoldingsDto> TurnIntoHoldingsDto(this IEnumerable<SharesWeightage> sws) {
-            foreach(SharesWeightage sw in sws) {
+        public static IEnumerable<HoldingsDto> TurnIntoHoldingsDto(this IEnumerable<Shares_Weightage> sws) {
+            foreach(var sw in sws) {
 
                 yield return new HoldingsDto {
-                    Name = sw.SharesWeightageStockName,
-                    Ticker = sw.SharesWeightageTicker,
-                    Weight = sw.SharesWeightageWeight.ToString("0.##")
+                    Name = sw.Shares_Weightage_StockName,
+                    Ticker = sw.Shares_Weightage_Ticker,
+                    Weight = sw.Shares_Weightage_Weight.ToString("0.##")
                 };
             }
         }

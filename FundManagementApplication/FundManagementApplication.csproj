@@ -5,8 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Fund\js\" />
-    <Folder Include="wwwroot\js\" />
+    <Compile Remove="Views\Fund\js\**" />
+    <Compile Remove="wwwroot\js\**" />
+    <Content Remove="Views\Fund\js\**" />
+    <Content Remove="wwwroot\js\**" />
+    <EmbeddedResource Remove="Views\Fund\js\**" />
+    <EmbeddedResource Remove="wwwroot\js\**" />
+    <None Remove="Views\Fund\js\**" />
+    <None Remove="wwwroot\js\**" />
   </ItemGroup>
 
   <ItemGroup>

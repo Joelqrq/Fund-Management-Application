@@ -1,5 +1,33 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
-  "libraries": []
+  "libraries": [
+    {
+      "provider": "jsdelivr",
+      "library": "bootstrap@4.3.1",
+      "destination": "wwwroot/lib/bootstrap/",
+      "files": [
+        "dist/js/bootstrap.bundle.min.js.map",
+        "dist/js/bootstrap.bundle.min.js"
+      ]
+    }
+  ,
+{
+  "library": "font-awesome@5.11.2",
+  "destination": "wwwroot/lib/font-awesome/",
+  "files": [
+    "js/all.min.js"
+  ]
+}
+,
+{
+  "library": "bootstrap-datepicker@1.9.0",
+  "destination": "wwwroot/lib/bootstrap-datepicker/",
+  "files": [
+    "js/bootstrap-datepicker.min.js",
+    "css/bootstrap-datepicker.css.map",
+    "css/bootstrap-datepicker.css"
+  ]
+}
+]
 }

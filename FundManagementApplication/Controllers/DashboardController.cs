@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using FundManagementApplication.DataAccess;
 using FundManagementApplication.Utilities;
 using FundManagementApplication.ViewModels;
-using FundManagementApplication.Models;
 using FundManagementApplication.Services;
 using System.Threading.Tasks;
 using Rotativa.AspNetCore;
@@ -13,11 +12,9 @@ namespace FundManagementApplication.Controllers {
     [Authorize]
     public class DashboardController : Controller {
         public AzureDbContext AzureDb { get; }
-        public FundFactSheetGenerator FundFactSheetGenerator { get; }
 
-        public DashboardController(AzureDbContext azureDb, FundFactSheetGenerator fundFactSheetGenerator) {
+        public DashboardController(AzureDbContext azureDb) {
             AzureDb = azureDb;
-            FundFactSheetGenerator = fundFactSheetGenerator;
         }
 
         [HttpGet]
@@ -25,26 +22,30 @@ namespace FundManagementApplication.Controllers {
 
             //Setup fund list
             var model = new DashboardViewModel() { 
-                Funds = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken()) 
+                Funds = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken())
             };
+
+            model.SelectedFund = model.Funds[0].Value;
             
             return View(model);
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Search([FromForm] string SelectedFund, [FromForm] string SelectedDate) {
 
             //Retrieve fund factsheet details
-            var userId = User.Claims.GetIDFromToken();
-            FundFactSheetDto fundFactSheet = await FundFactSheetGenerator.GenerateFactSheet(AzureDb, SelectedFund, SelectedDate);
-           
-            return View();
+            DashboardViewModel model = await new DashboardGenerator(AzureDb).GenerateDashboardData(SelectedFund, SelectedDate);
+            model.Funds = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken());
+            model.SelectedFund = SelectedFund;
+            return View("Dashboard", model);
         }
 
         [AllowAnonymous]
         [HttpGet("[controller]/FactSheet")]
         public async Task<IActionResult> ExecuteFactSheet(/*[FromForm]int inlineRadioOptions*/) {
 
+            //FundFactSheetDto fundFactSheet = new FundFactSheetGenerator(AzureDb, SelectedFund, SelectedDate).GenerateFactSheet();
             var model = new DashboardViewModel();
 
             //You can access this method by typing Dashboard/FactSheet
