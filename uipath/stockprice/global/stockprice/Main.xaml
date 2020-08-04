@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="594,898" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="984.666666666667,2478.66666666667" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="25">
       <x:String>System.Activities</x:String>
@@ -61,7 +61,7 @@
       <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
     </scg:Dictionary>
   </sap:WorkflowViewStateService.ViewState>
-  <Sequence DisplayName="stock price scraper" sap:VirtualizedContainerService.HintSize="560,833.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_3">
+  <Sequence DisplayName="stock price scraper" sap:VirtualizedContainerService.HintSize="994.666666666667,2414" sap2010:WorkflowViewState.IdRef="Sequence_3">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="globaltickerDT" />
       <Variable x:TypeArguments="x:String" Name="globalcompanycode" />
@@ -76,7 +76,8 @@
       <Variable x:TypeArguments="x:Decimal" Name="Decimal_global_today_price" />
       <Variable x:TypeArguments="x:Double" Name="global_today_DR" />
       <Variable x:TypeArguments="x:Decimal" Name="Decimal_global_today_DR" />
-      <Variable x:TypeArguments="x:String" Name="global_yesterday_price" />
+      <Variable x:TypeArguments="x:Double" Name="global_yesterday_price" />
+      <Variable x:TypeArguments="x:String" Name="Str_global_yesterday_price" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -84,34 +85,34 @@
         <x:Boolean x:Key="IsPinned">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence sap:VirtualizedContainerService.HintSize="518,679.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_106">
+    <Sequence sap:VirtualizedContainerService.HintSize="952.666666666667,2260" sap2010:WorkflowViewState.IdRef="Sequence_106">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsPinned">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <Sequence DisplayName="global" sap:VirtualizedContainerService.HintSize="476,587.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_87">
+      <Sequence DisplayName="global" sap:VirtualizedContainerService.HintSize="910.666666666667,2168" sap2010:WorkflowViewState.IdRef="Sequence_87">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <x:Boolean x:Key="IsPinned">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="global fund" sap:VirtualizedContainerService.HintSize="434,495.333333333333" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_6" Workbook="[globalwb]" WorkbookPath="global.xlsx">
+        <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="global fund" sap:VirtualizedContainerService.HintSize="868.666666666667,2076" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_6" Workbook="[globalwb]" WorkbookPath="global.xlsx">
           <ui:ExcelApplicationScope.Body>
             <ActivityAction x:TypeArguments="ui:WorkbookApplication">
               <ActivityAction.Argument>
                 <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
               </ActivityAction.Argument>
-              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="242,346.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_42">
+              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="834.666666666667,1927.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_42">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     <x:Boolean x:Key="IsPinned">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:ExcelReadRange AddHeaders="True" DataTable="[globaltickerDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_6" SheetName="global ticker">
+                <ui:ExcelReadRange AddHeaders="True" DataTable="[globaltickerDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="792.666666666667,52.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_6" SheetName="global ticker">
                   <ui:ExcelReadRange.Range>
                     <InArgument x:TypeArguments="x:String">
                       <Literal x:TypeArguments="x:String" Value="" />
@@ -124,7 +125,7 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:ExcelReadRange>
-                <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[globaltickerDT]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="ForEachRow_6">
+                <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[globaltickerDT]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="792.666666666667,52.6666666666667" sap2010:WorkflowViewState.IdRef="ForEachRow_6">
                   <ui:ForEachRow.Body>
                     <ActivityAction x:TypeArguments="sd:DataRow">
                       <ActivityAction.Argument>
@@ -231,14 +232,14 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:ForEachRow>
-                <Sequence DisplayName="write into database" sap:VirtualizedContainerService.HintSize="200,69.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_82">
+                <Sequence DisplayName="write into database" sap:VirtualizedContainerService.HintSize="792.666666666667,1650" sap2010:WorkflowViewState.IdRef="Sequence_82">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_19">
+                  <Assign sap:VirtualizedContainerService.HintSize="750.666666666667,62" sap2010:WorkflowViewState.IdRef="Assign_19">
                     <Assign.To>
                       <OutArgument x:TypeArguments="s:String[]">[globalsheets]</OutArgument>
                     </Assign.To>
@@ -246,35 +247,35 @@
                       <InArgument x:TypeArguments="s:String[]">[globalwb.GetSheets.ToArray]</InArgument>
                     </Assign.Value>
                   </Assign>
-                  <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="262,52.6666666666667" sap2010:WorkflowViewState.IdRef="ForEach`1_6" Values="[globalsheets]">
+                  <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="750.666666666667,1456" sap2010:WorkflowViewState.IdRef="ForEach`1_6" Values="[globalsheets]">
                     <ui:ForEach.Body>
                       <ActivityAction x:TypeArguments="x:String">
                         <ActivityAction.Argument>
                           <DelegateInArgument x:TypeArguments="x:String" Name="item" />
                         </ActivityAction.Argument>
-                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="242,144.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_81">
+                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="714,1320.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_81">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                               <x:Boolean x:Key="IsPinned">True</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <If Condition="[item &lt;&gt;&quot;global ticker&quot;]" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="If_2">
+                          <If Condition="[item &lt;&gt;&quot;global ticker&quot;]" sap:VirtualizedContainerService.HintSize="672,1228.66666666667" sap2010:WorkflowViewState.IdRef="If_2">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
                             <If.Then>
-                              <Sequence sap:VirtualizedContainerService.HintSize="200,69.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_99">
+                              <Sequence sap:VirtualizedContainerService.HintSize="526,1078" sap2010:WorkflowViewState.IdRef="Sequence_99">
                                 <sap:WorkflowViewStateService.ViewState>
                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">True</x:Boolean>
                                   </scg:Dictionary>
                                 </sap:WorkflowViewStateService.ViewState>
-                                <ui:ExcelReadCell Cell="A2" DisplayName="Read Latest Date" sap:VirtualizedContainerService.HintSize="262,52.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_25" SheetName="[item]">
+                                <ui:ExcelReadCell Cell="A2" DisplayName="Read Latest Date" sap:VirtualizedContainerService.HintSize="484,52.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_25" SheetName="[item]">
                                   <ui:ExcelReadCell.Result>
                                     <OutArgument x:TypeArguments="s:DateTime">[global_today_date]</OutArgument>
                                   </ui:ExcelReadCell.Result>
@@ -285,7 +286,7 @@
                                     </scg:Dictionary>
                                   </sap:WorkflowViewStateService.ViewState>
                                 </ui:ExcelReadCell>
-                                <ui:ExcelReadCell Cell="B2" DisplayName="Read Latest Price" sap:VirtualizedContainerService.HintSize="262,52.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_26" SheetName="[item]">
+                                <ui:ExcelReadCell Cell="B2" DisplayName="Read Latest Price" sap:VirtualizedContainerService.HintSize="484,52.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_26" SheetName="[item]">
                                   <ui:ExcelReadCell.Result>
                                     <OutArgument x:TypeArguments="x:Double">[global_today_price]</OutArgument>
                                   </ui:ExcelReadCell.Result>
@@ -296,7 +297,7 @@
                                     </scg:Dictionary>
                                   </sap:WorkflowViewStateService.ViewState>
                                 </ui:ExcelReadCell>
-                                <Assign DisplayName="convert price" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_29">
+                                <Assign DisplayName="convert price" sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_29">
                                   <Assign.To>
                                     <OutArgument x:TypeArguments="x:Decimal">[Decimal_global_today_price]</OutArgument>
                                   </Assign.To>
@@ -304,22 +305,30 @@
                                     <InArgument x:TypeArguments="x:Decimal">[Convert.ToDecimal(global_today_price)]</InArgument>
                                   </Assign.Value>
                                 </Assign>
-                                <ui:ExcelReadCell Cell="B3" DisplayName="Read yesterday's price" sap:VirtualizedContainerService.HintSize="262,52.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_28" SheetName="[item]">
+                                <ui:ExcelReadCell Cell="B3" DisplayName="Read yesterday's price" sap:VirtualizedContainerService.HintSize="484,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_28" SheetName="[item]">
                                   <ui:ExcelReadCell.Result>
-                                    <OutArgument x:TypeArguments="x:String">[global_yesterday_price]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:Double">[global_yesterday_price]</OutArgument>
                                   </ui:ExcelReadCell.Result>
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                     </scg:Dictionary>
                                   </sap:WorkflowViewStateService.ViewState>
                                 </ui:ExcelReadCell>
-                                <If Condition="[string.IsNullOrWhiteSpace(global_yesterday_price)]" DisplayName="If (dividend)" sap:VirtualizedContainerService.HintSize="262,52.6666666666667" sap2010:WorkflowViewState.IdRef="If_3">
+                                <Assign DisplayName="convert yesterday price" sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_31">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[Str_global_yesterday_price]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[Convert.ToString(global_yesterday_price)]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <If Condition="[string.IsNullOrWhiteSpace(Str_global_yesterday_price)]" DisplayName="If (dividend)" sap:VirtualizedContainerService.HintSize="484,210.666666666667" sap2010:WorkflowViewState.IdRef="If_3">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                     </scg:Dictionary>
                                   </sap:WorkflowViewStateService.ViewState>
                                   <If.Then>
@@ -343,7 +352,7 @@
                                     </ui:ExcelWriteCell>
                                   </If.Else>
                                 </If>
-                                <ui:ExcelReadCell Cell="C2" DisplayName="Read DR" sap:VirtualizedContainerService.HintSize="262,52.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_27" SheetName="[item]">
+                                <ui:ExcelReadCell Cell="C2" DisplayName="Read DR" sap:VirtualizedContainerService.HintSize="484,52.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_27" SheetName="[item]">
                                   <ui:ExcelReadCell.Result>
                                     <OutArgument x:TypeArguments="x:Double">[global_today_DR]</OutArgument>
                                   </ui:ExcelReadCell.Result>
@@ -354,7 +363,7 @@
                                     </scg:Dictionary>
                                   </sap:WorkflowViewStateService.ViewState>
                                 </ui:ExcelReadCell>
-                                <Assign DisplayName="convert dr" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_30">
+                                <Assign DisplayName="convert dr" sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_30">
                                   <Assign.To>
                                     <OutArgument x:TypeArguments="x:Decimal">[Decimal_global_today_DR]</OutArgument>
                                   </Assign.To>
@@ -403,8 +412,8 @@
                     </ui:ForEach.Body>
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                   </ui:ForEach>
@@ -421,6 +430,6 @@
         </ui:ExcelApplicationScope>
       </Sequence>
     </Sequence>
-    <ui:DatabaseDisconnect DatabaseConnection="[con]" DisplayName="Disconnect" sap:VirtualizedContainerService.HintSize="518,22" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_1" />
+    <ui:DatabaseDisconnect DatabaseConnection="[con]" DisplayName="Disconnect" sap:VirtualizedContainerService.HintSize="952.666666666667,22" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_1" />
   </Sequence>
 </Activity>
