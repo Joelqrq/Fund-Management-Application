@@ -23,6 +23,23 @@ namespace FundManagementApplication.Services {
             Fund = fund;
             Date = DateTime.Parse(date);
 
+            dynamic bidToBid;
+            dynamic offerToBid;
+            dynamic benchmarkBidToBid;
+
+            //AzureDb.BenchmarkOverviews.
+
+            if(fund == "PRES_01") {
+                bidToBid = AzureDb.Set<Prestige_BidToBid>();
+                offerToBid = AzureDb.Set<Prestige_OfferToBid>();
+                benchmarkBidToBid = AzureDb.Set<STI_BidToBid>();
+            }
+            else if(fund == "GLOB_01") {
+                bidToBid = AzureDb.Set<Prestige_BidToBid>();
+                offerToBid = AzureDb.Set<Prestige_OfferToBid>();
+                benchmarkBidToBid = new Tuple<DbSet<Nasdaq_BidToBid>, DbSet<DowJones_BidToBid>>(AzureDb.Set<Nasdaq_BidToBid>(), AzureDb.Set<DowJones_BidToBid>());
+            }
+
             var data = await AzureDb.Prestige_BidToBid.Join(AzureDb.Prestige_OfferToBid, bb => bb.Date, ob => ob.Date, (bb, ob) => new FundOverviewDto {
                 Date = bb.Date,
                 FundSize = bb.Price,

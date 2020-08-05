@@ -16,27 +16,51 @@
     <link href="~/lib/bootstrap/dist/css/FundManager.css" rel="stylesheet" />
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">google.charts.load('current', { 'packages': ['corechart'] });
+    <script type="text/javascript">
+google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses'],
-                ['2004', 1000, 400],
-                ['2005', 1170, 460],
-                ['2006', 660, 1120],
-                ['2007', 1030, 540]
-            ]);
+            //var data = google.visualization.arrayToDataTable([
+            //    ['Year', 'Sales', 'Expenses'],
+            //    ['2004', 1000, 400],
+            //    ['2005', 1170, 460],
+            //    ['2006', 660, 1120],
+            //    ['2007', 1030, 540]
+            //]);
+            var data = new google.visualization.DataTable();
+            @*Add Date column*@
+            data.addColumn('string', 'Year');
+            @foreach(var chart in Model.PerformanceCharts.Performances) {
+                @*Add chart columns*@
+                @:data.addColumn('number', '@chart.Name');
+            }
+
+            @*Add empty rows according to Date*@
+            data.addRows(@Model.PerformanceCharts.Date.Count);
+
+            @for(int dateNo = 0; dateNo < Model.PerformanceCharts.Date.Count; dateNo++) {
+
+                @*Set date cell*@
+                @:data.setCell(@dateNo, 0, '@Model.PerformanceCharts.Date[dateNo]');
+
+                for(int chartNo = 0; chartNo < Model.PerformanceCharts.Performances.Count; chartNo++) {
+
+                    @*Set chart cell*@
+                    @:data.setCell(@dateNo, @(chartNo + 1), @Model.PerformanceCharts.Performances[chartNo].CumulativeReturns[dateNo]);
+
+                }
+            }
 
             var options = {
                 title: 'Fund Performance',
                 curveType: 'function',
                 legend: { position: 'bottom' }
-            };
+                    };
 
-            var chart = new google.visualization.LineChart(document.getElementById('performance_chart'));
+                    var chart = new google.visualization.LineChart(document.getElementById('performance_chart'));
 
-            chart.draw(data, options);
+                    chart.draw(data, options);
         }</script>
 
 
@@ -85,8 +109,7 @@
                     </thead>
                     <tbody>
 
-                        @foreach (var holding in Model.Holdings)
-                        {
+                        @foreach(var holding in Model.Holdings) {
                             <tr>
                                 <td>@holding.Name </td>
                                 <td>@holding.Weight </td>
@@ -109,8 +132,7 @@
                     </thead>
                     <tbody>
 
-                        @foreach (var sector in Model.Sectors)
-                        {
+                        @foreach(var sector in Model.Sectors) {
                             <tr>
                                 <td>@sector.Name </td>
                                 <td>@sector.Percentage </td>

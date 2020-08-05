@@ -8,7 +8,7 @@ namespace FundManagementApplication.Models {
     public class FundFactSheetDto {
         public IEnumerable<HoldingsDto> Holdings { get; set; }
         public IEnumerable<SectorDto> Sectors { get; set; }
-        public IEnumerable<PerformanceChartDto> PerformanceCharts { get; set; }
+        public PerformanceChartDto PerformanceCharts { get; set; }
         public FundDetailsDto FundDetails { get; set; }
         public PerformanceTableDto PerformanceTable { get; set; }
     }
@@ -25,8 +25,17 @@ namespace FundManagementApplication.Models {
     }
 
     public class PerformanceChartDto {
-        public DateTime Date { get; set; }
-        public decimal CumulativeReturns { get; set; }
+        public List<string> Date { get; set; }
+        /// <summary>
+        /// List of performance data to be displayed.
+        /// </summary>
+        public List<PerformanceDto> Performances { get; set; }
+    }
+
+    public class PerformanceDto {
+        public string Name { get; set; }
+        //Assuming date and cumulativereturn have same count
+        public List<decimal> CumulativeReturns { get; set; }
     }
 
     public class FundDetailsDto {

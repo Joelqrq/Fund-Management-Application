@@ -5,7 +5,7 @@ using FundManagementApplication.Utilities;
 using FundManagementApplication.ViewModels;
 using FundManagementApplication.Services;
 using System.Threading.Tasks;
-using Rotativa.AspNetCore;
+using FundManagementApplication.Models;
 
 namespace FundManagementApplication.Controllers {
 
@@ -31,7 +31,6 @@ namespace FundManagementApplication.Controllers {
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Search([FromForm] string SelectedFund, [FromForm] string SelectedDate) {
 
             //Retrieve fund factsheet details
@@ -41,34 +40,30 @@ namespace FundManagementApplication.Controllers {
             return View("Dashboard", model);
         }
 
-        [AllowAnonymous]
-        [HttpGet("[controller]/FactSheet")]
-        public async Task<IActionResult> ExecuteFactSheet(/*[FromForm]int inlineRadioOptions*/) {
+        [HttpPost]
+        public async Task<IActionResult> ExecuteFactSheet([FromForm]int inlineRadioOptions) {
 
-            //FundFactSheetDto fundFactSheet = new FundFactSheetGenerator(AzureDb, SelectedFund, SelectedDate).GenerateFactSheet();
-            var model = new DashboardViewModel();
-
-            //You can access this method by typing Dashboard/FactSheet
-            //The Index is the index.cshtml. You can change to your .cshtml to test it.
-            return new ViewAsPdf("Dashboard", model);
 
             //var model = new DashboardViewModel() {
             //    Funds = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken())
             //};
-            //switch(inlineRadioOptions) {
-            //    case 1:
 
-            //        break;
-            //    case 2:
-            //        Response.Headers.Add("Content-Disposition", "attachment; filename=test.pdf");
-            //        return new ViewAsPdf("Index", model);
-            //    case 3:
-            //        return new ViewAsPdf("Index", model);
-            //    default:
-            //        return new ViewAsPdf("Index", model);
-            //}
+            //FundFactSheetDto fundFactSheet = new FundFactSheetGenerator(AzureDb).GenerateFactSheet(SelectedFund, SelectedDate);
 
-            //return View();
+            switch(inlineRadioOptions) {
+                case 1:
+
+                    break;
+                //case 2:
+                //    Response.Headers.Add("Content-Disposition", "attachment; filename=test.pdf");
+                //    return new FileStreamResult(pdfstream, "application/pdf");
+                //case 3:
+                //    return new FileStreamResult(pdfstream, "application/pdf");
+                //default:
+                //    return new FileStreamResult(pdfstream, "application/pdf");
+            }
+
+            return View();
         }
     }
 }

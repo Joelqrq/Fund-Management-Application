@@ -12,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Rotativa.AspNetCore;
 
 namespace FundManagementApplication {
     public class Startup {
@@ -91,9 +90,6 @@ namespace FundManagementApplication {
                     name: "default",
                     pattern: "{controller=Login}/{action=Login}");
             });
-
-            //PDF plugin
-            RotativaConfiguration.Setup(env.WebRootPath);
         }
     }
 }

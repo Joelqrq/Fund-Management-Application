@@ -6,12 +6,16 @@
 
   <ItemGroup>
     <Compile Remove="Views\Fund\js\**" />
+    <Compile Remove="wkhtmltopdf\**" />
     <Compile Remove="wwwroot\js\**" />
     <Content Remove="Views\Fund\js\**" />
+    <Content Remove="wkhtmltopdf\**" />
     <Content Remove="wwwroot\js\**" />
     <EmbeddedResource Remove="Views\Fund\js\**" />
+    <EmbeddedResource Remove="wkhtmltopdf\**" />
     <EmbeddedResource Remove="wwwroot\js\**" />
     <None Remove="Views\Fund\js\**" />
+    <None Remove="wkhtmltopdf\**" />
     <None Remove="wwwroot\js\**" />
   </ItemGroup>
 
@@ -24,7 +28,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
-    <PackageReference Include="Rotativa.AspNetCore" Version="1.2.0-beta" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>

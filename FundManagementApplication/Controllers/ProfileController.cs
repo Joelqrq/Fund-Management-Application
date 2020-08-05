@@ -40,7 +40,6 @@ namespace FundManagementApplication.Controllers {
         public IActionResult Update(ProfileViewModel model, [FromForm]string name, [FromForm]string email) {
             model.ManagerEmail = email;
             model.ManagerName = name;
-
             return View("Profile",model);
         }
 
