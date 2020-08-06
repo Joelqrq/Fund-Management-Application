@@ -1,166 +1,66 @@
-﻿@model FundManagementApplication.ViewModels.InvestorViewModel
+﻿@model InvestorViewModel
 
-@{
-    Layout = null;
-}
+<!-- Edit Investor Header -->
+<div class="container">
+    <div class="row>">
+        <h4 class="pt-4">Edit Investor</h4>
+        <hr>
+        <!-- Current Investor Details-->
 
-<!doctype html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>ABC Fund Manager Application</title>
-    <link href="~/lib/bootstrap/dist/css/styles.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/FundManager.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/AddRows.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-    <script type='text/javascript' src="js/rows.js"></script>
+        <form>
+            <h5 class="mt-2">Current Investor Details</h5>
 
-</head>
-<body class="bg-secondBackground">
-    <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content">
-            <main>
-                <!-- Navbard Header -->
-
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container">
-                        <!-- Logo-->
-                        <a class="navbar-brand" href="/home/index"><img class="Logo" src="~/Logo/ABC_LOGO.png" alt="Logo"></a>
-                        <!-- Navbar Toggler Icon -->
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item active px-3">
-                                    <a class="nav-link" href="/home/index">Dashboard<span class="sr-only">(current)</span></a>
-                                </li>
-
-                                <li class="nav-item dropdown px-3">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Fund
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/fund/createNewFund">Create New Fund</a>
-                                        <a class="dropdown-item" href="/fund/editFund">Edit Funds</a>
-                                    </div>
-                                </li>
-
-                                <li class="nav-item dropdown px-3">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Investor
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/investor/listOfInvestor">Lists of Investors</a>
-                                        <a class="dropdown-item" href="/investor/createNewInvestor">Create New Investor</a>
-                                        <a class="dropdown-item active" href="/investor/editInvestorDetails">Edit Investor Details</a>
-                                    </div>
-                                </li>
-
-                                <li class="nav-item px-3">
-                                    <a class="nav-link" href="/home/profile">Profile</a>
-                                </li>
-
-                                <li class="nav-item px-3">
-                                    <a class="nav-link" href="/login/login">Logout</a>
-                                </li>
-
-                            </ul>
-
-                        </div>
-                    </div> <!-- Nav Bar Container-->
-                </nav>
-
-                <!-- Edit Investor Header -->
-                <div class="container">
-                    <div class="row>">
-                        <h4 class="pt-4">Edit Investor</h4>
-                        <hr>
-                        <!-- Current Investor Details-->
-
-                        <form>
-                            <h5 class="mt-2">Current Investor Details</h5>
-
-                            <div class="form-group row mt-2">
-                                <label for="currentInvestorID" class="col-sm-2 col-form-label"> Investor ID: </label>
-                                <div class="col-sm-10">
-                                    <input type="text" readonly class="form-control-plaintext" id="currentInvestorID" value="G01">
-                                </div>
-
-                                <label for="currentInvestorName" class="col-sm-2 col-form-label"> Investor Name: </label>
-                                <div class="col-sm-10">
-                                    <input type="text" readonly class="form-control-plaintext" id="currentInvestorName" value="James Sandick">
-                                </div>
-
-                                <label for="currentInvestorEmail" class="col-sm-2 col-form-label"> Investor Email: </label>
-                                <div class="col-sm-10">
-                                    <input type="text" readonly class="form-control-plaintext" id="currentInvestorEmail" value="James@live.com">
-                                </div>
-
-                                <label for="currentInvestorName" class="col-sm-2 col-form-label"> Fund Type: </label>
-                                <div class="col-sm-10">
-                                    <input type="text" readonly class="form-control-plaintext" id="currentInvestorFund" value="ABC Prestige">
-                                </div>
-                            </div>
-                            <hr>
-                            <!-- New Investor Details-->
-                            <h5 class="mt-2">New Investor Details</h5>
-
-                            <div class="form-group row mt-2">
-                                <label for="inputNewFundType" class="col-sm-2 col-form-label mb-3">Fund Type: </label>
-                                <div class="col-sm-10">
-                                    <select class="browser-default custom-select mb-3">
-                                        <option id="selectFund" selected>Select New Funds</option>
-                                        <option value="Prestige">ABC Prestige</option>
-                                        <option value="Global">ABC Global</option>
-                                    </select>
-                                </div>
-
-                                <label for="inputNewInvestorName" class="col-sm-2 col-form-label mb-3s">Investor Name</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control mb-3" id="newInvestorName" type="text" placeholder="New Investor Name" asp-for="newInvestorName">
-                                </div>
-
-                                <label for="inputNewInvestorEmail" class="col-sm-2 col-form-label">Investor Email</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" id="newInvestorEmail" type="email" placeholder="New Investor Email" asp-for="newInvestorEmail">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group d-flex justify-content-center mt-5 mb-5">
-                                <a href="/investor/listOfInvestor" class="btn btn-danger btn-block-danger-secondary mx-5" role="button">Cancel</a>
-                                <button onclick="UpdateInvestor();" class="btn btn-success btn-block-success-secondary mx-5"> Update</button>
-                            </div>
-
-
-                        </form>
-
-                    </div>
-                </div><!-- End of Container -->
-
-
-            </main>
-        </div>
-        <!-- Footer-->
-        <div id="layoutAuthentication_footer">
-            <footer class="py-4 bg-light mt-5">
-                <div class="container-fluid">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; FundManager Application 2020</div>
-
-                    </div>
+            <div class="form-group row mt-2">
+                <label for="currentInvestorID" class="col-sm-2 col-form-label"> Investor ID: </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="currentInvestorID" value="G01">
                 </div>
-            </footer>
-        </div>
+
+                <label for="currentInvestorName" class="col-sm-2 col-form-label"> Investor Name: </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="currentInvestorName" value="James Sandick">
+                </div>
+
+                <label for="currentInvestorEmail" class="col-sm-2 col-form-label"> Investor Email: </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="currentInvestorEmail" value="James@live.com">
+                </div>
+
+                <label for="currentInvestorName" class="col-sm-2 col-form-label"> Fund Type: </label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="currentInvestorFund" value="ABC Prestige">
+                </div>
+            </div>
+            <hr>
+            <!-- New Investor Details-->
+            <h5 class="mt-2">New Investor Details</h5>
+
+            <div class="form-group row mt-2">
+                <label for="inputNewFundType" class="col-sm-2 col-form-label mb-3">Fund Type: </label>
+                <div class="col-sm-10">
+                    <select class="browser-default custom-select mb-3">
+                        <option id="selectFund" selected>Select New Funds</option>
+                        <option value="Prestige">ABC Prestige</option>
+                        <option value="Global">ABC Global</option>
+                    </select>
+                </div>
+
+                <label for="inputNewInvestorName" class="col-sm-2 col-form-label mb-3s">Investor Name</label>
+                <div class="col-sm-10">
+                    <input class="form-control mb-3" id="newInvestorName" type="text" placeholder="New Investor Name" asp-for="newInvestorName">
+                </div>
+
+                <label for="inputNewInvestorEmail" class="col-sm-2 col-form-label">Investor Email</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="newInvestorEmail" type="email" placeholder="New Investor Email" asp-for="newInvestorEmail">
+                </div>
+            </div>
+
+
+            <div class="form-group d-flex justify-content-center mt-5 mb-5">
+                <a href="/investor/listOfInvestor" class="btn btn-danger btn-block-danger-secondary mx-5" role="button">Cancel</a>
+                <button onclick="UpdateInvestor();" class="btn btn-success btn-block-success-secondary mx-5"> Update</button>
+            </div>
+        </form>
     </div>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
-</body>
-</html>
-
-
+</div><!-- End of Container -->

@@ -50,8 +50,6 @@ namespace FundManagementApplication {
             //DbContext
             services.AddDbContextPool<AzureDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQL")));
 
-            services.AddSingleton<FundFactSheetGenerator>();
-
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());

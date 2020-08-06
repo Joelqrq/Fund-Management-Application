@@ -1,10 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using FundManagementApplication.Utilities
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="~/lib/bootstrap/dist/css/styles.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/FundManager.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/AddRows.css" rel="stylesheet" />
     @RenderSection("Style", required: false)
     <title>@ViewBag.Title</title>
 </head>
@@ -24,39 +27,40 @@
 
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto">
-                                <li class="nav-item active px-3">
-                                    <a class="nav-link" asp-controller="Dashboard" asp-action="Dashboard">Dashboard<span class="sr-only">(current)</span></a>Need to fix this
+                                <li class="@Html.IsSelected("Dashboard", "Dashboard", "nav-item px-3")">
+                                    <a class="nav-link" asp-controller="Dashboard" asp-action="Dashboard">Dashboard</a>
                                 </li>
-                                
                                 <li class="nav-item dropdown px-3">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Fund
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/fund/createNewFund">Create New Fund</a>
-                                        <a class="dropdown-item" href="/fund/editFund">Edit Funds</a>
+                                        <a class="@Html.IsSelected("Fund", "createNewFund", "dropdown-item")" href="/fund/createNewFund">Create New Fund</a>
+                                        <a class="@Html.IsSelected("Fund", "editFund", "dropdown-item")" href="/fund/editFund">Edit Funds</a>
                                     </div>
                                 </li>
-
                                 <li class="nav-item dropdown px-3">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Investor
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/investor/listOfInvestor">Lists of Investors</a>
-                                        <a class="dropdown-item" href="/investor/createNewInvestor">Create New Investor</a>
-                                        <a class="dropdown-item" href="/investor/editInvestorDetails">Edit Investor Details</a>
+                                        <a class="@Html.IsSelected("Investor", "listOfInvestor", "dropdown-item")" href="/investor/listOfInvestor">Lists of Investors</a>
+                                        <a class="@Html.IsSelected("Investor", "createNewInvestor", "dropdown-item")" href="/investor/createNewInvestor">Create New Investor</a>
+                                        <a class="@Html.IsSelected("Investor", "editInvestorDetails", "dropdown-item")" href="/investor/editInvestorDetails">Edit Investor Details</a>
                                     </div>
                                 </li>
-
-                                <li class="nav-item px-3">
+                                <li class="@Html.IsSelected("Profile", "Profile", "nav-item px-3")">
                                     <a class="nav-link" asp-controller="Profile" asp-action="Profile">Profile</a>
                                 </li>
-
                                 <li class="nav-item px-3">
                                     <a class="nav-link" asp-controller="Login" asp-action="Logout">Logout</a>
                                 </li>
-
+                                <li class="@Html.IsSelected("Home", "FactSheetHtml", "nav-item px-3")">
+                                    <a class="nav-link" asp-controller="Home" asp-action="FactSheetHtml">FactSheet(HTML)</a>
+                                </li>
+                                <li class="@Html.IsSelected("Home", "FactSheetPDF", "nav-item px-3")">
+                                    <a class="nav-link" asp-controller="Home" asp-action="FactSheetPDF">FactSheet(PDF)</a>
+                                </li>
                             </ul>
 
                         </div>
@@ -77,9 +81,9 @@
             </footer>
         </div>
     </div>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

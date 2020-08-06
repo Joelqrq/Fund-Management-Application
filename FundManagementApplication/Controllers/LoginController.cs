@@ -34,8 +34,8 @@ namespace FundManagementApplication.Controllers {
             if(ModelState.IsValid) {
 
                 //Search for account in database
-                var userAccount = await AzureDb.FundManager.AsNoTracking()
-                                                           .SingleOrDefaultAsync(fm => fm.FundManagerEmail == model.Email);
+                var userAccount = await AzureDb.Fund_Manager.AsNoTracking()
+                                                            .SingleOrDefaultAsync(fm => fm.FundManagerEmail == model.Email);
 
                 if(userAccount == null || userAccount.FundManagerPassword != model.Password) {
                     ModelState.AddModelError("", $"Email or password is invalid.");
@@ -68,7 +68,7 @@ namespace FundManagementApplication.Controllers {
             if(ModelState.IsValid) {
 
                 //Search for account in database
-                var userAccount = await AzureDb.FundManager.AsNoTracking()
+                var userAccount = await AzureDb.Fund_Manager.AsNoTracking()
                                                            .SingleOrDefaultAsync(fm => fm.FundManagerEmail == model.Email);
 
                 if(userAccount == null) {

@@ -1,4 +1,7 @@
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FundManagementApplication.Models
 {
@@ -6,14 +9,23 @@ namespace FundManagementApplication.Models
     {
         public Funds()
         {
-            StocksOverview = new HashSet<StocksOverview>();
+            Stocks_Overview = new HashSet<Stocks_Overview>();
         }
 
-        public string PkFundId { get; set; }
+        [Key]
+        [StringLength(10)]
+        public string PK_Fund_ID { get; set; }
+        [Required]
+        [StringLength(45)]
         public string FundName { get; set; }
-        public string FundManagerId { get; set; }
+        [Required]
+        [StringLength(10)]
+        public string FundManager_ID { get; set; }
+        [Column(TypeName = "decimal(3, 2)")]
         public decimal FundFee { get; set; }
+        public DateTime InceptionDate { get; set; }
 
-        public virtual ICollection<StocksOverview> StocksOverview { get; set; }
+        [InverseProperty("Stocks_Overview_Fund_")]
+        public virtual ICollection<Stocks_Overview> Stocks_Overview { get; set; }
     }
 }
