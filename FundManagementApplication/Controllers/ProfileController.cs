@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FundManagementApplication.DataAccess;
+using FundManagementApplication.Models;
 using FundManagementApplication.Utilities;
 using FundManagementApplication.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -22,11 +23,30 @@ namespace FundManagementApplication.Controllers {
 
             ProfileViewModel model = new ProfileViewModel() {
                 ManagerID = User.Claims.GetIDFromToken(),
-                ManagerName = User.Claims.GetNameFromToken(),
-                ManagerEmail = User.Claims.GetEmailFromToken()
+               
             };
+            model.ManagerName = AzureDb.Fund_Manager.Where(w => w.PK_FundManager_ID == model.ManagerID).Select(c => c.FundManagerName).Single();
+            model.ManagerEmail = AzureDb.Fund_Manager.Where(w => w.PK_FundManager_ID == model.ManagerID).Select(c => c.FundManagerEmail).Single();
 
             return View(model);
+        }
+
+
+        public Fund_Manager UpdateDB(string MID)
+        {
+            var test = AzureDb.Fund_Manager.Where(a => a.PK_FundManager_ID == MID).FirstOrDefault();
+
+            return test;
+
+        }
+
+      
+        public void Update_Post(Models.Fund_Manager fund_Manager) {
+
+            AzureDb.Fund_Manager.Update(fund_Manager);
+            AzureDb.SaveChanges();
+            
+
         }
 
         /// <summary>
@@ -37,11 +57,32 @@ namespace FundManagementApplication.Controllers {
         /// <param name="email"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Update(ProfileViewModel model, [FromForm]string name, [FromForm]string email) {
-            model.ManagerEmail = email;
-            model.ManagerName = name;
+        public IActionResult Update([FromForm]string name, [FromForm]string email) {
+
+            ProfileViewModel model = new ProfileViewModel()
+            {
+                ManagerID = User.Claims.GetIDFromToken(),
+                ManagerEmail = email,
+                ManagerName = name
+            };
+  
+
+            var testValid = UpdateDB(model.ManagerID);
+            if (testValid != null)
+            {
+                testValid.FundManagerEmail = email;
+                testValid.FundManagerName = name;
+
+                Update_Post(testValid);
+
+            }
+                
+          
             return View("Profile",model);
+
+
         }
+
 
         /// <summary>
         /// Clear all input fields.
