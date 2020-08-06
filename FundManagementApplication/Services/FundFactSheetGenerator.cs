@@ -28,6 +28,7 @@ namespace FundManagementApplication.Services {
             //Retrieve information in database according to given date.
             fundFactSheetModel.Holdings = await RetrieveHoldingsData();
             fundFactSheetModel.Sectors = await RetrieveSectorData();
+            fundFactSheetModel.PerformanceCharts = await RetrievePerformanceChartData();
 
             return fundFactSheetModel;
         }
@@ -63,6 +64,57 @@ namespace FundManagementApplication.Services {
             }).OrderByDescending(so => so.Percentage);
         }
 
-        //private async Task<IEnumerable<>>
+        private async Task<PerformanceChartDto> RetrievePerformanceChartData() {
+
+            PerformanceChartDto chartDto = null;
+
+            DateTime yearBegin = new DateTime(DateTime.Today.Year, 1, 1);
+
+            if(Fund == "PRES_01") {
+               
+                var chartData = await AzureDb.Prestige_Performance_Chart.Where(ppc => ppc.Date >= yearBegin && ppc.Date <= Date).ToListAsync();
+
+                chartDto.Date = new List<string>();
+                var data1 = new PerformanceDto(); 
+                var data2 = new PerformanceDto();
+
+                data1.Name = await AzureDb.Funds.Where(f => f.PK_Fund_ID == Fund).Select(f => f.FundName).SingleAsync();
+                data2.Name = await AzureDb.STI_BidToBid.Select(pbb => pbb.Name).SingleAsync();
+
+                foreach(var cd in chartData) {
+                    chartDto.Date.Add(cd.Date.ToString());
+                    data1.CumulativeReturns.Add(cd.PrestigeCR);
+                    data2.CumulativeReturns.Add(cd.STICR);
+                }
+                chartDto.Performances.Add(data1);
+                chartDto.Performances.Add(data2);
+            }
+            else if(Fund == "GLOB_01") {
+               
+                var chartData = await AzureDb.Global_Performance_Chart.Where(gpc => gpc.Date >= yearBegin && gpc.Date <= Date).ToListAsync();
+
+                chartDto.Date = new List<string>();
+                var data1 = new PerformanceDto();
+                var data2 = new PerformanceDto();
+                var data3 = new PerformanceDto();
+
+                data1.Name = await AzureDb.Funds.Where(f => f.PK_Fund_ID == Fund).Select(f => f.FundName).SingleAsync();
+                data2.Name = await AzureDb.Nasdaq_BidToBid.Select(nbb => nbb.Name).SingleAsync();
+                data3.Name = await AzureDb.DowJones_BidToBid.Select(dbb => dbb.Name).SingleAsync();
+
+                foreach(var cd in chartData) {
+                    chartDto.Date.Add(cd.Date.ToString());
+                    data1.CumulativeReturns.Add(cd.GlobalCR);
+                    data2.CumulativeReturns.Add(cd.NasdaqCR);
+                    data3.CumulativeReturns.Add(cd.DowJonesCR);
+                }
+                chartDto.Performances.Add(data1);
+                chartDto.Performances.Add(data2);
+                chartDto.Performances.Add(data3);
+            }
+            else return null;
+
+            return chartDto;
+        }
     }
 }
