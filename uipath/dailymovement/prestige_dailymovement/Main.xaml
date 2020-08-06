@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="567.333333333333,1577.33333333333" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="873.333333333333,1862.66666666667" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="25">
       <x:String>System.Activities</x:String>
@@ -60,7 +60,7 @@
       <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>
     </scg:Dictionary>
   </sap:WorkflowViewStateService.ViewState>
-  <Sequence sap:VirtualizedContainerService.HintSize="468.666666666667,1512.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_3">
+  <Sequence sap:VirtualizedContainerService.HintSize="468.666666666667,1798" sap2010:WorkflowViewState.IdRef="Sequence_3">
     <Sequence.Variables>
       <Variable x:TypeArguments="ui:DatabaseConnection" Name="con" />
       <Variable x:TypeArguments="sd:DataTable" Name="prestigetickerDT" />
@@ -71,11 +71,6 @@
       <Variable x:TypeArguments="x:Int32" Default="1" Name="counter" />
       <Variable x:TypeArguments="sd:DataTable" Name="dailyreturnDT" />
       <Variable x:TypeArguments="x:String" Name="prestigeticker" />
-      <Variable x:TypeArguments="x:Int32" Name="weightcounter">
-        <Variable.Default>
-          <Literal x:TypeArguments="x:Int32" Value="1" />
-        </Variable.Default>
-      </Variable>
       <Variable x:TypeArguments="sd:DataTable" Name="weightDT" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
@@ -92,7 +87,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:DatabaseConnect>
-    <ui:ReadRange AddHeaders="True" DataTable="[prestigetickerDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="426.666666666667,52.6666666666667" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="prestige ticker" WorkbookPath="prestige.xlsx">
+    <ui:ReadRange AddHeaders="True" DataTable="[prestigetickerDT]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="426.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="prestige ticker" WorkbookPath="prestige.xlsx">
       <ui:ReadRange.Range>
         <InArgument x:TypeArguments="x:String">
           <Literal x:TypeArguments="x:String" Value="" />
@@ -100,18 +95,18 @@
       </ui:ReadRange.Range>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ReadRange>
-    <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[prestigetickerDT]" DisplayName="get stock DR" sap:VirtualizedContainerService.HintSize="426.666666666667,52.6666666666667" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+    <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[prestigetickerDT]" DisplayName="get stock DR" sap:VirtualizedContainerService.HintSize="426.666666666667,1096.66666666667" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
       <ui:ForEachRow.Body>
         <ActivityAction x:TypeArguments="sd:DataRow">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,600" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,944" sap2010:WorkflowViewState.IdRef="Sequence_4">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -134,9 +129,20 @@
                 <InArgument x:TypeArguments="x:String">[row.Item(1).ToString]</InArgument>
               </Assign.Value>
             </Assign>
-            <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[dailyreturnDT]" DisplayName="Execute Query" ExistingDbConnection="[con]" sap:VirtualizedContainerService.HintSize="334,87.3333333333333" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="[&quot;SELECT TOP 1 DR FROM [dbo].[&quot;+prestigeticker+&quot;] ORDER BY Date DESC&quot;]">
+            <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[dailyreturnDT]" DisplayName="Execute Query" ExistingDbConnection="[con]" sap:VirtualizedContainerService.HintSize="334,87.3333333333333" sap2010:WorkflowViewState.IdRef="ExecuteQuery_5" Sql="[&quot;SELECT TOP 1 DR FROM [dbo].[&quot;+prestigeticker+&quot;] ORDER BY Date DESC&quot;]">
               <ui:ExecuteQuery.Parameters>
-                <InArgument x:TypeArguments="x:String" x:Key="tableName">[prestigeticker]</InArgument>
+                <scg:Dictionary x:TypeArguments="x:String, Argument" />
+              </ui:ExecuteQuery.Parameters>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ExecuteQuery>
+            <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[weightDT]" DisplayName="Execute Query" ExistingDbConnection="[con]" sap:VirtualizedContainerService.HintSize="334,87.3333333333333" sap2010:WorkflowViewState.IdRef="ExecuteQuery_6" Sql="[&quot;SELECT Shares_Weightage_Weight FROM [dbo].[Shares_Weightage] where Shares_Weightage_Ticker= '&quot;+prestigeticker+&quot;'&quot;]">
+              <ui:ExecuteQuery.Parameters>
+                <scg:Dictionary x:TypeArguments="x:String, Argument" />
               </ui:ExecuteQuery.Parameters>
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -149,17 +155,27 @@
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:WriteRange>
+            <ui:WriteRange AddHeaders="False" DataTable="[weightDT]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,114.666666666667" sap2010:WorkflowViewState.IdRef="WriteRange_4" SheetName="prestige ticker" StartingCell="[&quot;E&quot;+counter.ToString]" WorkbookPath="prestige.xlsx">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </ui:WriteRange>
             <ui:ClearDataTable DataTable="[dailyreturnDT]" DisplayName="Clear Data Table" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="ClearDataTable_1" />
+            <ui:ClearDataTable DataTable="[weightDT]" DisplayName="Clear Data Table" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="ClearDataTable_3" />
           </Sequence>
         </ActivityAction>
       </ui:ForEachRow.Body>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ForEachRow>
@@ -194,64 +210,6 @@
         </sap:WorkflowViewStateService.ViewState>
       </ui:ReadCell>
     </Sequence>
-    <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[prestigetickerDT]" DisplayName="get share weightage" sap:VirtualizedContainerService.HintSize="426.666666666667,752.666666666667" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
-      <ui:ForEachRow.Body>
-        <ActivityAction x:TypeArguments="sd:DataRow">
-          <ActivityAction.Argument>
-            <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
-          </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,600" sap2010:WorkflowViewState.IdRef="Sequence_9">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                <x:Boolean x:Key="IsPinned">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <Assign sap:VirtualizedContainerService.HintSize="334,62" sap2010:WorkflowViewState.IdRef="Assign_6">
-              <Assign.To>
-                <OutArgument x:TypeArguments="x:Int32">[weightcounter]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="x:Int32">[weightcounter+1]</InArgument>
-              </Assign.Value>
-            </Assign>
-            <Assign DisplayName="Assign global ticker" sap:VirtualizedContainerService.HintSize="334,62" sap2010:WorkflowViewState.IdRef="Assign_7">
-              <Assign.To>
-                <OutArgument x:TypeArguments="x:String">[prestigeticker]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="x:String">[row.Item(1).ToString]</InArgument>
-              </Assign.Value>
-            </Assign>
-            <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[weightDT]" DisplayName="Execute Query" ExistingDbConnection="[con]" sap:VirtualizedContainerService.HintSize="334,87.3333333333333" sap2010:WorkflowViewState.IdRef="ExecuteQuery_3" Sql="[&quot;SELECT Shares_Weightage_Weight FROM [dbo].[Shares_Weightage] where Shares_Weightage_Ticker= '&quot;+prestigeticker+&quot;'&quot;]">
-              <ui:ExecuteQuery.Parameters>
-                <InArgument x:TypeArguments="x:String" x:Key="tableName">[prestigeticker]</InArgument>
-              </ui:ExecuteQuery.Parameters>
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-            </ui:ExecuteQuery>
-            <ui:WriteRange AddHeaders="False" DataTable="[weightDT]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,114.666666666667" sap2010:WorkflowViewState.IdRef="WriteRange_3" SheetName="prestige ticker" StartingCell="[&quot;E&quot;+counter.ToString]" WorkbookPath="prestige.xlsx">
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-            </ui:WriteRange>
-            <ui:ClearDataTable DataTable="[dailyreturnDT]" DisplayName="Clear Data Table" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="ClearDataTable_2" />
-          </Sequence>
-        </ActivityAction>
-      </ui:ForEachRow.Body>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          <x:Boolean x:Key="IsPinned">True</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-    </ui:ForEachRow>
     <Sequence DisplayName="get prestige DR" sap:VirtualizedContainerService.HintSize="426.666666666667,69.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_7">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
