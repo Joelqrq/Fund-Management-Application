@@ -17,7 +17,7 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
@@ -31,6 +31,7 @@ google.charts.load('current', { 'packages': ['corechart'] });
             var data = new google.visualization.DataTable();
             @*Add Date column*@
             data.addColumn('string', 'Year');
+
             @foreach(var chart in Model.PerformanceCharts.Performances) {
                 @*Add chart columns*@
                 @:data.addColumn('number', '@chart.Name');
@@ -53,15 +54,28 @@ google.charts.load('current', { 'packages': ['corechart'] });
             }
 
             var options = {
-                title: 'Fund Performance',
-                curveType: 'function',
-                legend: { position: 'bottom' }
+                title: 'ABC Global Fund Performance',
+                 curveType: 'function',
+                legend: { position: 'bottom' },
+                colors: ['#53019A', '#FAA916', '#DB4C40', '#2D82B7', '#4285F4'],
+                  hAxis : {
+                    format: 'd MMM',
+                    textStyle : {
+                    fontSize: 8 // or the number you want
+                      }
+                    
+                     }
                     };
 
                     var chart = new google.visualization.LineChart(document.getElementById('performance_chart'));
 
                     chart.draw(data, options);
-        }</script>
+
+        }
+
+           
+       
+    </script>
 
 
 </head>
@@ -96,7 +110,7 @@ google.charts.load('current', { 'packages': ['corechart'] });
     <!-- Row 2 -->
     <div class="container">
         <div class="row">
-            <div class="col pl-0">
+            <div class=" col-md-4">
                 <h5 class="pt-4">Top 10 Holdings </h5>
                 <hr class="hrHalf">
                 <table class="table ">
@@ -109,7 +123,8 @@ google.charts.load('current', { 'packages': ['corechart'] });
                     </thead>
                     <tbody>
 
-                        @foreach(var holding in Model.Holdings) {
+                        @foreach (var holding in Model.Holdings)
+                        {
                             <tr>
                                 <td>@holding.Name </td>
                                 <td>@holding.Weight </td>
@@ -119,7 +134,7 @@ google.charts.load('current', { 'packages': ['corechart'] });
                 </table>
             </div>
 
-            <div class="col pr-0 ml-5">
+            <div class="col-md-4">
                 <h5 class="pt-4">Sector Allocation</h5>
                 <hr class="hrHalf">
                 <table class="table ">
@@ -132,7 +147,8 @@ google.charts.load('current', { 'packages': ['corechart'] });
                     </thead>
                     <tbody>
 
-                        @foreach(var sector in Model.Sectors) {
+                        @foreach (var sector in Model.Sectors)
+                        {
                             <tr>
                                 <td>@sector.Name </td>
                                 <td>@sector.Percentage </td>
@@ -144,6 +160,63 @@ google.charts.load('current', { 'packages': ['corechart'] });
                     </tbody>
                 </table>
             </div>
+
+            <div class="col-md-4">
+                <h5 class="pt-4">Funds Details</h5>
+                <hr class="hrHalf">
+                <table class="table ">
+
+                    <tbody>
+                        <tr>
+                            <td>Benchmark: </td>
+                            <td>@Model.FundDetails.BenchmarkName</td>
+                        </tr>
+                        <tr>
+                            <td>Fund Manager Name: </td>
+                            <td>@Model.FundDetails.FundManagerName</td>
+
+                        </tr>
+                        <tr>
+                            <td>Fund Size: </td>
+                            <td>@Model.FundDetails.FundSize</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Base Currency:</td>
+                            <td>@Model.FundDetails.StockCurrency</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Number of Holdings:</td>
+                            <td>@Model.FundDetails.TotalHoldings</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Initial Fee:</td>
+                            <td>@Model.FundDetails.InitialFee</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Inception Date:</td>
+                            <td>@Model.FundDetails.InceptionDate</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Annualize Returns:</td>
+                            <td>@Model.FundDetails.AnnualizeReturns</td>
+
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
     <!-- Row 3 -->
@@ -152,9 +225,9 @@ google.charts.load('current', { 'packages': ['corechart'] });
             <div class="col pl-0">
                 <h5 class="pt-4">Performance Overiew </h5>
                 <hr class="hrHalf">
-                <div class="pt-0" id="performance_chart" style="width:auto; height: 27rem; margin:auto;"></div>
+                <div class="chart" id="performance_chart" ></div>
             </div>
-
+            <!--
             <div class="col pr-0 ml-5">
                 <h5 class="pt-4">Funds Details</h5>
                 <hr class="hrHalf">
@@ -210,11 +283,12 @@ google.charts.load('current', { 'packages': ['corechart'] });
                     </tbody>
                 </table>
             </div>
+            -->
         </div>
     </div>
     <!-- Row 4 -->
 
-    <div class="container">
+    <div class="container mb-5">
         <div class="row">
             <h5 class="pt-4">Performance as at 31 May 2020</h5>
             <hr class="hrHalf">
