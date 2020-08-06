@@ -52,18 +52,8 @@ namespace FundManagementApplication.DataAccess
         public virtual DbSet<_5EIXIC> _5EIXIC { get; set; }
         public virtual DbSet<_5ESTI_3FP_3D_5ESTI> _5ESTI_3FP_3D_5ESTI { get; set; }
 
-        //public DbSet<BenchmarkOverview> BenchmarkOverviews { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Manual generated
-            //modelBuilder.Entity<BenchmarkOverview>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //    entity.ToView("BenchmarkDatabase");
-            //    //entity.Property(e => e.)
-            //});
-
             //Auto generated
             modelBuilder.Entity<C>(entity =>
             {

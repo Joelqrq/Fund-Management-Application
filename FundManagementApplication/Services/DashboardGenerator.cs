@@ -11,8 +11,6 @@ namespace FundManagementApplication.Services {
     public class DashboardGenerator {
 
         public AzureDbContext AzureDb { get; }
-        public string Fund { get; set; }
-        public DateTime Date { get; set; }
 
         public DashboardGenerator(AzureDbContext azureDb) {
             AzureDb = azureDb;
@@ -20,40 +18,28 @@ namespace FundManagementApplication.Services {
 
         public async Task<DashboardViewModel> GenerateDashboardData(string fund, string date) {
 
-            Fund = fund;
-            Date = DateTime.Parse(date);
-
-            dynamic bidToBid;
-            dynamic offerToBid;
-            dynamic benchmarkBidToBid;
-
-            //AzureDb.BenchmarkOverviews.
+            FundOverviewDto data = new FundOverviewDto();
+            data.Date = DateTime.Parse(date);
 
             if(fund == "PRES_01") {
-                bidToBid = AzureDb.Set<Prestige_BidToBid>();
-                offerToBid = AzureDb.Set<Prestige_OfferToBid>();
-                benchmarkBidToBid = AzureDb.Set<STI_BidToBid>();
+
+                var priceNBB = await AzureDb.Prestige_BidToBid.Where(bb => bb.Date == data.Date).Select(bb => new { bb.Price, bb.OneMonth }).SingleAsync();
+                data.FundSize = priceNBB.Price;
+                data.BidToBid = priceNBB.OneMonth;
+                data.OfferToBid = await AzureDb.Prestige_OfferToBid.Where(ob => ob.Date == data.Date).Select(ob => ob.OneMonth).SingleAsync();
+                data.BenchmarkBidToBid = await AzureDb.STI_BidToBid.Where(sbb => sbb.Date == data.Date).Select(sbb => sbb.OneMonth).SingleAsync();
             }
             else if(fund == "GLOB_01") {
-                bidToBid = AzureDb.Set<Prestige_BidToBid>();
-                offerToBid = AzureDb.Set<Prestige_OfferToBid>();
-                benchmarkBidToBid = new Tuple<DbSet<Nasdaq_BidToBid>, DbSet<DowJones_BidToBid>>(AzureDb.Set<Nasdaq_BidToBid>(), AzureDb.Set<DowJones_BidToBid>());
+                var priceNBB = await AzureDb.Global_BidToBid.Where(bb => bb.Date == data.Date).Select(bb => new { bb.Price, bb.OneMonth }).SingleAsync();
+                data.FundSize = priceNBB.Price;
+                data.BidToBid = priceNBB.OneMonth;
+                data.OfferToBid = await AzureDb.Global_OfferToBid.Where(ob => ob.Date == data.Date).Select(ob => ob.OneMonth).SingleAsync();
+                data.BenchmarkBidToBid = await AzureDb.Nasdaq_BidToBid.Where(sbb => sbb.Date == data.Date).Select(sbb => sbb.OneMonth).SingleAsync();
             }
 
-            var data = await AzureDb.Prestige_BidToBid.Join(AzureDb.Prestige_OfferToBid, bb => bb.Date, ob => ob.Date, (bb, ob) => new FundOverviewDto {
-                Date = bb.Date,
-                FundSize = bb.Price,
-                BidToBid = bb.OneMonth,
-                OfferToBid = ob.OneMonth,
-            }).Join(AzureDb.STI_BidToBid, fod => fod.Date, sbb => sbb.Date, (fod, sbb) => new FundOverviewDto {
-                Date = fod.Date,
-                FundSize = fod.FundSize,
-                BidToBid = fod.BidToBid,
-                OfferToBid = fod.OfferToBid,
-                BenchmarkBidToBid = sbb.OneMonth
-            }).SingleOrDefaultAsync(d => d.Date == Date);
-
             return new DashboardViewModel() {
+                SelectedFund = fund,
+                SelectedDate = data.Date,
                 FundSize = data.FundSize.ToString("0.##"),
                 BidToBid = data.BidToBid.ToString("0.##"),
                 OfferToBid = data.OfferToBid.ToString("0.##"),

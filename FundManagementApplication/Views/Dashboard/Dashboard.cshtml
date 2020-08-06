@@ -19,7 +19,7 @@
                 autoclose: true,
                 calendarWeeks: true,
                 clearBtn: true,
-                disableTouchKeyboard: true
+                disableTouchKeyboard: true,
             });
 
         });</script>
@@ -138,7 +138,7 @@
     </div>
 
     <!-- Funds Selection -->
-    <form asp-controller="Dashboard" asp-action="ExecuteFactSheet" method="post">
+    <form asp-controller="Dashboard" asp-action="GetFactSheet" method="post">
         <div class="row">
             <div class="form-check form-check-inline col-xl-3 col-xs-2 ml-2">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" asp-for="SelectAction">
