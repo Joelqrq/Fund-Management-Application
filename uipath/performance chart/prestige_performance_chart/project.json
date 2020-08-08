@@ -1,5 +1,5 @@
 {
-  "name": "global_dailymovement",
+  "name": "global_performance_chart",
   "description": "Blank Process",
   "main": "Main.xaml",
   "dependencies": {
@@ -13,7 +13,7 @@
   "entitiesStores": [],
   "schemaVersion": "4.0",
   "studioVersion": "20.6.0.0",
-  "projectVersion": "1.0.1",
+  "projectVersion": "1.0.0",
   "runtimeOptions": {
     "autoDispose": false,
     "isPausable": true,
@@ -33,10 +33,6 @@
       "privateWorkflows": []
     },
     "fileInfoCollection": []
-  },
-  "arguments": {
-    "input": [],
-    "output": []
   },
   "expressionLanguage": "VisualBasic"
 }
