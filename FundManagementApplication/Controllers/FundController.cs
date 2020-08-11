@@ -18,5 +18,11 @@ namespace FundManagementApplication.Controllers
         {
             return View();
         }
+
+        //[HttpPost]
+        //public IActionResult AddStock([FromForm]string name, [FromForm]string ticker) {
+        //    var date = DateTime.Now.Date.AddDays(-1);
+        //    ExecuteUIPathScrapper(name, ticker, date);
+        //}
     }
 }

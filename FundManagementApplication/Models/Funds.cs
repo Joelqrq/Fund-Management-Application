@@ -9,23 +9,30 @@ namespace FundManagementApplication.Models
     {
         public Funds()
         {
-            Stocks_Overview = new HashSet<Stocks_Overview>();
+            Stock = new HashSet<Stock>();
         }
 
         [Key]
+        [Column("PK_Fund_ID")]
         [StringLength(10)]
-        public string PK_Fund_ID { get; set; }
+        public string PkFundId { get; set; }
         [Required]
         [StringLength(45)]
         public string FundName { get; set; }
         [Required]
+        [Column("FundManager_ID")]
         [StringLength(10)]
-        public string FundManager_ID { get; set; }
+        public string FundManagerId { get; set; }
         [Column(TypeName = "decimal(3, 2)")]
         public decimal FundFee { get; set; }
         public DateTime InceptionDate { get; set; }
+        [StringLength(1000)]
+        public string FundProfile { get; set; }
 
-        [InverseProperty("Stocks_Overview_Fund_")]
-        public virtual ICollection<Stocks_Overview> Stocks_Overview { get; set; }
+        [ForeignKey(nameof(FundManagerId))]
+        [InverseProperty("Funds")]
+        public virtual FundManager FundManager { get; set; }
+        [InverseProperty("Fund")]
+        public virtual ICollection<Stock> Stock { get; set; }
     }
 }
