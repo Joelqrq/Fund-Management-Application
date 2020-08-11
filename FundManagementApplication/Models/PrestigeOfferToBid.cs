@@ -5,20 +5,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FundManagementApplication.Models
 {
-    public partial class Global_OfferToBid
+    [Table("Prestige_OfferToBid")]
+    public partial class PrestigeOfferToBid
     {
         [Key]
         [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
         [Required]
+        [Column("Fund_ID")]
         [StringLength(10)]
-        public string Fund_ID { get; set; }
+        public string FundId { get; set; }
         [Column(TypeName = "decimal(13, 10)")]
         public decimal Price { get; set; }
         [Column(TypeName = "decimal(13, 10)")]
         public decimal PriceAfterAdmin { get; set; }
-        [Column(TypeName = "decimal(11, 10)")]
-        public decimal YTD { get; set; }
+        [Column("YTD", TypeName = "decimal(11, 10)")]
+        public decimal Ytd { get; set; }
         [Column(TypeName = "decimal(11, 10)")]
         public decimal OneMonth { get; set; }
         [Column(TypeName = "decimal(11, 10)")]
@@ -29,5 +31,6 @@ namespace FundManagementApplication.Models
         public decimal OneYear { get; set; }
         [Column(TypeName = "decimal(11, 10)")]
         public decimal SinceInception { get; set; }
+        public int Id { get; set; }
     }
 }

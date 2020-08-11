@@ -8,15 +8,22 @@ namespace FundManagementApplication.Models
     public partial class Investor
     {
         [Key]
+        [Column("PK_ID")]
         [StringLength(10)]
-        public string PK_Investor_ID { get; set; }
+        public string PkId { get; set; }
         [Required]
         [StringLength(45)]
-        public string InvestorName { get; set; }
+        public string Name { get; set; }
         [Required]
         [StringLength(45)]
-        public string InvestorEmail { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime InvestorDate { get; set; }
+        public string Email { get; set; }
+        public DateTime Date { get; set; }
+        [Column("FundManagerID")]
+        [StringLength(10)]
+        public string FundManagerId { get; set; }
+
+        [ForeignKey(nameof(FundManagerId))]
+        [InverseProperty("Investor")]
+        public virtual FundManager FundManager { get; set; }
     }
 }
