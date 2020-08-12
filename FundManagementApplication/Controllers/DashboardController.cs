@@ -55,10 +55,11 @@ namespace FundManagementApplication.Controllers {
                     //case 2:
                     //    Response.Headers.Add("Content-Disposition", "attachment; filename=test.pdf");
                     //    return new FileStreamResult(pdfstream, "application/pdf");
-                    //case 3:
-                    //    return new FileStreamResult(pdfstream, "application/pdf");
-                    //default:
-                    //    return new FileStreamResult(pdfstream, "application/pdf");
+                    case 3:
+                        return View("Factsheet", fundFactSheet);
+                    default:
+                        return View("Factsheet", fundFactSheet);
+
             }
 
             return RedirectToAction("Search", new { SelectedFund = fund, SelectedDate = date });
