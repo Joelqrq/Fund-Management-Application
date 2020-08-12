@@ -302,7 +302,7 @@
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ExecuteNonQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" AffectedRecords="[affectedrecords]" CommandType="Text" DisplayName="Execute Non Query" ExistingDbConnection="[con]" sap:VirtualizedContainerService.HintSize="334,87.3333333333333" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_1" Sql="INSERT Into [dbo].[Prestige_DailyMovement] (Date,PrestigeDR, R)VALUES(@globalDate,@globalDR, @R)">
+      <ui:ExecuteNonQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" AffectedRecords="[affectedrecords]" CommandType="Text" DisplayName="Execute Non Query" ExistingDbConnection="[con]" sap:VirtualizedContainerService.HintSize="334,87.3333333333333" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_1" Sql="INSERT Into [dbo].[Prestige_DailyMovement] (Date,PrestigeDR, Prestige_1R)VALUES(@globalDate,@globalDR, @R)">
         <ui:ExecuteNonQuery.Parameters>
           <InArgument x:TypeArguments="s:DateTime" x:Key="globalDate">[currentDate]</InArgument>
           <InArgument x:TypeArguments="x:Decimal" x:Key="globalDR">[decimalDR]</InArgument>
@@ -317,6 +317,6 @@
       </ui:ExecuteNonQuery>
       <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="334,62.6666666666667" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[&quot;affected rows: &quot;+affectedrecords.ToString]" />
     </Sequence>
-    <ui:DatabaseDisconnect DatabaseConnection="[con]" DisplayName="Disconnect" sap:VirtualizedContainerService.HintSize="271.333333333333,22" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_1" />
+    <ui:DatabaseDisconnect DatabaseConnection="[con]" DisplayName="Disconnect" sap:VirtualizedContainerService.HintSize="376,22" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_1" />
   </Sequence>
 </Activity>
