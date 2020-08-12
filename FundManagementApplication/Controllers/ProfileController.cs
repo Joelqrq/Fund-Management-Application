@@ -7,9 +7,11 @@ using FundManagementApplication.Models;
 using FundManagementApplication.Utilities;
 using FundManagementApplication.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FundManagementApplication.Controllers {
+    
     [Authorize]
     public class ProfileController : Controller {
         public AzureDbContext AzureDb { get; }
@@ -21,38 +23,30 @@ namespace FundManagementApplication.Controllers {
         [HttpGet]
         public IActionResult Profile() {
 
-            ProfileViewModel model = new ProfileViewModel() {
-                ManagerID = User.Claims.GetIDFromToken(),
-               
-            };
-            model.ManagerName = AzureDb.Fund_Manager.Where(w => w.PK_FundManager_ID == model.ManagerID).Select(c => c.FundManagerName).Single();
-            model.ManagerEmail = AzureDb.Fund_Manager.Where(w => w.PK_FundManager_ID == model.ManagerID).Select(c => c.FundManagerEmail).Single();
-
-            return View(model);
-        }
-
-
-        public Fund_Manager UpdateDB(string MID)
-        {
-            var test = AzureDb.Fund_Manager.Where(a => a.PK_FundManager_ID == MID).FirstOrDefault();
-
-            return test;
-
-        }
-
-      
-        public void Update_Post(Models.Fund_Manager fund_Manager) {
-
-            AzureDb.Fund_Manager.Update(fund_Manager);
-            AzureDb.SaveChanges();
+            var id = User.Claims.GetIDFromToken();
+            var fundManagerAccount = AzureDb.FundManager.Where(fm => fm.PkFundManagerId == id).Single();
             
+            return View(new ProfileViewModel() {
+                ManagerID = id,
+                ManagerName = fundManagerAccount.FundManagerName,
+                ManagerEmail = fundManagerAccount.FundManagerEmail
+            });
+        }
+        
+        private FundManager ValidateFM(string MID)
+        {
+            return AzureDb.FundManager.Where(a => a.PkFundManagerId == MID).FirstOrDefault();
+        }
 
+        private void UpdateDb(FundManager fundManager) {
+
+            AzureDb.FundManager.Update(fundManager);
+            AzureDb.SaveChanges();
         }
 
         /// <summary>
         /// Update fund manager profile.
         /// </summary>
-        /// <param name="model"></param>
         /// <param name="name"></param>
         /// <param name="email"></param>
         /// <returns></returns>
@@ -62,37 +56,28 @@ namespace FundManagementApplication.Controllers {
             ProfileViewModel model = new ProfileViewModel()
             {
                 ManagerID = User.Claims.GetIDFromToken(),
-                ManagerEmail = email,
-                ManagerName = name
+                ManagerName = name,
+                ManagerEmail = email
             };
   
-
-            var testValid = UpdateDB(model.ManagerID);
-            if (testValid != null)
+            var fmAccount = ValidateFM(model.ManagerID);
+            if (fmAccount != null)
             {
-                testValid.FundManagerEmail = email;
-                testValid.FundManagerName = name;
-
-                Update_Post(testValid);
-
+                fmAccount.FundManagerName = name;
+                fmAccount.FundManagerEmail = email;
+                UpdateDb(fmAccount);
             }
                 
           
-            return View("Profile",model);
-
-
+            return View("Profile", model);
         }
-
 
         /// <summary>
         /// Clear all input fields.
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public IActionResult Cancel(ProfileViewModel model) {
-
-            return View(model);
+        [HttpPost]
+        public IActionResult Cancel() {
+            return RedirectToAction("Profile");
         }
     }
 }

@@ -5,17 +5,15 @@ using FundManagementApplication.Utilities;
 using FundManagementApplication.ViewModels;
 using FundManagementApplication.Services;
 using System.Threading.Tasks;
+using System.Text;
+using System.Web;
 using FundManagementApplication.Models;
-using System;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
 
 namespace FundManagementApplication.Controllers {
 
     [Authorize]
     public class DashboardController : Controller {
         public AzureDbContext AzureDb { get; }
-        public List<SelectListItem> FundList { get; set; }
 
         public DashboardController(AzureDbContext azureDb) {
             AzureDb = azureDb;
@@ -26,50 +24,45 @@ namespace FundManagementApplication.Controllers {
 
             var model = new DashboardViewModel();
 
-            if(FundList == null) {
-                //Setup fund list
-                FundList = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken());
-                model.SelectedFund = FundList[0].Value;
-            }
-            
-            model.Funds = FundList;
+            //Setup fund list
+            model.Funds = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken());
+            model.SelectedFund = model.Funds[0].Value;
 
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string SelectedFund, string SelectedDate) {
+
+            //Retrieve fund factsheet details
+            var model = await new DashboardGenerator(AzureDb).GenerateDashboardData(SelectedFund, SelectedDate);
+            model.Funds = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken());
             return View("Dashboard", model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Search([FromForm]string SelectedFund, [FromForm]string SelectedDate) {
-            
-            //Retrieve fund factsheet details
-            var model = await new DashboardGenerator(AzureDb).GenerateDashboardData(SelectedFund, SelectedDate);
+        [HttpGet("[controller]/[action]/{fund}/{date}")]
+        public async Task<IActionResult> ExecuteFactSheetAction(int SelectAction, [FromRoute]string fund, [FromRoute]string date) {
 
-            return RedirectToAction("Dashboard", model);
-        }
+            //Format date properly
+            date = HttpUtility.UrlDecode(date);
 
-        [HttpPost]
-        public async Task<IActionResult> GetFactSheet([FromForm]int inlineRadioOptions) {
+            FundFactSheetDto fundFactSheet = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fund, date);
 
-
-            //var model = new DashboardViewModel() {
-            //    Funds = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken())
-            //};
-
-            //FundFactSheetDto fundFactSheet = new FundFactSheetGenerator(AzureDb).GenerateFactSheet(SelectedFund, SelectedDate);
-
-            switch(inlineRadioOptions) {
+            switch(SelectAction) {
                 case 1:
 
                     break;
                     //case 2:
                     //    Response.Headers.Add("Content-Disposition", "attachment; filename=test.pdf");
                     //    return new FileStreamResult(pdfstream, "application/pdf");
-                    //case 3:
-                    //    return new FileStreamResult(pdfstream, "application/pdf");
-                    //default:
-                    //    return new FileStreamResult(pdfstream, "application/pdf");
+                    case 3:
+                        return View("Factsheet", fundFactSheet);
+                    default:
+                        return View("Factsheet", fundFactSheet);
+
             }
 
-            return View();
+            return RedirectToAction("Search", new { SelectedFund = fund, SelectedDate = date });
         }
     }
 }

@@ -23,7 +23,7 @@
         function drawChart() {
             var data = new google.visualization.DataTable();
             @*Add Date column*@
-            data.addColumn('string', 'Year');
+            data.addColumn('date', 'Year');
 
             @foreach(var chart in Model.PerformanceCharts.Performances) {
                 @*Add chart columns*@
@@ -36,13 +36,13 @@
             @for(int dateNo = 0; dateNo < Model.PerformanceCharts.Date.Count; dateNo++) {
 
                 @*Set date cell*@
-                @:data.setCell(@dateNo, 0, '@Model.PerformanceCharts.Date[dateNo]');
+                var date = Model.PerformanceCharts.Date[dateNo];
+                @:data.setCell(@dateNo, 0, new Date(@date.Year, @date.Month, @date.Day));
 
                 for(int chartNo = 0; chartNo < Model.PerformanceCharts.Performances.Count; chartNo++) {
 
                     @*Set chart cell*@
                     @:data.setCell(@dateNo, @(chartNo + 1), @Model.PerformanceCharts.Performances[chartNo].CumulativeReturns[dateNo]);
-
                 }
             }
 
@@ -52,24 +52,19 @@
                 legend: { position: 'bottom' },
                 colors: ['#53019A', '#FAA916', '#DB4C40', '#2D82B7', '#4285F4'],
                   hAxis : {
-                    format: 'd MMM',
+                    format: 'MMM, yyyy',
+                    gridlines:{
+                        count: (@Model.PerformanceCharts.Date.Max().Month - @Model.PerformanceCharts.Date.Min().Month) / 3
+                    },
                     textStyle : {
-                    fontSize: 8 // or the number you want
+                    fontSize: 12 // or the number you want
                       }
-                    
                      }
-                    };
-
+            };
                     var chart = new google.visualization.LineChart(document.getElementById('performance_chart'));
-
                     chart.draw(data, options);
-
         }
-
-           
-       
     </script>
-
 
 </head>
 <body class="bg-secondBackground">
@@ -80,8 +75,6 @@
                     @Model.FundDetails.FundName
                 </h3>
                 <img class="FSLogo ml-auto img-fluid" style="max-width: 22%" src="~/Logo/ABC_LOGO-HORIZONTAL.png">
-
-
             </div>
         </div>
     </div>
@@ -92,10 +85,7 @@
             <h5 class="pt-4">About The Fund</h5>
             <hr class="hrHalf">
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                @Model.FundProfile
             </p>
 
         </div>
@@ -111,13 +101,10 @@
                         <tr>
                             <th></th>
                             <th>%</th>
-
                         </tr>
                     </thead>
                     <tbody>
-
-                        @foreach (var holding in Model.Holdings)
-                        {
+                        @foreach(var holding in Model.Holdings) {
                             <tr>
                                 <td>@holding.Name </td>
                                 <td>@holding.Weight </td>
@@ -126,7 +113,6 @@
                     </tbody>
                 </table>
             </div>
-
             <div class="col-md-4">
                 <h5 class="pt-4">Sector Allocation</h5>
                 <hr class="hrHalf">
@@ -135,21 +121,15 @@
                         <tr>
                             <th></th>
                             <th>%</th>
-
                         </tr>
                     </thead>
                     <tbody>
-
-                        @foreach (var sector in Model.Sectors)
-                        {
+                        @foreach(var sector in Model.Sectors) {
                             <tr>
                                 <td>@sector.Name </td>
                                 <td>@sector.Percentage </td>
                             </tr>
                         }
-
-
-
                     </tbody>
                 </table>
             </div>
@@ -158,58 +138,44 @@
                 <h5 class="pt-4">Funds Details</h5>
                 <hr class="hrHalf">
                 <table class="table ">
-
                     <tbody>
                         <tr>
                             <td>Benchmark: </td>
-                            <td>@Model.FundDetails.BenchmarkName</td>
+                            @foreach(var benchmarkName in Model.FundDetails.BenchmarkNames) {
+                                <td>@benchmarkName</td>
+                            }
                         </tr>
                         <tr>
                             <td>Fund Manager Name: </td>
                             <td>@Model.FundDetails.FundManagerName</td>
-
                         </tr>
                         <tr>
                             <td>Fund Size: </td>
                             <td>@Model.FundDetails.FundSize</td>
-
                         </tr>
-
                         <tr>
                             <td>Base Currency:</td>
                             <td>@Model.FundDetails.StockCurrency</td>
-
                         </tr>
-
                         <tr>
                             <td>Number of Holdings:</td>
                             <td>@Model.FundDetails.TotalHoldings</td>
-
                         </tr>
-
                         <tr>
                             <td>Initial Fee:</td>
                             <td>@Model.FundDetails.InitialFee</td>
-
                         </tr>
-
                         <tr>
                             <td>Inception Date:</td>
                             <td>@Model.FundDetails.InceptionDate</td>
-
                         </tr>
-
                         <tr>
                             <td>Annualize Returns:</td>
                             <td>@Model.FundDetails.AnnualizeReturns</td>
-
                         </tr>
-
-
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
     <!-- Row 3 -->
@@ -218,69 +184,11 @@
             <div class="col pl-0">
                 <h5 class="pt-4">Performance Overiew </h5>
                 <hr class="hrHalf">
-                <div class="chart" id="performance_chart" ></div>
+                <div class="chart" id="performance_chart"></div>
             </div>
-            <!--
-            <div class="col pr-0 ml-5">
-                <h5 class="pt-4">Funds Details</h5>
-                <hr class="hrHalf">
-                <table class="table ">
-
-                    <tbody>
-                        <tr>
-                            <td>Benchmark: </td>
-                            <td>@Model.FundDetails.BenchmarkName</td>
-                        </tr>
-                        <tr>
-                            <td>Fund Manager Name: </td>
-                            <td>@Model.FundDetails.FundManagerName</td>
-
-                        </tr>
-                        <tr>
-                            <td>Fund Size: </td>
-                            <td>@Model.FundDetails.FundSize</td>
-
-                        </tr>
-
-                        <tr>
-                            <td>Base Currency:</td>
-                            <td>@Model.FundDetails.StockCurrency</td>
-
-                        </tr>
-
-                        <tr>
-                            <td>Number of Holdings:</td>
-                            <td>@Model.FundDetails.TotalHoldings</td>
-
-                        </tr>
-
-                        <tr>
-                            <td>Initial Fee:</td>
-                            <td>@Model.FundDetails.InitialFee</td>
-
-                        </tr>
-
-                        <tr>
-                            <td>Inception Date:</td>
-                            <td>@Model.FundDetails.InceptionDate</td>
-
-                        </tr>
-
-                        <tr>
-                            <td>Annualize Returns:</td>
-                            <td>@Model.FundDetails.AnnualizeReturns</td>
-
-                        </tr>
-
-
-                    </tbody>
-                </table>
-            </div>
-            -->
         </div>
     </div>
     <!-- Row 4 -->
-
     <div class="container mb-5">
         <div class="row">
             <h5 class="pt-4">Performance as at 31 May 2020</h5>
@@ -298,33 +206,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Bid to Bid%</td>
-                        <td>@Model.PerformanceTable.BidToBid.OneMonth</td>
-                        <td>@Model.PerformanceTable.BidToBid.ThreeMonth</td>
-                        <td>@Model.PerformanceTable.BidToBid.SixMonth</td>
-                        <td>@Model.PerformanceTable.BidToBid.OneYear</td>
-                        <td>@Model.PerformanceTable.BidToBid.YearToDate</td>
-                        <td>@Model.PerformanceTable.BidToBid.SinceInception</td>
-                    </tr>
-                    <tr>
-                        <td>Offer to Bid%</td>
-                        <td>@Model.PerformanceTable.OfferToBid.OneMonth</td>
-                        <td>@Model.PerformanceTable.OfferToBid.ThreeMonth</td>
-                        <td>@Model.PerformanceTable.OfferToBid.SixMonth</td>
-                        <td>@Model.PerformanceTable.OfferToBid.OneYear</td>
-                        <td>@Model.PerformanceTable.OfferToBid.YearToDate</td>
-                        <td>@Model.PerformanceTable.OfferToBid.SinceInception</td>
-                    </tr>
-                    <tr>
-                        <td>Benchmark%</td>
-                        <td>@Model.PerformanceTable.Benchmark.OneMonth</td>
-                        <td>@Model.PerformanceTable.Benchmark.ThreeMonth</td>
-                        <td>@Model.PerformanceTable.Benchmark.SixMonth</td>
-                        <td>@Model.PerformanceTable.Benchmark.OneYear</td>
-                        <td>@Model.PerformanceTable.Benchmark.YearToDate</td>
-                        <td>@Model.PerformanceTable.Benchmark.SinceInception</td>
-                    </tr>
+                    @foreach(var column in Model.PerformanceTable.Performances) {
+                        <tr>
+                            <td>@column.Name</td>
+                            <td>@column.OneMonth</td>
+                            <td>@column.ThreeMonth</td>
+                            <td>@column.SixMonth</td>
+                            <td>@column.OneYear</td>
+                            <td>@column.YearToDate</td>
+                            <td>@column.SinceInception</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
 

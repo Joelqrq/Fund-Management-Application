@@ -5,11 +5,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FundManagementApplication.Models
 {
-    public partial class Fund_Manager
+    [Table("Fund_Manager")]
+    public partial class FundManager
     {
+        public FundManager()
+        {
+            Funds = new HashSet<Funds>();
+            Investor = new HashSet<Investor>();
+        }
+
         [Key]
+        [Column("PK_FundManager_ID")]
         [StringLength(10)]
-        public string PK_FundManager_ID { get; set; }
+        public string PkFundManagerId { get; set; }
         [Required]
         [StringLength(45)]
         public string FundManagerName { get; set; }
@@ -19,5 +27,10 @@ namespace FundManagementApplication.Models
         [Required]
         [StringLength(20)]
         public string FundManagerPassword { get; set; }
+
+        [InverseProperty("FundManager")]
+        public virtual ICollection<Funds> Funds { get; set; }
+        [InverseProperty("FundManager")]
+        public virtual ICollection<Investor> Investor { get; set; }
     }
 }

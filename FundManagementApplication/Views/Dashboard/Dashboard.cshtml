@@ -1,9 +1,5 @@
 ﻿@model DashboardViewModel
 
-@{
-    ViewBag.Title = "Dashboard";
-}
-
 @section Style{
     <link href="~/lib/bootstrap/dist/css/DatePicker.css" rel="stylesheet" />
 }
@@ -20,6 +16,8 @@
                 calendarWeeks: true,
                 clearBtn: true,
                 disableTouchKeyboard: true,
+                //minDate: ,
+                //maxDate: ,
             });
 
         });</script>
@@ -27,7 +25,7 @@
 
 <!-- Dashboard -->
 <div class="container">
-    <form autocomplete="off" asp-controller="Dashboard" asp-action="Search" method="post">
+    <form autocomplete="off" asp-controller="Dashboard" asp-action="Search" method="get">
         <div class="row>">
             <h4 class="pt-4">Dashboard</h4>
             <hr>
@@ -46,7 +44,7 @@
             </div>
         </div>
         <div class="form-group d-flex  justify-content-left mt-4 mb-4">
-            <button class="btn btn-invert btn-block-invert">Search</button>
+            <button type="submit" class="btn btn-invert btn-block-invert">Search</button>
         </div>
     </form>
 </div> <!-- Date Range Container-->
@@ -67,7 +65,7 @@
                             <span class="h6 font-weight-bold mb-0" id="fundNav">@Model.FundSize</span>
                         </div>
                         <div class="col-auto">
-                            <!-- Fund NAV Icon -->
+                            <!-- Fund Size Icon -->
                             <i class="fa fa-chart-bar" aria-hidden="true"></i>
                         </div>
                     </div>
@@ -91,7 +89,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Bid - Offer Card -->
         <div class="col-xl-3 col-lg-3 col-sm-6">
             <div class="card card-stats mb-4 mb-xl-0">
@@ -109,7 +106,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Benchmark Card -->
         <div class="col-xl-3 col-lg-3 col-sm-6">
             <div class="card card-stats mb-4 mb-xl-0">
@@ -130,31 +126,27 @@
             </div>
         </div>
     </div>
-
     <!-- Select option for fundfact sheet-->
     <div class="row>">
         <hr>
         <h5 class="mb-4">Select Fund Factsheet Action</h5>
     </div>
-
     <!-- Funds Selection -->
-    <form asp-controller="Dashboard" asp-action="GetFactSheet" method="post">
+    <form asp-controller="Dashboard" asp-action="ExecuteFactSheetAction" method="get" asp-route-fund="@Model.SelectedFund" asp-route-date="@Model.SelectedDate">
         <div class="row">
             <div class="form-check form-check-inline col-xl-3 col-xs-2 ml-2">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" asp-for="SelectAction">
+                <input class="form-check-input" type="radio" id="inlineRadio1" value="1" asp-for="SelectAction">
                 <label class="form-check-label" for="inlineRadio1">Send Factsheet</label>
             </div>
             <div class="form-check form-check-inline col-xl-3 ml-2">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" asp-for="SelectAction">
+                <input class="form-check-input" type="radio" id="inlineRadio2" value="2" asp-for="SelectAction">
                 <label class="form-check-label" for="inlineRadio2">Download Factsheet</label>
             </div>
             <div class="form-check form-check-inline col-xl-3 ml-2">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3" asp-for="SelectAction">
+                <input class="form-check-input" type="radio" id="inlineRadio3" value="3" asp-for="SelectAction">
                 <label class="form-check-label" for="inlineRadio3">Preview Factsheet</label>
             </div>
-
         </div>
-
         <!-- Go Button -->
         <div class="form-group d-flex justify-content-left mt-5 mb-5">
             <button class="btn btn-success btn-block-success-secondary">Go!</button>

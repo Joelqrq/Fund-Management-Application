@@ -1,4 +1,4 @@
-﻿@model FundManagementApplication.ViewModels.ProfileViewModel
+﻿@model ProfileViewModel
 
 @section Scripts{
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -29,14 +29,11 @@
             <div class="col-sm-10">
                 <input type="text" readonly class="form-control-plaintext" id="currentManagerEmail" value=@Model.ManagerEmail>
             </div>
-
-
         </div>
         <hr>
         <!-- New Investor Details-->
         <h5 class="mt-2">New Manager Details</h5>
-
-        <form asp-controller="Profile">
+        <form asp-controller="Profile" method="post">
             <div class="form-group row mt-2">
 
                 <label for="inputNewManagerName" class="col-sm-2 col-form-label mb-3s">Manager Name</label>
@@ -50,10 +47,9 @@
                 </div>
             </div>
 
-
             <div class="form-group d-flex justify-content-center mt-5 mb-5">
-                <button class="btn btn-danger btn-block-danger-secondary mx-5" asp-action="Cancel">Cancel</button>
-                <button class="btn btn-success btn-block-success-secondary mx-5" asp-action="Update" formmethod="post"> Update</button>
+                <button type="reset" class="btn btn-danger btn-block-danger-secondary mx-5">Cancel</button>
+                <button type="submit" class="btn btn-success btn-block-success-secondary mx-5" asp-action="Update"> Update</button>
             </div>
         </form>
     </div>

@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace FundManagementApplication.Interfaces {
     public interface IJWTAuthenticationManager {
-        string GenerateToken(Fund_Manager account);
+        string GenerateToken(FundManager account);
     }
 }

@@ -5,12 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FundManagementApplication.Models
 {
-    public partial class Prestige_DailyMovement
+    [Table("Prestige_Performance_Chart")]
+    public partial class PrestigePerformanceChart
     {
         [Key]
         [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
-        [Column(TypeName = "decimal(11, 10)")]
-        public decimal PrestigeDR { get; set; }
+        [Column("PrestigeCR", TypeName = "decimal(11, 10)")]
+        public decimal PrestigeCr { get; set; }
+        [Column("STICR", TypeName = "decimal(11, 10)")]
+        public decimal Sticr { get; set; }
     }
 }

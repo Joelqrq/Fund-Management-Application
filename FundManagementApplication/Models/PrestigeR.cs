@@ -5,12 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FundManagementApplication.Models
 {
-    public partial class Global_DailyMovement
+    [Table("Prestige_R")]
+    public partial class PrestigeR
     {
-        [Key]
+        [Column("STI_1R", TypeName = "decimal(11, 10)")]
+        public decimal? Sti1r { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime Date { get; set; }
-        [Column(TypeName = "decimal(11, 10)")]
-        public decimal GlobalDR { get; set; }
+        public DateTime? Date { get; set; }
     }
 }
