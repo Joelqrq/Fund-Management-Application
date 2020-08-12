@@ -1854,11 +1854,11 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "global_dailymovement",
-      "projectName": "global_dailymovement",
-      "projectPath": "C:\\Users\\ngjin\\Desktop\\fundfactsheet\\Fund-Management-Application\\UiPath\\dailymovement\\prestige_dailymovement\\.local",
+      "projectUniqueName": "global_performance_chart",
+      "projectName": "global_performance_chart",
+      "projectPath": "C:\\Users\\ngjin\\Desktop\\fundfactsheet\\Fund-Management-Application\\UiPath\\performance chart\\global_performance_chart\\.local",
       "packagesPath": "C:\\Users\\ngjin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ngjin\\Desktop\\fundfactsheet\\Fund-Management-Application\\UiPath\\dailymovement\\prestige_dailymovement\\.local"
+      "outputPath": "C:\\Users\\ngjin\\Desktop\\fundfactsheet\\Fund-Management-Application\\UiPath\\performance chart\\global_performance_chart\\.local"
     },
     "frameworks": {
       "net461": {
