@@ -1,35 +1,34 @@
-﻿<!-- Edit Fund Header-->
+﻿@model FundViewModel
+
+<!-- Edit Fund Header-->
 <div class="container">
     <div class="row>">
         <h4 class="pt-4">Edit Fund</h4>
         <hr>
         <!-- Funds Selection -->
         <h5 class="mt-4">Fund Name</h5>
-        <select class="browser-default custom-select">
-            <option id="selectFund" selected>Select Funds</option>
-            <option value="Prestige">ABC Prestige</option>
-            <option value="Global">ABC Global</option>
+        <select class="browser-default custom-select" asp-items=Model.Funds onchange="displayStock()">
+            <option id="selectFund" value="" selected>Select Funds</option>
         </select>
     </div>
-
     <h5 class="mt-4">Share Details</h5>
     <hr>
 </div>
 <!-- Fund Details Table -->
-<div class="container">
-    <div class="row">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>SHARE NAME</th>
-                        <th>ISIN</th>
-                        <th>SHARE ALLOCATION%</th>
-                        <th>INPUT NEW SHARE ALLOCATION</th>
-                    </tr>
-                </thead>
-                <form>
+<form>
+    <div class="container">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>SHARE NAME</th>
+                            <th>ISIN</th>
+                            <th>SHARE ALLOCATION%</th>
+                            <th>INPUT NEW SHARE ALLOCATION</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr id="d1">
                             <td>1</td>
@@ -46,12 +45,12 @@
                             <td><input type="text" id="inputAllocation2" placeholder="Enter New Allocation" class="form-control"></td>
                         </tr>
                     </tbody>
-                </form>
-            </table>
+                </table>
+            </div>
+        </div>
+        <!-- Go Button -->
+        <div class="form-group d-flex justify-content-center mt-5 mb-5">
+            <button onclick="updateFundAllocation();" class="btn btn-success btn-block-success-secondary"> Update!</button>
         </div>
     </div>
-    <!-- Go Button -->
-    <div class="form-group d-flex justify-content-center mt-5 mb-5">
-        <button onclick="updateFundAllocation();" class="btn btn-success btn-block-success-secondary"> Update!</button>
-    </div>
-</div>
+</form>

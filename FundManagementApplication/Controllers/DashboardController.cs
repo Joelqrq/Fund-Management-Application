@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Web;
 using FundManagementApplication.Models;
+using System;
 
 namespace FundManagementApplication.Controllers {
 
@@ -32,37 +33,36 @@ namespace FundManagementApplication.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Search(string SelectedFund, string SelectedDate) {
+        public async Task<IActionResult> Search(string SelectedFund, string SelectedDate = null) {
 
             //Retrieve fund factsheet details
-            var model = await new DashboardGenerator(AzureDb).GenerateDashboardData(SelectedFund, SelectedDate);
+            var model = await new DashboardGenerator(AzureDb).GenerateDashboardData(SelectedFund, DateTime.Today.ToString());
             model.Funds = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken());
             return View("Dashboard", model);
         }
 
         [HttpGet("[controller]/[action]/{fund}/{date}")]
-        public async Task<IActionResult> ExecuteFactSheetAction(int SelectAction, [FromRoute]string fund, [FromRoute]string date) {
+        public async Task<IActionResult> ExecuteFactSheetAction(int SelectAction, [FromRoute]string fundId, [FromRoute]string date = null) {
 
             //Format date properly
-            date = HttpUtility.UrlDecode(date);
+            //if(date != null)
+            //    date = HttpUtility.UrlDecode(date);
 
-            FundFactSheetDto fundFactSheet = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fund, date);
+            FundFactSheetDto fundFactSheet = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fundId, DateTime.Today.ToString());
 
             switch(SelectAction) {
-                case 1:
 
-                    break;
-                    //case 2:
-                    //    Response.Headers.Add("Content-Disposition", "attachment; filename=test.pdf");
-                    //    return new FileStreamResult(pdfstream, "application/pdf");
-                    case 3:
-                        return View("Factsheet", fundFactSheet);
-                    default:
-                        return View("Factsheet", fundFactSheet);
+                case 1:
+                    return View("Factsheet", fundFactSheet);
+                case 2:
+                    //Call ctrl + P
+                    return View("Factsheet", fundFactSheet);
+                case 3:
+                    return View("Factsheet", fundFactSheet);
+                default:
+                    return RedirectToAction("Search", new { SelectedFund = fundId, SelectedDate = DateTime.Today.ToString() });
 
             }
-
-            return RedirectToAction("Search", new { SelectedFund = fund, SelectedDate = date });
         }
     }
 }

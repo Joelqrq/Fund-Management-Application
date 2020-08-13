@@ -4,7 +4,7 @@
     <link href="~/lib/bootstrap/dist/css/DatePicker.css" rel="stylesheet" />
 }
 
-@section Scripts{
+@*@section Scripts{
     <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.css">
     <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script type='text/javascript'>
@@ -21,7 +21,7 @@
             });
 
         });</script>
-}
+}*@
 
 <!-- Dashboard -->
 <div class="container">
@@ -32,17 +32,17 @@
             <!-- Funds Selection -->
             <h5 class="mt-4">Fund Name</h5>
             <select class="browser-default custom-select" asp-for="SelectedFund" asp-items=Model.Funds>
-                <option id="selectFund" selected>Select Funds</option>
+                <option id="selectFund" value ="" selected>Select Funds</option>
             </select>
         </div>
-        <div class="row mt-5">
+        @*<div class="row mt-5">
             <!-- Date Range Input - Fund End Date-->
             <div class="input-group input-daterange col-sm-4 ">
                 <input type="text" id="fundEndDate" class="form-control text-left " asp-for="SelectedDate">
                 <label class="ml-0 form-control-placeholder" id="fundEndDateLabel">Select Date Range</label>
                 <span class="fa fa-calendar" id="fa-2" aria-hidden="true"></span>
             </div>
-        </div>
+        </div>*@
         <div class="form-group d-flex  justify-content-left mt-4 mb-4">
             <button type="submit" class="btn btn-invert btn-block-invert">Search</button>
         </div>
@@ -132,7 +132,7 @@
         <h5 class="mb-4">Select Fund Factsheet Action</h5>
     </div>
     <!-- Funds Selection -->
-    <form asp-controller="Dashboard" asp-action="ExecuteFactSheetAction" method="get" asp-route-fund="@Model.SelectedFund" asp-route-date="@Model.SelectedDate">
+    <form asp-controller="Dashboard" asp-action="ExecuteFactSheetAction" method="get" asp-route-fund="@Model.SelectedFund" asp-route-date="@Model.SelectedDate" target="_blank">
         <div class="row">
             <div class="form-check form-check-inline col-xl-3 col-xs-2 ml-2">
                 <input class="form-check-input" type="radio" id="inlineRadio1" value="1" asp-for="SelectAction">

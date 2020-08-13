@@ -26,6 +26,8 @@ namespace FundManagementApplication {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
 
+            services.AddHttpClient();
+
             //Authentication
             var tokenKey = Configuration.GetValue<string>("TokenKey");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -42,7 +44,6 @@ namespace FundManagementApplication {
                         ClockSkew = TimeSpan.Zero
                     };
                 });
-
 
             services.AddSingleton<IJWTAuthenticationManager>(new JWTAuthenticationManager(tokenKey));
 
