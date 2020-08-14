@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,10 @@ namespace FundManagementApplication.Utilities {
 
             return acceptedActions.Contains(currentAction) && acceptedControllers.Contains(currentController) ?
                 $"{cssClass} active" : cssClass;
+        }
+
+        public static HtmlString DisabledIf(this IHtmlHelper htmlHelper, bool condition) {
+            return new HtmlString(condition ? "disabled=\"disabled\"" : "");
         }
     }
 }

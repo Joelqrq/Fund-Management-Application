@@ -35,20 +35,28 @@ namespace FundManagementApplication.Controllers {
         [HttpGet]
         public async Task<IActionResult> Search(string SelectedFund, string SelectedDate = null) {
 
+            //Get today's date if it's past 5pm
+            var time = DateTime.Now.TimeOfDay.Hours;
+            SelectedDate = time < 17 ? DateTime.Today.AddDays(-1).ToString() : DateTime.Today.ToString();
+
             //Retrieve fund factsheet details
-            var model = await new DashboardGenerator(AzureDb).GenerateDashboardData(SelectedFund, DateTime.Today.ToString());
+            var model = await new DashboardGenerator(AzureDb).GenerateDashboardData(SelectedFund, SelectedDate);
             model.Funds = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken());
             return View("Dashboard", model);
         }
 
         [HttpGet("[controller]/[action]/{fund}/{date}")]
-        public async Task<IActionResult> ExecuteFactSheetAction(int SelectAction, [FromRoute]string fundId, [FromRoute]string date = null) {
+        public async Task<IActionResult> ExecuteFactSheetAction(int SelectAction, [FromRoute]string fund, [FromRoute]string date = null) {
 
             //Format date properly
             //if(date != null)
             //    date = HttpUtility.UrlDecode(date);
 
-            FundFactSheetDto fundFactSheet = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fundId, DateTime.Today.ToString());
+            //Get today's date if it's past 5pm
+            var time = DateTime.Now.TimeOfDay.Hours;
+            date = time < 17 ? DateTime.Today.AddDays(-1).ToString() : DateTime.Today.ToString();
+
+            FundFactSheetDto fundFactSheet = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fund, date);
 
             switch(SelectAction) {
 
@@ -60,7 +68,7 @@ namespace FundManagementApplication.Controllers {
                 case 3:
                     return View("Factsheet", fundFactSheet);
                 default:
-                    return RedirectToAction("Search", new { SelectedFund = fundId, SelectedDate = DateTime.Today.ToString() });
+                    return RedirectToAction("Search", new { SelectedFund = fund, SelectedDate = DateTime.Today.ToString() });
 
             }
         }

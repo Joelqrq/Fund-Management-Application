@@ -1,4 +1,69 @@
-﻿@model FundViewModel
+﻿@using FundManagementApplication.Utilities
+
+@model FundViewModel
+
+@section Scripts{
+    <script type="text/javascript">
+        $('#fundDropdown').on('change', function displayStock() {
+            var fundId = this.value;
+            toggleButtons(fundId);
+            if (fundId === "") {
+                $('#stocksList').html("");
+                return;
+            }
+            $.ajax({
+                type: "GET",
+                url: "/fund/displaystock",
+                data: { 'fundId': fundId },
+                dataType: "json",
+                success: function (json) {
+                    $.each(json, function () {
+                        $('#stocksList').append(
+                            $(`<tr>
+                               <td>${this.name}</td>
+                               <td>${this.ticker}</td>
+                               <td id="${this.ticker}"><input type="number" placeholder="Enter New Allocation" value=${this.weight * 100} class="form-control"></td>
+                               <td><button type="button" class="btn btn-danger">Delete</button></td>
+                               </tr>`)
+                        );
+                    });
+                    //Add click listener
+                    $('#stocksList').on("click", "button", function () {
+                        $(this).parentsUntil($('#stocksList')).remove();
+                    });
+                }
+            });
+        });
+
+        //Update stock list
+        $('#updateStockList').on('click', function updateStock(e) {
+            e.preventDefault();
+            console.log($('td input').serialize());
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/fund/updatestock",
+            //});
+        });
+
+        //Add stock button
+        $('#addStock').on('click', function addStock(e) {
+            e.preventDefault();
+            $('#stocksList').append(
+                $(`<tr>
+                   <td><input type="text" placeholder="Enter Share Name" value="" class="form-control"></td>
+                   <td><input type="text" placeholder="Enter Stock Ticker" value="" class="form-control"></td>
+                   <td><input type="number" placeholder="Enter New Allocation" value=0 class="form-control"></td>
+                   <td><button type="button" class="btn btn-danger">Delete</button></td>
+                   </tr>`)
+            );
+        });
+
+        function toggleButtons(fundId) {
+            $('#addStock').prop('disabled', fundId === "");
+            $('#updateStockList').prop('disabled', fundId === "");
+        }
+    </script>
+}
 
 <!-- Edit Fund Header-->
 <div class="container">
@@ -7,7 +72,7 @@
         <hr>
         <!-- Funds Selection -->
         <h5 class="mt-4">Fund Name</h5>
-        <select class="browser-default custom-select" asp-items=Model.Funds onchange="displayStock()">
+        <select class="browser-default custom-select" id="fundDropdown" asp-items=Model.Funds>
             <option id="selectFund" value="" selected>Select Funds</option>
         </select>
     </div>
@@ -15,42 +80,27 @@
     <hr>
 </div>
 <!-- Fund Details Table -->
-<form>
-    <div class="container">
-        <div class="row">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>SHARE NAME</th>
-                            <th>ISIN</th>
-                            <th>SHARE ALLOCATION%</th>
-                            <th>INPUT NEW SHARE ALLOCATION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr id="d1">
-                            <td>1</td>
-                            <td id="f1">DBS</td>
-                            <td id="l1">D05.SI</td>
-                            <td id="m1">20%</td>
-                            <td><input type="text" id="inputAllocation2" placeholder="Enter New Allocation" class="form-control"></td>
-                        </tr>
-                        <tr id="d2">
-                            <td>2</td>
-                            <td id="f2">Singtel</td>
-                            <td id="l2">Z74.SI</td>
-                            <td id="m2">5%</td>
-                            <td><input type="text" id="inputAllocation2" placeholder="Enter New Allocation" class="form-control"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- Go Button -->
-        <div class="form-group d-flex justify-content-center mt-5 mb-5">
-            <button onclick="updateFundAllocation();" class="btn btn-success btn-block-success-secondary"> Update!</button>
+<div class="container">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>SHARE NAME</th>
+                        <th>TICKER</th>
+                        <th>SHARE ALLOCATION %</th>
+                    </tr>
+                </thead>
+                <tbody id="stocksList">
+                </tbody>
+            </table>
         </div>
     </div>
-</form>
+    <!-- Go Button -->
+    <div class="form-group d-flex justify-content-center mt-5 mb-5">
+        <!-- Add Button -->
+        <button type="button" id="addStock" class="btn btn-success btn-block-success-secondary mx-5" disabled>Add Stock</button>
+        <!-- Go Button -->
+        <button type="button" id="updateStockList" class="btn btn-success btn-block-success-secondary mx-5" disabled>Update</button>
+    </div>
+</div>

@@ -23,18 +23,18 @@ namespace FundManagementApplication.Services {
 
             if(fund == "PRES_01") {
 
-                var priceNBB = await AzureDb.PrestigeBidToBid.Where(bb => bb.Date == data.Date).Select(bb => new { bb.Price, bb.OneMonth }).SingleAsync();
+                var priceNBB = await AzureDb.PrestigeBidToBid.Where(bb => bb.Date == data.Date).Select(bb => new { bb.Price, bb.OneMonth }).FirstAsync();
                 data.FundSize = priceNBB.Price;
                 data.BidToBid = priceNBB.OneMonth;
-                data.OfferToBid = await AzureDb.PrestigeOfferToBid.Where(ob => ob.Date == data.Date).Select(ob => ob.OneMonth).SingleAsync();
-                data.BenchmarkBidToBid = await AzureDb.StiBidToBid.Where(sbb => sbb.Date == data.Date).Select(sbb => sbb.OneMonth).SingleAsync();
+                data.OfferToBid = await AzureDb.PrestigeOfferToBid.Where(ob => ob.Date == data.Date).Select(ob => ob.OneMonth).FirstAsync();
+                data.BenchmarkBidToBid = await AzureDb.StiBidToBid.Where(sbb => sbb.Date == data.Date).Select(sbb => sbb.OneMonth).FirstAsync();
             }
             else if(fund == "GLOB_01") {
-                var priceNBB = await AzureDb.GlobalBidToBid.Where(bb => bb.Date == data.Date).Select(bb => new { bb.Price, bb.OneMonth }).SingleAsync();
+                var priceNBB = await AzureDb.GlobalBidToBid.Where(bb => bb.Date == data.Date).Select(bb => new { bb.Price, bb.OneMonth }).FirstAsync();
                 data.FundSize = priceNBB.Price;
                 data.BidToBid = priceNBB.OneMonth;
-                data.OfferToBid = await AzureDb.GlobalOfferToBid.Where(ob => ob.Date == data.Date).Select(ob => ob.OneMonth).SingleAsync();
-                data.BenchmarkBidToBid = await AzureDb.NasdaqBidToBid.Where(sbb => sbb.Date == data.Date).Select(sbb => sbb.OneMonth).SingleAsync();
+                data.OfferToBid = await AzureDb.GlobalOfferToBid.Where(ob => ob.Date == data.Date).Select(ob => ob.OneMonth).FirstAsync();
+                data.BenchmarkBidToBid = await AzureDb.NasdaqBidToBid.Where(sbb => sbb.Date == data.Date).Select(sbb => sbb.OneMonth).FirstAsync();
             }
 
             return new DashboardViewModel() {
