@@ -29,7 +29,7 @@ namespace FundManagementApplication.Models
         [Column(TypeName = "decimal(3, 2)")]
         public decimal Weight { get; set; }
         [Column("DR", TypeName = "decimal(13, 10)")]
-        public decimal Dr { get; set; }
+        public decimal? Dr { get; set; }
         [Required]
         [StringLength(10)]
         public string FundId { get; set; }
