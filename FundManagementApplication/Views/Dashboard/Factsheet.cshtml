@@ -91,7 +91,7 @@
         </div>
     </div>
     <!-- Row 2 -->
-    <div class="container">
+    <div class="container mt-2">
         <div class="row">
             <div class=" col-md-4">
                 <h5 class="pt-4">Top 10 Holdings </h5>
@@ -179,7 +179,7 @@
         </div>
     </div>
     <!-- Row 3 -->
-    <div class="container">
+    <div class="container mb-5 mt-3">
         <div class="row">
             <div class="col pl-0">
                 <h5 class="pt-4">Performance Overiew </h5>
@@ -189,7 +189,12 @@
         </div>
     </div>
     <!-- Row 4 -->
-    <div class="container mb-5">
+    <div class="container mt-5">
+        <br />
+        <br />
+        <br />
+
+
         <div class="row">
             <h5 class="pt-4">Performance as at 31 May 2020</h5>
             <hr class="hrHalf">
@@ -206,7 +211,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(var column in Model.PerformanceTable.Performances) {
+                    @foreach (var column in Model.PerformanceTable.Performances)
+                    {
                         <tr>
                             <td>@column.Name</td>
                             <td>@column.OneMonth</td>
