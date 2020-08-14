@@ -103,7 +103,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:DatabaseConnect>
-    <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[globalistDT]" DisplayName="Query Ticker list" ExistingDbConnection="[con]" sap:VirtualizedContainerService.HintSize="354.666666666667,87.3333333333333" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="select Ticker from [dbo].[Stock] where FundId='Glob_01'">
+    <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[globalistDT]" DisplayName="Query Ticker list" ExistingDbConnection="[con]" sap:VirtualizedContainerService.HintSize="354.666666666667,87.3333333333333" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="select Ticker from [dbo].[Stock] where FundId='Glob_01' Group By Ticker">
       <ui:ExecuteQuery.Parameters>
         <scg:Dictionary x:TypeArguments="x:String, Argument" />
       </ui:ExecuteQuery.Parameters>
