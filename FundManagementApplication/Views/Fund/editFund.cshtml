@@ -4,14 +4,16 @@
 
 @section Scripts{
     <script type="text/javascript">
-        function displayStock(url, fundId) {
-            if (fundId == "") {
+        $('#fundDropdown').on('change', function displayStock() {
+            var fundId = this.value;
+            toggleButtons(fundId);
+            if (fundId === "") {
                 $('#stocksList').html("");
                 return;
             }
             $.ajax({
                 type: "GET",
-                url: url,
+                url: "/fund/displaystock",
                 data: { 'fundId': fundId },
                 dataType: "json",
                 success: function (json) {
@@ -20,7 +22,7 @@
                             $(`<tr>
                                <td>${this.name}</td>
                                <td>${this.ticker}</td>
-                               <td><input type="number" placeholder="Enter New Allocation" value=${this.weight * 100} class="form-control"></td>
+                               <td id="${this.ticker}"><input type="number" placeholder="Enter New Allocation" value=${this.weight * 100} class="form-control"></td>
                                <td><button type="button" class="btn btn-danger">Delete</button></td>
                                </tr>`)
                         );
@@ -31,15 +33,21 @@
                     });
                 }
             });
-        }
+        });
 
         //Update stock list
-        $('#updateStockList').on('click', function updateStock() {
-
+        $('#updateStockList').on('click', function updateStock(e) {
+            e.preventDefault();
+            console.log($('td input').serialize());
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/fund/updatestock",
+            //});
         });
 
         //Add stock button
-        $('#addStock').on('click', function addStock() {
+        $('#addStock').on('click', function addStock(e) {
+            e.preventDefault();
             $('#stocksList').append(
                 $(`<tr>
                    <td><input type="text" placeholder="Enter Share Name" value="" class="form-control"></td>
@@ -50,11 +58,10 @@
             );
         });
 
-        //Toggle buttons
-        $('#fundDropdown').on('change', function toggleButtons() {
-            $('#addStock').prop('disabled', this.value === "");
-            $('#updateStockList').prop('disabled', this.value === "");
-        });
+        function toggleButtons(fundId) {
+            $('#addStock').prop('disabled', fundId === "");
+            $('#updateStockList').prop('disabled', fundId === "");
+        }
     </script>
 }
 
@@ -65,7 +72,7 @@
         <hr>
         <!-- Funds Selection -->
         <h5 class="mt-4">Fund Name</h5>
-        <select class="browser-default custom-select" id="fundDropdown" asp-items=Model.Funds onchange="displayStock('@Url.Action("DisplayStock", "fund")', this.value);">
+        <select class="browser-default custom-select" id="fundDropdown" asp-items=Model.Funds>
             <option id="selectFund" value="" selected>Select Funds</option>
         </select>
     </div>
@@ -73,29 +80,27 @@
     <hr>
 </div>
 <!-- Fund Details Table -->
-<form asp-controller="Fund" asp-action="UpdateStock" method="post">
-    <div class="container">
-        <div class="row">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>SHARE NAME</th>
-                            <th>ISIN</th>
-                            <th>SHARE ALLOCATION%</th>
-                        </tr>
-                    </thead>
-                    <tbody id="stocksList">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- Go Button -->
-        <div class="form-group d-flex justify-content-center mt-5 mb-5">
-            <!-- Add Button -->
-            <button type="button" id="addStock" class="btn btn-success btn-block-success-secondary mx-5" disabled>Add Stock</button>
-            <!-- Go Button -->
-            <button type="submit" id="updateStockList" class="btn btn-success btn-block-success-secondary mx-5" disabled>Update</button>
+<div class="container">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>SHARE NAME</th>
+                        <th>TICKER</th>
+                        <th>SHARE ALLOCATION %</th>
+                    </tr>
+                </thead>
+                <tbody id="stocksList">
+                </tbody>
+            </table>
         </div>
     </div>
-</form>
+    <!-- Go Button -->
+    <div class="form-group d-flex justify-content-center mt-5 mb-5">
+        <!-- Add Button -->
+        <button type="button" id="addStock" class="btn btn-success btn-block-success-secondary mx-5" disabled>Add Stock</button>
+        <!-- Go Button -->
+        <button type="button" id="updateStockList" class="btn btn-success btn-block-success-secondary mx-5" disabled>Update</button>
+    </div>
+</div>

@@ -46,7 +46,7 @@ namespace FundManagementApplication.Controllers {
         }
 
         [HttpGet("[controller]/[action]/{fund}/{date}")]
-        public async Task<IActionResult> ExecuteFactSheetAction(int SelectAction, [FromRoute]string fundId, [FromRoute]string date = null) {
+        public async Task<IActionResult> ExecuteFactSheetAction(int SelectAction, [FromRoute]string fund, [FromRoute]string date = null) {
 
             //Format date properly
             //if(date != null)
@@ -56,7 +56,7 @@ namespace FundManagementApplication.Controllers {
             var time = DateTime.Now.TimeOfDay.Hours;
             date = time < 17 ? DateTime.Today.AddDays(-1).ToString() : DateTime.Today.ToString();
 
-            FundFactSheetDto fundFactSheet = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fundId, date);
+            FundFactSheetDto fundFactSheet = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fund, date);
 
             switch(SelectAction) {
 
@@ -68,7 +68,7 @@ namespace FundManagementApplication.Controllers {
                 case 3:
                     return View("Factsheet", fundFactSheet);
                 default:
-                    return RedirectToAction("Search", new { SelectedFund = fundId, SelectedDate = DateTime.Today.ToString() });
+                    return RedirectToAction("Search", new { SelectedFund = fund, SelectedDate = DateTime.Today.ToString() });
 
             }
         }
