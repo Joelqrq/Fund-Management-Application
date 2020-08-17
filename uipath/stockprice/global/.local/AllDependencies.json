@@ -8118,9 +8118,9 @@
     "restore": {
       "projectUniqueName": "stockprice",
       "projectName": "stockprice",
-      "projectPath": "C:\\Users\\ngjin\\Desktop\\fundfactsheet\\Fund-Management-Application\\UiPath\\stockprice\\global\\.local",
+      "projectPath": "C:\\Users\\ngjin\\Desktop\\stockprice\\global\\.local",
       "packagesPath": "C:\\Users\\ngjin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ngjin\\Desktop\\fundfactsheet\\Fund-Management-Application\\UiPath\\stockprice\\global\\.local"
+      "outputPath": "C:\\Users\\ngjin\\Desktop\\stockprice\\global\\.local"
     },
     "frameworks": {
       "net461": {
