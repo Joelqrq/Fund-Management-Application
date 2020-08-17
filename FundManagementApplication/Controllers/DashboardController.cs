@@ -5,10 +5,9 @@ using FundManagementApplication.Utilities;
 using FundManagementApplication.ViewModels;
 using FundManagementApplication.Services;
 using System.Threading.Tasks;
-using System.Text;
-using System.Web;
 using FundManagementApplication.Models;
 using System;
+using System.Linq;
 
 namespace FundManagementApplication.Controllers {
 
@@ -27,7 +26,7 @@ namespace FundManagementApplication.Controllers {
 
             //Setup fund list
             model.Funds = await AzureDb.Funds.GetFundNames(User.Claims.GetIDFromToken());
-            model.SelectedFund = model.Funds[0].Value;
+            model.SelectedFund = model.Funds.First().Value;
 
             return View(model);
         }

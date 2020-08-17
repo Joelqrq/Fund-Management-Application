@@ -16,34 +16,34 @@ namespace FundManagementApplication.Services {
             AzureDb = azureDb;
         }
 
-        public async Task<DashboardViewModel> GenerateDashboardData(string fund, string date) {
+        public async Task<DashboardViewModel> GenerateDashboardData(string fundId, string date) {
 
             FundOverviewDto data = new FundOverviewDto();
             data.Date = DateTime.Parse(date);
 
-            if(fund == "PRES_01") {
+            if(fundId == "PRES_01") {
 
-                var priceNBB = await AzureDb.PrestigeBidToBid.Where(bb => bb.Date == data.Date).Select(bb => new { bb.Price, bb.OneMonth }).FirstAsync();
-                data.FundSize = priceNBB.Price;
-                data.BidToBid = priceNBB.OneMonth;
-                data.OfferToBid = await AzureDb.PrestigeOfferToBid.Where(ob => ob.Date == data.Date).Select(ob => ob.OneMonth).FirstAsync();
-                data.BenchmarkBidToBid = await AzureDb.StiBidToBid.Where(sbb => sbb.Date == data.Date).Select(sbb => sbb.OneMonth).FirstAsync();
+                var fundBB = await AzureDb.PrestigeBidToBid.OrderByDescending(b => b.Date).Select(b => new { b.Price, b.OneMonth }).FirstAsync();
+                data.FundSize = fundBB.Price;
+                data.BidToBid = fundBB.OneMonth;
+                data.OfferToBid = await AzureDb.PrestigeOfferToBid.OrderByDescending(b => b.Date).Select(b => b.OneMonth).FirstAsync();
+                data.BenchmarkBidToBid = await AzureDb.StiBidToBid.OrderByDescending(b => b.Date).Select(b => b.OneMonth).FirstAsync();
             }
-            else if(fund == "GLOB_01") {
-                var priceNBB = await AzureDb.GlobalBidToBid.Where(bb => bb.Date == data.Date).Select(bb => new { bb.Price, bb.OneMonth }).FirstAsync();
-                data.FundSize = priceNBB.Price;
-                data.BidToBid = priceNBB.OneMonth;
-                data.OfferToBid = await AzureDb.GlobalOfferToBid.Where(ob => ob.Date == data.Date).Select(ob => ob.OneMonth).FirstAsync();
-                data.BenchmarkBidToBid = await AzureDb.NasdaqBidToBid.Where(sbb => sbb.Date == data.Date).Select(sbb => sbb.OneMonth).FirstAsync();
+            else if(fundId == "GLOB_01") {
+                var fundBB = await AzureDb.GlobalBidToBid.OrderByDescending(b => b.Date).Select(b => new { b.Price, b.OneMonth }).FirstAsync();
+                data.FundSize = fundBB.Price;
+                data.BidToBid = fundBB.OneMonth;
+                data.OfferToBid = await AzureDb.GlobalOfferToBid.OrderByDescending(b => b.Date).Select(b => b.OneMonth).FirstAsync();
+                data.BenchmarkBidToBid = await AzureDb.NasdaqBidToBid.OrderByDescending(b => b.Date).Select(b => b.OneMonth).FirstAsync();
             }
 
             return new DashboardViewModel() {
-                SelectedFund = fund,
+                SelectedFund = fundId,
                 SelectedDate = data.Date,
-                FundSize = data.FundSize.ToString("0.##"),
-                BidToBid = data.BidToBid.ToString("0.##"),
-                OfferToBid = data.OfferToBid.ToString("0.##"),
-                BenchMark = data.BenchmarkBidToBid.ToString("0.##")
+                FundSize = data.FundSize.ToString(),
+                BidToBid = data.BidToBid.ToString(),
+                OfferToBid = data.OfferToBid.ToString(),
+                BenchMark = data.BenchmarkBidToBid.ToString()
             };
         }
     }

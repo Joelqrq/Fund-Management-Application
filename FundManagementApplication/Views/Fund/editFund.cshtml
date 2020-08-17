@@ -13,7 +13,7 @@
             }
             $.ajax({
                 type: "GET",
-                url: "/fund/displaystock",
+                url: "@Url.Action("DisplayStock", "Fund")",
                 data: { 'fundId': fundId },
                 dataType: "json",
                 success: function (json) {
@@ -38,24 +38,80 @@
         //Update stock list
         $('#updateStockList').on('click', function updateStock(e) {
             e.preventDefault();
-            console.log($('td input').serialize());
-            //$.ajax({
-            //    type: "POST",
-            //    url: "/fund/updatestock",
-            //});
+
+            var tbl = $('#stocksList tr').map(function (idxRow, ele) {
+                //
+                // start building the retVal object
+                //
+                var retVal = { };
+                //
+                // for each cell
+                //
+                var $td = $(ele).find('td').map(function (idxCell, ele) {
+                    var input = $(ele).find(':input');
+                    var button = $(ele).find(':button');
+                    // continue if cell contains a button
+                    if (button.length == 1) return;
+                    //
+                    // if cell contains an input or select....
+                    //
+                    if (input.length == 1) {
+                        var attr = $('#stockTable thead tr th').eq(idxCell).text();
+                        attr = attr.replace(/[^A-Z0-9]+/ig, "");
+                        retVal[attr] = input.val();
+                    } else {
+                        var attr = $('#stockTable thead tr th').eq(idxCell).text();
+                        attr = attr.replace(/[^A-Z0-9]+/ig, "");
+                        retVal[attr] = $(ele).text();
+                    }
+                    retVal['fundId'] = $('#fundDropdown').val();
+                });
+                return retVal;
+            }).get();
+
+            console.log(tbl);
+            console.log($('input[name="CSRF-TOKEN-ABC-FORM"]').val());
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UpdateStockList", "Fund")",
+                data: JSON.stringify(tbl),
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    "CSRF-TOKEN-ABC": $('input[name="CSRF-TOKEN-ABC-FORM"]').val()
+                },
+                dataType: "json",
+                success: function (json) {
+                    console.log(json);
+                }
+            });
         });
 
         //Add stock button
         $('#addStock').on('click', function addStock(e) {
             e.preventDefault();
-            $('#stocksList').append(
-                $(`<tr>
-                   <td><input type="text" placeholder="Enter Share Name" value="" class="form-control"></td>
-                   <td><input type="text" placeholder="Enter Stock Ticker" value="" class="form-control"></td>
-                   <td><input type="number" placeholder="Enter New Allocation" value=0 class="form-control"></td>
-                   <td><button type="button" class="btn btn-danger">Delete</button></td>
-                   </tr>`)
-            );
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetStaticStockList", "Fund")",
+                data: $('#fundDropdown').val(),
+                dataType: "json",
+                success: function (json) {
+                    console.log(json);
+                    var htmlString = '<tr><td><select id="stockDropdown" class="browser-default custom-select"><option value="">Select Stock</option>';
+                    $.each(json, function () {
+                        htmlString += '<option value ="'+this.ticker+'">'+this.shareName+'</option>';
+                    });
+                    //Close options
+                    htmlString += '</select></td><td><input id="stockTicker" type="text" class="form-control" readonly></td>'
+                        + '<td><input type="number" placeholder="Enter New Allocation" value=0 class="form-control"></td>'
+                        + '<td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
+
+                    $('#stocksList').append(htmlString);
+                    //Change ticker field according to selected stock
+                    $('#stocksList').on("change", "select", function () {
+                        $('#stockTicker').val(this.value); 
+                    });
+                }
+            });
         });
 
         function toggleButtons(fundId) {
@@ -73,17 +129,18 @@
         <!-- Funds Selection -->
         <h5 class="mt-4">Fund Name</h5>
         <select class="browser-default custom-select" id="fundDropdown" asp-items=Model.Funds>
-            <option id="selectFund" value="" selected>Select Funds</option>
+            <option value="" selected>Select Funds</option>
         </select>
     </div>
     <h5 class="mt-4">Share Details</h5>
     <hr>
 </div>
 <!-- Fund Details Table -->
+@Html.AntiForgeryToken()
 <div class="container">
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-hover">
+            <table id="stockTable" class="table table-hover">
                 <thead>
                     <tr>
                         <th>SHARE NAME</th>

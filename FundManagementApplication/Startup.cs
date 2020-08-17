@@ -27,6 +27,12 @@ namespace FundManagementApplication {
         public void ConfigureServices(IServiceCollection services) {
 
             services.AddHttpClient();
+            services.AddAntiforgery(options =>
+            {
+                options.Cookie.Name = "X-CSRF-TOKEN-ABC";
+                options.FormFieldName = "CSRF-TOKEN-ABC-FORM";
+                options.HeaderName = "CSRF-TOKEN-ABC";
+            });
 
             //Authentication
             var tokenKey = Configuration.GetValue<string>("TokenKey");

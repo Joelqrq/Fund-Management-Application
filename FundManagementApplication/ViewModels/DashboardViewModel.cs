@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FundManagementApplication.ViewModels {
     public class DashboardViewModel {
-        public List<SelectListItem> Funds { get; set; }
+        public IEnumerable<SelectListItem> Funds { get; set; }
         public string SelectedFund { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "dd-mm-yyyy", ApplyFormatInEditMode = true)]
