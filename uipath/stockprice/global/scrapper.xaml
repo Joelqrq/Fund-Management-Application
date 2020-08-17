@@ -268,7 +268,7 @@
                     <OutArgument x:TypeArguments="x:String">[str_yesterdayprice]</OutArgument>
                   </Assign.To>
                   <Assign.Value>
-                    <InArgument x:TypeArguments="x:String">[scrapingDT.Select("[Date] ='"+in_Date.AddDays(-1).ToString("MMM dd, yyyy")+"'").First()(1).ToString]</InArgument>
+                    <InArgument x:TypeArguments="x:String">[row("price").ToString]</InArgument>
                   </Assign.Value>
                 </Assign>
                 <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_52">
@@ -308,7 +308,7 @@
                         <OutArgument x:TypeArguments="x:String">[str_yesterdayprice]</OutArgument>
                       </Assign.To>
                       <Assign.Value>
-                        <InArgument x:TypeArguments="x:String">[scrapingDT.Select("[Date] ='"+in_Date.AddDays(-1).ToString("MMM dd, yyyy")+"'").First()(1).ToString]</InArgument>
+                        <InArgument x:TypeArguments="x:String">[row("price").ToString]</InArgument>
                       </Assign.Value>
                     </Assign>
                     <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_54">
@@ -454,9 +454,7 @@
       </sap:WorkflowViewStateService.ViewState>
       <ui:ExecuteNonQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" AffectedRecords="[deletedrecords]" CommandType="Text" DisplayName="clear records" ExistingDbConnection="[in_DatabaseConnection]" sap:VirtualizedContainerService.HintSize="334,87.3333333333333" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_21" Sql="DELETE FROM [dbo].[Stock] WHERE date &lt; GETDATE()- 2 AND FundId=@fundId">
         <ui:ExecuteNonQuery.Parameters>
-          <InArgument x:TypeArguments="x:String" x:Key="fundId">
-            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="fundid" />
-          </InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="fundId">[fundid]</InArgument>
         </ui:ExecuteNonQuery.Parameters>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -465,7 +463,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:ExecuteNonQuery>
-      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="334,62.6666666666667" sap2010:WorkflowViewState.IdRef="WriteLine_17" Text="[deletedrecords.ToString+&quot; records deleted where FundId='Glob_01'&quot;]" />
+      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="334,62.6666666666667" sap2010:WorkflowViewState.IdRef="WriteLine_17" Text="[deletedrecords.ToString+&quot; records deleted where FundId='Pres_01'&quot;]" />
     </Sequence>
     <ui:DatabaseDisconnect DatabaseConnection="[in_DatabaseConnection]" DisplayName="Disconnect" sap:VirtualizedContainerService.HintSize="746.666666666667,22" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_3" />
   </Sequence>
