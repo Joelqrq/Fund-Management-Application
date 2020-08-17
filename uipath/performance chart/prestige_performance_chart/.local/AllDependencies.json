@@ -1854,8 +1854,8 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "global_performance_chart",
-      "projectName": "global_performance_chart",
+      "projectUniqueName": "prestige_performance_chart",
+      "projectName": "prestige_performance_chart",
       "projectPath": "C:\\Users\\ngjin\\Desktop\\fundfactsheet\\Fund-Management-Application\\UiPath\\performance chart\\prestige_performance_chart\\.local",
       "packagesPath": "C:\\Users\\ngjin\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\ngjin\\Desktop\\fundfactsheet\\Fund-Management-Application\\UiPath\\performance chart\\prestige_performance_chart\\.local"
