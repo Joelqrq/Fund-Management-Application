@@ -64,7 +64,6 @@ namespace FundManagementApplication.Controllers {
             FundFactSheetDto fundFactSheet = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fund, date);
 
             switch (SelectAction) {
-
                 case 1:
                     //Get access token key
                     using(var client = ClientFactory.CreateClient("SendFactSheet")) {
@@ -109,10 +108,7 @@ namespace FundManagementApplication.Controllers {
                         httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                         response = await client.PostAsync("https://cloud.uipath.com/nilakspdzp/JoelQ/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs", httpContent);
                         response.EnsureSuccessStatusCode();
-                        responseBody = await response.Content.ReadAsStringAsync();
-
                     }
-
                     return View("Factsheet", fundFactSheet);
                 case 2:
                     //Call ctrl + P
@@ -121,7 +117,6 @@ namespace FundManagementApplication.Controllers {
                     return View("Factsheet", fundFactSheet);
                 default:
                     return RedirectToAction("Search", new { SelectedFund = fund, SelectedDate = DateTime.Today.ToString() });
-
             }
         }
     }
