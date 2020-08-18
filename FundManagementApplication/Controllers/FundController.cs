@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using FundManagementApplication.DataAccess;
 using FundManagementApplication.Models;
@@ -47,9 +48,8 @@ namespace FundManagementApplication.Controllers {
 
             if(!User.Identity.IsAuthenticated) return Unauthorized();
 
-            var stocks = await AzureDb.Stock.Where(s => s.FundId == fundId).ToListAsync();
-            var result = stocks.Except(stocks.Where(s => s.Name == "STI" || s.Name == "DowsJones" || s.Name == "Nasdaq"))
-                               .GroupBy(s => s.Ticker)
+            var stocks = await AzureDb.Stock.Where(s => s.FundId == fundId && s.Name != "STI" && s.Name != "DowsJones" && s.Name != "Nasdaq").ToListAsync();
+            var result = stocks.GroupBy(s => s.Ticker)
                                .Select(g => g.OrderByDescending(s => s.Date).First());
 
             return Json(result);
@@ -67,26 +67,29 @@ namespace FundManagementApplication.Controllers {
                     Ticker = stockModel.Ticker, 
                     Industry = stockModel.Sector,
                     Weight = decimal.Parse(stockModel.ShareAllocation), 
-                    FundId = stockModel.FundId 
+                    FundId = stockModel.FundId,
                 });
             }
 
+
             //Delete stocks in database
-            var client = ClientFactory.CreateClient("DeleteStock");
+            var client = ClientFactory.CreateClient("ModifyStock");
             using var httpResponse = await client.DeleteAsync($"/fund/deletestocks/{stocks}");
             httpResponse.EnsureSuccessStatusCode();
 
             //Retrieve existing stocks from database
-            var existingStocks = await AzureDb.Stock.Where(s => s.FundId == fundId || s.Name != "STI" || s.Name != "DowsJones" || s.Name != "Nasdaq")
+            var existingStocks = await AzureDb.Stock.Where(s => s.FundId == fundId && s.Name != "STI" && s.Name != "DowsJones" && s.Name != "Nasdaq")
                                                     .ToListAsync();
 
-            var stockListInDb = existingStocks.Except(existingStocks)
+            var stockListInDb = existingStocks.Except(stocks)
                                               .GroupBy(s => s.Ticker)
                                               .Select(g => g.OrderByDescending(s => s.Date).First());
 
+            //AzureDb.Stock.UpdateRange()
+
             //var newStockList = stockList.Except(stockListInDb);
 
-            return Json(stockListInDb);
+            return Json(existingStocks);
         }
 
         [HttpDelete]
