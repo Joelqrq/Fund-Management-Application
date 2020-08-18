@@ -61,21 +61,17 @@ namespace FundManagementApplication.Controllers {
             var time = DateTime.Now.TimeOfDay.Hours;
             date = time < 17 ? DateTime.Today.AddDays(-1).ToString() : DateTime.Today.ToString();
 
-            //FundFactSheetDto fundFactSheet = null;// = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fund, date);
             FundFactSheetDto fundFactSheet = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fund, date);
 
-
             switch (SelectAction) {
-
                 case 1:
                     //Get access token key
                     using(var client = ClientFactory.CreateClient("SendFactSheet")) {
-                        client.DefaultRequestHeaders.Add("X-UIPATH-TenantName", "ustglobalDecrnj331550");
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        client.DefaultRequestHeaders.Add("X-UIPATH-TenantName", "NilDefaultca3f552939");
                         var httpContent = new StringContent(JsonSerializer.Serialize(new {
                             grant_type = "refresh_token",
                             client_id = "8DEv1AMNXczW3y4U15LL3jYf62jK93n5",
-                            refresh_token = "7JBAcG_DVRWXkAzL1WvtYCaHzaoagDFNRHdS9dWUErAz3"
+                            refresh_token = "F7gOJTuAzssxBN3ZBdycu1uuGXSyWAxY6OiND_9zUpz3W"
                         }, new JsonSerializerOptions() {
                             WriteIndented = true
                         }));
@@ -88,7 +84,7 @@ namespace FundManagementApplication.Controllers {
                         //Add access token key to header
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessTokenKey);
                         //Get folder ID
-                        response = await client.GetAsync("https://cloud.uipath.com/ustglovzyunm/ustglobalDefault/odata/Folders");
+                        response = await client.GetAsync("https://cloud.uipath.com/nilakspdzp/JoelQ/odata/Folders");
                         response.EnsureSuccessStatusCode();
                         responseBody = await response.Content.ReadAsStringAsync();
                         responseJson = JObject.Parse(responseBody);
@@ -96,36 +92,23 @@ namespace FundManagementApplication.Controllers {
                         //Set folder ID
                         client.DefaultRequestHeaders.Add("X-UIPATH-OrganizationUnitId", folderId);
                         //Get Release Key
-                        response = await client.GetAsync("https://cloud.uipath.com/ustglovzyunm/ustglobalDefault/odata/Releases?$filter=ProcessKey eq 'ArgumentAutomation'");
+                        response = await client.GetAsync("https://cloud.uipath.com/nilakspdzp/JoelQ/odata/Releases?$filter=ProcessKey eq 'EmailAutomation'");
                         response.EnsureSuccessStatusCode();
                         responseBody = await response.Content.ReadAsStringAsync();
                         responseJson = JObject.Parse(responseBody);
                         string releaseKey = responseJson["value"][0]["Key"].ToString();
                         //Get Robot ID
-                        response = await client.GetAsync("https://cloud.uipath.com/ustglovzyunm/ustglobalDefault/odata/Robots?$filter=Name eq 'JoelRobot'");
+                        response = await client.GetAsync("https://cloud.uipath.com/nilakspdzp/JoelQ/odata/Robots?$filter=Name eq 'JoelRobot'");
                         response.EnsureSuccessStatusCode();
                         responseBody = await response.Content.ReadAsStringAsync();
                         responseJson = JObject.Parse(responseBody);
                         string robotId = responseJson["value"][0]["Id"].ToString();
                         //Start Job(Process)
-                        httpContent = new StringContent(JsonSerializer.Serialize(new {
-                            startInfo = new {
-                                ReleaseKey = releaseKey,
-                                Strategy = "Specific",
-                                RobotIds = $"[{robotId}]",
-                                JobsCount = 0,
-                                InputArguments = new {
-                                    message = "test"
-                                }
-                            }
-                        }));
+                        httpContent = new StringContent("{ \"startInfo\":{\"ReleaseKey\": \""+releaseKey+"\",\"Strategy\": \"Specific\",\"RobotIds\": ["+robotId+"],\"JobsCount\": 0,\"InputArguments\": \"{ \\\"FundID\\\": \\\""+fund+"\\\" }\"}}");
                         httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                        response = await client.PostAsync("https://cloud.uipath.com/ustglovzyunm/ustglobalDefault/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs", httpContent);
+                        response = await client.PostAsync("https://cloud.uipath.com/nilakspdzp/JoelQ/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs", httpContent);
                         response.EnsureSuccessStatusCode();
-                        responseBody = await response.Content.ReadAsStringAsync();
-
                     }
-
                     return View("Factsheet", fundFactSheet);
                 case 2:
                     //Call ctrl + P
@@ -134,7 +117,6 @@ namespace FundManagementApplication.Controllers {
                     return View("Factsheet", fundFactSheet);
                 default:
                     return RedirectToAction("Search", new { SelectedFund = fund, SelectedDate = DateTime.Today.ToString() });
-
             }
         }
     }
