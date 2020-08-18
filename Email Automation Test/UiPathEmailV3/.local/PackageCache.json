@@ -130,6 +130,19 @@
         "C:\\Users\\Jason\\.nuget\\packages\\uipath.vision/2.1.0-preview\\lib/net461/UiPath.Vision.dll"
       ],
       "Path": "C:\\Users\\Jason\\.nuget\\packages\\uipath.uiautomation.activities\\20.6.0-preview"
+    },
+    {
+      "Package": {
+        "Id": "UiPath.Database.Activities",
+        "Version": "1.3.7369.25200"
+      },
+      "Assemblies": [
+        "C:\\Users\\Jason\\.nuget\\packages\\uipath.database.activities/1.3.7369.25200\\lib/net452/Microsoft.Data.ConnectionUI.Dialog.dll",
+        "C:\\Users\\Jason\\.nuget\\packages\\uipath.database.activities/1.3.7369.25200\\lib/net452/UiPath.Database.Activities.Design.dll",
+        "C:\\Users\\Jason\\.nuget\\packages\\uipath.database.activities/1.3.7369.25200\\lib/net452/UiPath.Database.Activities.dll",
+        "C:\\Users\\Jason\\.nuget\\packages\\uipath.database.activities/1.3.7369.25200\\lib/net452/UiPath.Database.dll"
+      ],
+      "Path": "C:\\Users\\Jason\\.nuget\\packages\\uipath.database.activities\\1.3.7369.25200"
     }
   ],
   "Conflicts": [],
@@ -257,6 +270,11 @@
     "UiPath": {
       "Id": "UiPath",
       "Version": "20.6.7473.25550-preview",
+      "Dependencies": []
+    },
+    "UiPath.Database.Activities": {
+      "Id": "UiPath.Database.Activities",
+      "Version": "1.3.7369.25200",
       "Dependencies": []
     },
     "UiPath.Excel.Activities": {
@@ -676,6 +694,19 @@
         "C:\\Users\\Jason\\.nuget\\packages\\uipath\\20.6.7473.25550-preview\\lib\\UiPath.Interop.dll"
       ],
       "Path": "C:\\Users\\Jason\\.nuget\\packages\\uipath\\20.6.7473.25550-preview"
+    },
+    {
+      "Package": {
+        "Id": "UiPath.Database.Activities",
+        "Version": "1.3.7369.25200"
+      },
+      "Assemblies": [
+        "C:\\Users\\Jason\\.nuget\\packages\\uipath.database.activities\\1.3.7369.25200\\lib\\net452\\Microsoft.Data.ConnectionUI.Dialog.dll",
+        "C:\\Users\\Jason\\.nuget\\packages\\uipath.database.activities\\1.3.7369.25200\\lib\\net452\\UiPath.Database.Activities.Design.dll",
+        "C:\\Users\\Jason\\.nuget\\packages\\uipath.database.activities\\1.3.7369.25200\\lib\\net452\\UiPath.Database.Activities.dll",
+        "C:\\Users\\Jason\\.nuget\\packages\\uipath.database.activities\\1.3.7369.25200\\lib\\net452\\UiPath.Database.dll"
+      ],
+      "Path": "C:\\Users\\Jason\\.nuget\\packages\\uipath.database.activities\\1.3.7369.25200"
     },
     {
       "Package": {
