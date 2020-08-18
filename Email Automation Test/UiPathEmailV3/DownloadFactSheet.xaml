@@ -2,7 +2,7 @@
   <x:Members>
     <x:Property Name="FundID" Type="InArgument(x:String)" />
   </x:Members>
-  <sap:VirtualizedContainerService.HintSize>780.8,4152.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>806.8,4152.4</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="19">
@@ -307,6 +307,6 @@
         </ActivityAction>
       </ui:ForEachRow.Body>
     </ui:ForEachRow>
-    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="602,59.2" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;You have successfully emailed &quot; +FactSheet+ &quot; Fund Factsheet to the investors&quot;]" />
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="602,59.2" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;You have successfully emailed &quot; +FactSheet+ &quot; Fund Factsheet to the investors, Thank you&quot;]" />
   </Sequence>
 </Activity>
