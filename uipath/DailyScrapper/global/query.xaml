@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" this:Main.in_TableName="PRES_01" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_TableName" Type="InArgument(x:String)" />
   </x:Members>
@@ -106,10 +106,18 @@
     </ui:ExecuteQuery>
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Workflow File" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="scrapper.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_StockList">[stockList]</InArgument>
-        <InArgument x:TypeArguments="ui:DatabaseConnection" x:Key="in_DatabaseConnection">[DatabaseConnection]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_TableName">[in_TableName]</InArgument>
-        <InArgument x:TypeArguments="s:DateTime" x:Key="in_Date">[DateTime.Today]</InArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_StockList">
+          <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="stockList" />
+        </InArgument>
+        <InArgument x:TypeArguments="ui:DatabaseConnection" x:Key="in_DatabaseConnection">
+          <mva:VisualBasicValue x:TypeArguments="ui:DatabaseConnection" ExpressionText="DatabaseConnection" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_TableName">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TableName" />
+        </InArgument>
+        <InArgument x:TypeArguments="s:DateTime" x:Key="in_Date">
+          <mva:VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="DateTime.Today.AddDays(-1)" />
+        </InArgument>
       </ui:InvokeWorkflowFile.Arguments>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
