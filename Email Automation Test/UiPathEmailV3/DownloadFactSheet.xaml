@@ -1,12 +1,11 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="DownloadFactSheet" this:DownloadFactSheet.InvestorEmailAddress="[new List(of String) From {&quot;Tiongrealty@gmail.com&quot;,&quot;148728@ust-global.com&quot;}]" this:DownloadFactSheet.FactSheet="Prestige" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="DownloadFactSheet" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="InvestorEmailAddress" Type="InArgument(scg:List(x:String))" />
-    <x:Property Name="FactSheet" Type="InArgument(x:String)" />
+    <x:Property Name="FundID" Type="InArgument(x:String)" />
   </x:Members>
-  <sap:VirtualizedContainerService.HintSize>763.2,3000.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>780.8,4152.4</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="17">
+    <scg:List x:TypeArguments="x:String" Capacity="19">
       <x:String>System</x:String>
       <x:String>System.Collections</x:String>
       <x:String>System.Collections.Generic</x:String>
@@ -24,10 +23,12 @@
       <x:String>Microsoft.VisualBasic</x:String>
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Database</x:String>
+      <x:String>System.Xml.Serialization</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="25">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="26">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -53,20 +54,84 @@
       <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Database</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap:VirtualizedContainerService.HintSize="644,2835.2" sap2010:WorkflowViewState.IdRef="Sequence_18">
+  <Sequence sap:VirtualizedContainerService.HintSize="644,3987.2" sap2010:WorkflowViewState.IdRef="Sequence_18">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Default="AungWengJason.Tiong@ust-global.com" Name="FromReceipent" />
       <Variable x:TypeArguments="x:String" Name="reportSavedPath" />
       <Variable x:TypeArguments="x:String" Name="reportDate" />
       <Variable x:TypeArguments="x:String" Name="DFFSpath" />
+      <Variable x:TypeArguments="ui:DatabaseConnection" Name="DbConnect" />
+      <Variable x:TypeArguments="sd:DataTable" Name="InvestorEmailAddress" />
+      <Variable x:TypeArguments="sd:DataTable" Name="FactSheetName" />
+      <Variable x:TypeArguments="x:String" Name="FactSheet" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
+    <ui:DatabaseConnect DatabaseConnection="[DbConnect]" DisplayName="Connect" sap:VirtualizedContainerService.HintSize="602,59.2" sap2010:WorkflowViewState.IdRef="DatabaseConnect_1" ProviderName="System.Data.SqlClient" ConnectionString="Data Source=rpa2020.database.windows.net;Initial Catalog=dailyfundfactsheet;Persist Security Info=True;User ID=rpa2020;Password=Rpa_2020">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:DatabaseConnect>
+    <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[InvestorEmailAddress]" DisplayName="Query Email Address" ExistingDbConnection="[DbConnect]" sap:VirtualizedContainerService.HintSize="602,88.4" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="[&quot;Select Email, Name from [dbo].[Investor]  where Fund_ID = '&quot; + FundID + &quot;'&quot;]">
+      <ui:ExecuteQuery.Parameters>
+        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+      </ui:ExecuteQuery.Parameters>
+    </ui:ExecuteQuery>
+    <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[InvestorEmailAddress]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="602,302.8" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+      <ui:ForEachRow.Body>
+        <ActivityAction x:TypeArguments="sd:DataRow">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="272,154.4" sap2010:WorkflowViewState.IdRef="Sequence_27">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="230,62.4" sap2010:WorkflowViewState.IdRef="WriteLine_10" Text="[row(0).ToString + &quot; &quot; + row(1).ToString]" />
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEachRow.Body>
+    </ui:ForEachRow>
+    <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DataTable="[FactSheetName]" DisplayName="Query Email Address" ExistingDbConnection="[DbConnect]" sap:VirtualizedContainerService.HintSize="602,88.4" sap2010:WorkflowViewState.IdRef="ExecuteQuery_2" Sql="[&quot;Select FundName From [dbo].[Funds] Where PK_Fund_ID = '&quot; + FundID + &quot;'&quot;]">
+      <ui:ExecuteQuery.Parameters>
+        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+      </ui:ExecuteQuery.Parameters>
+    </ui:ExecuteQuery>
+    <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[FactSheetName]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="602,300" sap2010:WorkflowViewState.IdRef="ForEachRow_4">
+      <ui:ForEachRow.Body>
+        <ActivityAction x:TypeArguments="sd:DataRow">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="304.4,151.6" sap2010:WorkflowViewState.IdRef="Sequence_30">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="262.4,59.6" sap2010:WorkflowViewState.IdRef="Assign_5">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[FactSheet]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[row(0).ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEachRow.Body>
+    </ui:ForEachRow>
+    <WriteLine DisplayName="Check Factsheet Name" sap:VirtualizedContainerService.HintSize="602,62.4" sap2010:WorkflowViewState.IdRef="WriteLine_13" Text="[FactSheet]" />
     <Sequence DisplayName="Download FactSheet" sap:VirtualizedContainerService.HintSize="602,2225.6" sap2010:WorkflowViewState.IdRef="Sequence_11">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -150,7 +215,7 @@
                   <InArgument x:TypeArguments="x:String">[Environment.CurrentDirectory + reportSavedPath+FactSheet+"_"+reportDate+".pdf"]</InArgument>
                 </Assign.Value>
               </Assign>
-              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="484,62.4" sap2010:WorkflowViewState.IdRef="WriteLine_8" Text="[DFFSpath]" />
+              <WriteLine DisplayName="Check Path" sap:VirtualizedContainerService.HintSize="484,62.4" sap2010:WorkflowViewState.IdRef="WriteLine_8" Text="[DFFSpath]" />
               <ui:TypeInto AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" DisplayName="Type Into 'Edit'" sap:VirtualizedContainerService.HintSize="484,134" sap2010:WorkflowViewState.IdRef="TypeInto_5" SimulateType="False" Text="[DFFSpath]">
                 <ui:TypeInto.Target>
                   <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="b930d531-5616-436b-85b0-008b881d4d45" InformativeScreenshot="eb9cc463aa2b978a33c9e7e3db16f8c1" Selector="&lt;wnd app='chrome.exe' cls='*' title='Save As' /&gt;&lt;wnd aaname='Explorer Pane' cls='DirectUIHWND' /&gt;&lt;wnd aaname='File name:' cls='ComboBox' /&gt;&lt;wnd /&gt;">
@@ -219,31 +284,29 @@
         </ui:BrowserScope.Body>
       </ui:BrowserScope>
     </Sequence>
-    <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="602,477.6" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[InvestorEmailAddress]">
-      <ui:ForEach.Body>
-        <ActivityAction x:TypeArguments="x:Object">
+    <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[InvestorEmailAddress]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="602,389.2" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
+      <ui:ForEachRow.Body>
+        <ActivityAction x:TypeArguments="sd:DataRow">
           <ActivityAction.Argument>
-            <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
+            <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,343.2" sap2010:WorkflowViewState.IdRef="Sequence_15">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,240.8" sap2010:WorkflowViewState.IdRef="Sequence_29">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="[FromReceipent]" Body="[&quot;Hi attached is your daily fundfactsheet for &quot;+now.tostring(“dd_MMM_yy”)]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,148.8" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" IsBodyHtml="False" IsDraft="False" Subject="[FactSheet + &quot; Daily Fund FactSheet Report&quot;]" To="[item.ToString]">
+            <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="[FromReceipent]" Body="[&quot;Hi &quot; +row(1).ToString+&quot; &quot; +vbCrLf +&quot;Please find attached your daily fundfactsheet for &quot;+now.tostring(“dd_MMM_yy”) +vbCrLf+ vbCrLf+vbCrLf+vbCrLf+&quot;Sincerely&quot;  +vbCrLf+ &quot;ABC Fund Management Team&quot;]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,148.8" sap2010:WorkflowViewState.IdRef="SendOutlookMail_2" IsBodyHtml="False" IsDraft="False" Subject="[FactSheet + &quot; Daily Fund FactSheet Report&quot;]" To="[row(0).ToString]">
               <ui:SendOutlookMail.Files>
                 <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
-                  <InArgument x:TypeArguments="x:String">
-                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="DFFSpath" />
-                  </InArgument>
+                  <InArgument x:TypeArguments="x:String">[DFFSpath]</InArgument>
                 </scg:List>
               </ui:SendOutlookMail.Files>
             </ui:SendOutlookMail>
-            <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="334,62.4" sap2010:WorkflowViewState.IdRef="WriteLine_5" Text="[item.ToString +&quot;Hi attached is your daily fundfactsheet for &quot;+System.DateTime.Now.ToString]" />
           </Sequence>
         </ActivityAction>
-      </ui:ForEach.Body>
-    </ui:ForEach>
+      </ui:ForEachRow.Body>
+    </ui:ForEachRow>
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="602,59.2" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;You have successfully emailed &quot; +FactSheet+ &quot; Fund Factsheet to the investors&quot;]" />
   </Sequence>
 </Activity>
