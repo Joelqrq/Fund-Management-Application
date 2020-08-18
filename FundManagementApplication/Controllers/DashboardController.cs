@@ -61,9 +61,11 @@ namespace FundManagementApplication.Controllers {
             var time = DateTime.Now.TimeOfDay.Hours;
             date = time < 17 ? DateTime.Today.AddDays(-1).ToString() : DateTime.Today.ToString();
 
-            FundFactSheetDto fundFactSheet = null;// = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fund, date);
+            //FundFactSheetDto fundFactSheet = null;// = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fund, date);
+            FundFactSheetDto fundFactSheet = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fund, date);
 
-            switch(SelectAction) {
+
+            switch (SelectAction) {
 
                 case 1:
                     //Get access token key
