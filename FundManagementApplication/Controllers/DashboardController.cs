@@ -63,7 +63,7 @@ namespace FundManagementApplication.Controllers {
 
             FundFactSheetDto fundFactSheet = await new FundFactSheetGenerator(AzureDb).GenerateFactSheet(User.Claims.GetIDFromToken(), fund, date);
 
-            switch(SelectAction) {
+            switch (SelectAction) {
 
                 case 1:
                     //Get access token key
