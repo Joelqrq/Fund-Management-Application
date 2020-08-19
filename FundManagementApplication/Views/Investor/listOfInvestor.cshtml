@@ -1,5 +1,6 @@
 ﻿@model InvestorViewModel
 
+
 <!-- Create New Fund Header -->
 <div class="container">
     <div class="row>">
@@ -9,66 +10,64 @@
 
         <form>
             <h5 class="mt-2">Fund Name</h5>
-            <select class="browser-default custom-select">
-                <option id="selectFund" selected>Select Funds</option>
-                <option value="Prestige">ABC Prestige</option>
-                <option value="Global">ABC Global</option>
+            <select class="browser-default custom-select" asp-for="SelectedFund" asp-items="Model.Funds">
+                <option id="selectFund" value="" selected>Select Funds</option>
+
             </select>
+
             <h5 class="mt-2">Investor Name</h5>
-            <input class="form-control py-4" id="inputInvestorName" type="text" placeholder="Enter Investor Name" asp-for="investorName" />
+            <input class="form-control py-4" id="inputInvestorName" type="text" placeholder="Enter Investor Name" value="Jason Tiong" asp-for="newInvestorName" />
             <h5 class="mt-2">Investor Email Address</h5>
-            <input class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter Email Address" asp-for="investorEmail" />
+            <input class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter Email Address" value ="148728@ust-global.com" asp-for="newInvestorEmail" />
 
             <div class="form-group d-flex  justify-content-center mt-4 mb-2">
-                <a class="btn btn-invert btn-block-invert" onclick="searchInvestors();" href="#">Search</a>
+                <button type="submit" class="btn btn-invert btn-block-invert">Search</button>
             </div>
+
         </form>
 
     </div>
 </div>
 
-<div class="container">
+<div class="container mt-3">
     <div class="row>">
         <h5 class="pt-0">
-            Search Results</h4>
-            <hr>
-            <!-- Fund Details Table -->
-            <div class="row">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Investor Name</th>
-                                <th>Email</th>
-                                <th>Fund</th>
-                                <th>Edit Details</th>
+            Search Results
+        </h5>
+        <hr>
+        <!-- Fund Details Table -->
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Investor Name</th>
+                            <th>Email</th>
+                            <th>Fund</th>
+                            <th>Edit Details</th>
 
 
-                            </tr>
-                        </thead>
-                        <form>
-                            <tbody>
-                                <tr id="int1">
-                                    <td>G01</td>
-                                    <td id="name1">John Pinsker</td>
-                                    <td id="email1">Johnpinsker@live.com</td>
-                                    <td id="fund1">ABC Global Fund</td>
-                                    <td class="mt-2"><button class="badge badge-warning" onclick="editInvestor"><i class="far fa-edit"></i> Edit</button></td>
-                                </tr>
-
-                                <tr id="int2">
-                                    <td>G02</td>
-                                    <td id="name2">John Pinsker</td>
-                                    <td id="email2">Johnpinsker@live.com</td>
-                                    <td id="fund2">ABC Global Fund</td>
+                        </tr>
+                    </thead>
+                    <form>
+                        <tbody>
+                            @foreach (var InvestorDetails in Model.GetInvestorDetails)
+                            {
+                                <tr>
+                                    <td>@InvestorDetails.InvestorID
+                                    <td>
+                                    <td>@InvestorDetails.InvestorName </td>
+                                    <td>@InvestorDetails.InvestorEmail</td>
+                                    <td>@InvestorDetails.FundName</td>
                                     <td class="mt-2"><button class="badge badge-warning" onclick="editInvestor"><i class="far fa-edit"></i> Edit</button></td>
                                     <!-- <td><button type="button" data-toggle="modal" data-target="#edit" data-uid="2" class="update btn btn-warning btn-sm"><i class="far fa-edit"></i> </button></td> -->
                                 </tr>
-                            </tbody>
-                        </form>
-                    </table>
-                </div>
-            </div>   <!-- Funds Selection -->
+                            }
+                        </tbody>
+                    </form>
+                </table>
+            </div>
+        </div>   <!-- Funds Selection -->
     </div>
 </div>
