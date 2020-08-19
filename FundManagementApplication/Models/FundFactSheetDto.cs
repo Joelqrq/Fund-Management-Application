@@ -43,7 +43,9 @@ namespace FundManagementApplication.Models {
         public string InitialFee { get; set; }
         public DateTime InceptionDate { get; set; }
         public string FundManagerName { get; set; }
-        public decimal FundSize { get; set; }
+
+        // Change FundSize data type to string from decimal
+        public String FundSize { get; set; }
         public string AnnualizeReturns { get; set; }
         public string StockCurrency { get; set; }
         public List<string> BenchmarkNames { get; set; }

@@ -40,10 +40,10 @@ namespace FundManagementApplication.Services {
             return new DashboardViewModel() {
                 SelectedFund = fundId,
                 SelectedDate = data.Date,
-                FundSize = data.FundSize.ToString(),
-                BidToBid = data.BidToBid.ToString(),
-                OfferToBid = data.OfferToBid.ToString(),
-                BenchMark = data.BenchmarkBidToBid.ToString()
+                FundSize = data.FundSize.ToString("C"),
+                BidToBid = data.BidToBid.ToString("p"),
+                OfferToBid = data.OfferToBid.ToString("p"),
+                BenchMark = data.BenchmarkBidToBid.ToString("p")
             };
         }
     }
