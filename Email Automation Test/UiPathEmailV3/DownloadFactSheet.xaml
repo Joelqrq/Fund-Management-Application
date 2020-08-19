@@ -2,7 +2,7 @@
   <x:Members>
     <x:Property Name="FundID" Type="InArgument(x:String)" />
   </x:Members>
-  <sap:VirtualizedContainerService.HintSize>806.8,4152.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>638,4152.4</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="19">
@@ -296,7 +296,7 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="[FromReceipent]" Body="[&quot;Hi &quot; +row(1).ToString+&quot; &quot; +vbCrLf +&quot;Please find attached your daily fundfactsheet for &quot;+now.tostring(“dd_MMM_yy”) +vbCrLf+ vbCrLf+vbCrLf+vbCrLf+&quot;Sincerely&quot;  +vbCrLf+ &quot;ABC Fund Management Team&quot;]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,148.8" sap2010:WorkflowViewState.IdRef="SendOutlookMail_2" IsBodyHtml="False" IsDraft="False" Subject="[FactSheet + &quot; Daily Fund FactSheet Report&quot;]" To="[row(0).ToString]">
+            <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="[FromReceipent]" Body="[&quot;Hi &quot; +row(1).ToString+&quot;, &quot; +vbCrLf +&quot;Please find attached your daily fund factsheet for &quot;+now.tostring(“dd_MMM_yy”) +vbCrLf+ vbCrLf+vbCrLf+vbCrLf+&quot;Sincerely&quot;  +vbCrLf+ &quot;ABC Fund Management Team&quot;]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,148.8" sap2010:WorkflowViewState.IdRef="SendOutlookMail_2" IsBodyHtml="False" IsDraft="False" Subject="[FactSheet + &quot; Daily Fund FactSheet Report&quot;]" To="[row(0).ToString]">
               <ui:SendOutlookMail.Files>
                 <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
                   <InArgument x:TypeArguments="x:String">[DFFSpath]</InArgument>

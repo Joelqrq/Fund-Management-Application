@@ -134,7 +134,7 @@ namespace FundManagementApplication.Services {
         private async Task<FundDetailsDto> RetrieveFundDetailsData(FundManager fm, Funds fund, IEnumerable<Stock> stocks) {
 
             var fundDetails = new FundDetailsDto() {
-                InitialFee = fund.FundFee.ToString(),
+                InitialFee = fund.FundFee.ToString("P"),
                 InceptionDate = fund.InceptionDate,
                 FundManagerName = fm.FundManagerName,
                 StockCurrency = stocks.Select(s => s.Currency).First(),
@@ -144,16 +144,16 @@ namespace FundManagementApplication.Services {
 
             if(FundId == "PRES_01") {
                 var details = await AzureDb.PrestigeBidToBid.OrderByDescending(b => b.Date).FirstAsync();
-                fundDetails.FundSize = details.Price;
-                fundDetails.AnnualizeReturns = details.SinceInception.ToString();
+                fundDetails.FundSize = details.Price.ToString("C");
+                fundDetails.AnnualizeReturns = details.SinceInception.ToString("P");
                 fundDetails.BenchmarkNames = new List<string>() {
                     AzureDb.StiBidToBid.Select(sti => sti.Name).First()
                 };
             }
             else if(FundId == "GLOB_01") {
                 var details = await AzureDb.GlobalBidToBid.OrderByDescending(b => b.Date).FirstAsync();
-                fundDetails.FundSize = details.Price;
-                fundDetails.AnnualizeReturns = details.SinceInception.ToString();
+                fundDetails.FundSize = details.Price.ToString("C");
+                fundDetails.AnnualizeReturns = details.SinceInception.ToString("P");
                 fundDetails.BenchmarkNames = new List<string>() {
                     AzureDb.NasdaqBidToBid.Select(sti => sti.Name).First(),
                     AzureDb.DowJonesBidToBid.Select(sti => sti.Name).First()
@@ -172,32 +172,32 @@ namespace FundManagementApplication.Services {
                 var bidToBidData = await AzureDb.PrestigeBidToBid.OrderByDescending(b => b.Date).FirstAsync();
                 var bidToBid = new PerformanceTableColumnDto() {
                     Name = "Bid to Bid %",
-                    OneMonth = bidToBidData.OneMonth.ToString(),
-                    ThreeMonth = bidToBidData.ThreeMonth.ToString(),
-                    SixMonth = bidToBidData.SixMonth.ToString(),
-                    OneYear = bidToBidData.OneYear.ToString(),
-                    SinceInception = bidToBidData.SinceInception.ToString(),
-                    YearToDate = bidToBidData.Ytd.ToString()
+                    OneMonth = bidToBidData.OneMonth.ToString("P"),
+                    ThreeMonth = bidToBidData.ThreeMonth.ToString("P"),
+                    SixMonth = bidToBidData.SixMonth.ToString("P"),
+                    OneYear = bidToBidData.OneYear.ToString("P"),
+                    SinceInception = bidToBidData.SinceInception.ToString("P"),
+                    YearToDate = bidToBidData.Ytd.ToString("P")
                 };
                 var offerToBidData = await AzureDb.PrestigeOfferToBid.OrderByDescending(b => b.Date).FirstAsync();
                 var offerToBid = new PerformanceTableColumnDto() {
                     Name = "Offer to Bid %",
-                    OneMonth = offerToBidData.OneMonth.ToString(),
-                    ThreeMonth = offerToBidData.ThreeMonth.ToString(),
-                    SixMonth = offerToBidData.SixMonth.ToString(),
-                    OneYear = offerToBidData.OneYear.ToString(),
-                    SinceInception = offerToBidData.SinceInception.ToString(),
-                    YearToDate = offerToBidData.Ytd.ToString()
+                    OneMonth = offerToBidData.OneMonth.ToString("P"),
+                    ThreeMonth = offerToBidData.ThreeMonth.ToString("P"),
+                    SixMonth = offerToBidData.SixMonth.ToString("P"),
+                    OneYear = offerToBidData.OneYear.ToString("P"),
+                    SinceInception = offerToBidData.SinceInception.ToString("P"),
+                    YearToDate = offerToBidData.Ytd.ToString("P")
                 };
                 var benchMarkData = await AzureDb.StiBidToBid.OrderByDescending(b => b.Date).FirstAsync();
                 var benchMark = new PerformanceTableColumnDto() {
                     Name = $"{benchMarkData.Name} %",
-                    OneMonth = benchMarkData.OneMonth.ToString(),
-                    ThreeMonth = benchMarkData.ThreeMonth.ToString(),
-                    SixMonth = benchMarkData.SixMonth.ToString(),
-                    OneYear = benchMarkData.OneYear.ToString(),
-                    SinceInception = benchMarkData.SinceInception.ToString(),
-                    YearToDate = benchMarkData.Ytd.ToString()
+                    OneMonth = benchMarkData.OneMonth.ToString("P"),
+                    ThreeMonth = benchMarkData.ThreeMonth.ToString("P"),
+                    SixMonth = benchMarkData.SixMonth.ToString("P"),
+                    OneYear = benchMarkData.OneYear.ToString("P"),
+                    SinceInception = benchMarkData.SinceInception.ToString("P"),
+                    YearToDate = benchMarkData.Ytd.ToString("P")
                 };
 
                 performanceTable.Performances.Add(bidToBid);
@@ -208,42 +208,42 @@ namespace FundManagementApplication.Services {
                 var bidToBidData = await AzureDb.GlobalBidToBid.OrderByDescending(b => b.Date).FirstAsync();
                 var bidToBid = new PerformanceTableColumnDto() {
                     Name = "Bid to Bid %",
-                    OneMonth = bidToBidData.OneMonth.ToString(),
-                    ThreeMonth = bidToBidData.ThreeMonth.ToString(),
-                    SixMonth = bidToBidData.SixMonth.ToString(),
-                    OneYear = bidToBidData.OneYear.ToString(),
-                    SinceInception = bidToBidData.SinceInception.ToString(),
-                    YearToDate = bidToBidData.Ytd.ToString()
+                    OneMonth = bidToBidData.OneMonth.ToString("P"),
+                    ThreeMonth = bidToBidData.ThreeMonth.ToString("P"),
+                    SixMonth = bidToBidData.SixMonth.ToString("P"),
+                    OneYear = bidToBidData.OneYear.ToString("P"),
+                    SinceInception = bidToBidData.SinceInception.ToString("P"),
+                    YearToDate = bidToBidData.Ytd.ToString("P")
                 };
                 var offerToBidData = await AzureDb.GlobalOfferToBid.OrderByDescending(b => b.Date).FirstAsync();
                 var offerToBid = new PerformanceTableColumnDto() {
                     Name = "Offer to Bid %",
-                    OneMonth = offerToBidData.OneMonth.ToString(),
-                    ThreeMonth = offerToBidData.ThreeMonth.ToString(),
-                    SixMonth = offerToBidData.SixMonth.ToString(),
-                    OneYear = offerToBidData.OneYear.ToString(),
-                    SinceInception = offerToBidData.SinceInception.ToString(),
-                    YearToDate = offerToBidData.Ytd.ToString()
+                    OneMonth = offerToBidData.OneMonth.ToString("P"),
+                    ThreeMonth = offerToBidData.ThreeMonth.ToString("P"),
+                    SixMonth = offerToBidData.SixMonth.ToString("P"),
+                    OneYear = offerToBidData.OneYear.ToString("P"),
+                    SinceInception = offerToBidData.SinceInception.ToString("P"),
+                    YearToDate = offerToBidData.Ytd.ToString("P")
                 };
                 var djBenchMarkData = await AzureDb.DowJonesBidToBid.OrderByDescending(b => b.Date).FirstAsync();
                 var djBenchMark = new PerformanceTableColumnDto() {
                     Name = $"{djBenchMarkData.Name} %",
-                    OneMonth = djBenchMarkData.OneMonth.ToString(),
-                    ThreeMonth = djBenchMarkData.ThreeMonth.ToString(),
-                    SixMonth = djBenchMarkData.SixMonth.ToString(),
-                    OneYear = djBenchMarkData.OneYear.ToString(),
-                    SinceInception = djBenchMarkData.SinceInception.ToString(),
-                    YearToDate = djBenchMarkData.Ytd.ToString()
+                    OneMonth = djBenchMarkData.OneMonth.ToString("P"),
+                    ThreeMonth = djBenchMarkData.ThreeMonth.ToString("P"),
+                    SixMonth = djBenchMarkData.SixMonth.ToString("P"),
+                    OneYear = djBenchMarkData.OneYear.ToString("P"),
+                    SinceInception = djBenchMarkData.SinceInception.ToString("P"),
+                    YearToDate = djBenchMarkData.Ytd.ToString("P")
                 };
                 var nqBenchMarkData = await AzureDb.NasdaqBidToBid.OrderByDescending(b => b.Date).FirstAsync();
                 var nqBenchMark = new PerformanceTableColumnDto() {
                     Name = $"{nqBenchMarkData.Name} %",
-                    OneMonth = nqBenchMarkData.OneMonth.ToString(),
-                    ThreeMonth = nqBenchMarkData.ThreeMonth.ToString(),
-                    SixMonth = nqBenchMarkData.SixMonth.ToString(),
-                    OneYear = nqBenchMarkData.OneYear.ToString(),
-                    SinceInception = nqBenchMarkData.SinceInception.ToString(),
-                    YearToDate = nqBenchMarkData.Ytd.ToString()
+                    OneMonth = nqBenchMarkData.OneMonth.ToString("P"),
+                    ThreeMonth = nqBenchMarkData.ThreeMonth.ToString("P"),
+                    SixMonth = nqBenchMarkData.SixMonth.ToString("P"),
+                    OneYear = nqBenchMarkData.OneYear.ToString("P"),
+                    SinceInception = nqBenchMarkData.SinceInception.ToString("P"),
+                    YearToDate = nqBenchMarkData.Ytd.ToString("P")
                 };
 
                 performanceTable.Performances.Add(bidToBid);
