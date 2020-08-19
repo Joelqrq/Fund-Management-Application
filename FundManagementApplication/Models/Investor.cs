@@ -22,6 +22,8 @@ namespace FundManagementApplication.Models
         [StringLength(10)]
         public string FundManagerId { get; set; }
 
+        public string Fund_ID { get; set; }
+
         [ForeignKey(nameof(FundManagerId))]
         [InverseProperty("Investor")]
         public virtual FundManager FundManager { get; set; }
