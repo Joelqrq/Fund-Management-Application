@@ -1854,8 +1854,8 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "global_bidtobid",
-      "projectName": "global_bidtobid",
+      "projectUniqueName": "prestige_offertobid",
+      "projectName": "prestige_offertobid",
       "projectPath": "C:\\Users\\ngjin\\Desktop\\fundfactsheet\\Fund-Management-Application\\UiPath\\offer to bid\\prestige_offertobid\\.local",
       "packagesPath": "C:\\Users\\ngjin\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\ngjin\\Desktop\\fundfactsheet\\Fund-Management-Application\\UiPath\\offer to bid\\prestige_offertobid\\.local"
