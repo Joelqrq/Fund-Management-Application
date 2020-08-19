@@ -51,7 +51,6 @@ namespace FundManagementApplication.Controllers {
         /// <param name="email"></param>
         /// <returns></returns>
         [HttpPost]
-        [IgnoreAntiforgeryToken]
         public IActionResult Update([FromForm]string name, [FromForm]string email) {
 
             ProfileViewModel model = new ProfileViewModel()

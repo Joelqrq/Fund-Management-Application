@@ -36,7 +36,7 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         @*<a class="@Html.IsSelected("Fund", "createNewFund", "dropdown-item")" href="/fund/createNewFund">Create New Fund</a>*@
-                                        <a class="@Html.IsSelected("Fund", "editFund", "dropdown-item")" asp-controller="Fund" asp-action="EditFund">Edit Funds</a>
+                                        <a class="@Html.IsSelected("Fund", "viewfund", "dropdown-item")" asp-controller="Fund" asp-action="ViewFund">View Funds</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown px-3">
@@ -46,7 +46,6 @@
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="@Html.IsSelected("Investor", "listOfInvestor", "dropdown-item")" href="/investor/listOfInvestor">Lists of Investors</a>
                                         <a class="@Html.IsSelected("Investor", "createNewInvestor", "dropdown-item")" href="/investor/createNewInvestor">Create New Investor</a>
-                                        <a class="@Html.IsSelected("Investor", "editInvestorDetails", "dropdown-item")" href="/investor/editInvestorDetails">Edit Investor Details</a>
                                     </div>
                                 </li>
                                 <li class="@Html.IsSelected("Profile", "Profile", "nav-item px-3")">

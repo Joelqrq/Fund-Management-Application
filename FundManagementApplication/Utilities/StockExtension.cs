@@ -1,8 +1,5 @@
 ﻿using FundManagementApplication.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FundManagementApplication.Utilities {
     public static class StockExtension {
@@ -25,6 +22,20 @@ namespace FundManagementApplication.Utilities {
                     Name = stock.Name,
                     Ticker = stock.Ticker,
                     Weight = stock.Weight.ToString("0.##")
+                };
+            }
+        }
+
+        public static IEnumerable<Stock> ConvertIntoStock(this IEnumerable<ViewModels.StockViewModel> stocks) {
+            
+            foreach(var stock in stocks) {
+
+                yield return new Stock() {
+                    Name = stock.ShareName,
+                    Ticker = stock.Ticker,
+                    Industry = stock.Sector,
+                    Weight = decimal.Parse(stock.ShareAllocation),
+                    FundId = stock.FundId,
                 };
             }
         }
