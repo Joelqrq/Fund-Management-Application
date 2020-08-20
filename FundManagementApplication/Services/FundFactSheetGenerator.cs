@@ -113,8 +113,9 @@ namespace FundManagementApplication.Services {
                 data3.Name = await AzureDb.DowJonesBidToBid.Select(dbb => dbb.Name).FirstAsync();
                 data1.CumulativeReturns = new List<string>();
                 data2.CumulativeReturns = new List<string>();
+                data3.CumulativeReturns = new List<string>();
 
-                foreach(var cd in chartData) {
+                foreach (var cd in chartData) {
                     chartDto.Date.Add(cd.Date);
                     data1.CumulativeReturns.Add(cd.GlobalCr.ToString());
                     data2.CumulativeReturns.Add(cd.NasdaqCr.ToString());
