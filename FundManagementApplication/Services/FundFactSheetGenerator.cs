@@ -12,7 +12,7 @@ namespace FundManagementApplication.Services {
 
         public AzureDbContext AzureDb { get; }
         public string FundManagerId { get; set; }
-        public string FundId { get; set; }
+        public string Currency { get; set; }
         public DateTime Date { get; set; }
 
         public FundFactSheetGenerator(AzureDbContext azureDb) {
@@ -22,13 +22,13 @@ namespace FundManagementApplication.Services {
         public async Task<FundFactSheetDto> GenerateFactSheet(string fundManagerId, string fundId, string date) {
 
             FundManagerId = fundManagerId;
-            FundId = fundId;
             DateTime yearBegin = new DateTime(DateTime.Today.Year, 1, 1);
             Date = DateTime.Parse(date);
 
             //Retrieve information in database according to given date. (FundManager, Funds, Stocks)
             var fm = await AzureDb.FundManager.AsNoTracking().Where(fm => fm.PkFundManagerId == fundManagerId).FirstAsync();
             var fund = await AzureDb.Funds.Where(f => f.PkFundId == fundId).FirstAsync();
+            Currency = fund.Currency;
             var stocks = await AzureDb.Stock.Where(s => s.FundId == fundId && s.Date >= yearBegin && s.Date <= Date).ToListAsync();
             var latestStocksData = stocks.Except(stocks.Where(s => s.Name == "STI" || s.Name == "DowsJones" || s.Name == "Nasdaq"))
                                          .GroupBy(s => s.Ticker)
@@ -76,7 +76,7 @@ namespace FundManagementApplication.Services {
 
             PerformanceChartDto chartDto = new PerformanceChartDto();
 
-            if(FundId == "PRES_01") {
+            if(Currency == "SGD") {
 
                 var chartData = await AzureDb.PrestigePerformanceChart.Where(ppc => ppc.Date >= yearBegin && ppc.Date <= Date).ToListAsync();
 
@@ -99,7 +99,7 @@ namespace FundManagementApplication.Services {
                 chartDto.Performances.Add(data1);
                 chartDto.Performances.Add(data2);
             }
-            else if(FundId == "GLOB_01") {
+            else if(Currency == "USD") {
 
                 var chartData = await AzureDb.GlobalPerformanceChart.Where(gpc => gpc.Date >= yearBegin && gpc.Date <= Date).ToListAsync();
 
@@ -143,7 +143,7 @@ namespace FundManagementApplication.Services {
                 TotalHoldings = stocks.Count()
             };
 
-            if(FundId == "PRES_01") {
+            if(Currency == "SGD") {
                 var details = await AzureDb.PrestigeBidToBid.OrderByDescending(b => b.Date).FirstAsync();
                 fundDetails.FundSize = details.Price.ToString("C");
                 fundDetails.AnnualizeReturns = details.SinceInception.ToString("P");
@@ -151,7 +151,7 @@ namespace FundManagementApplication.Services {
                     AzureDb.StiBidToBid.Select(sti => sti.Name).First()
                 };
             }
-            else if(FundId == "GLOB_01") {
+            else if(Currency == "USD") {
                 var details = await AzureDb.GlobalBidToBid.OrderByDescending(b => b.Date).FirstAsync();
                 fundDetails.FundSize = details.Price.ToString("C");
                 fundDetails.AnnualizeReturns = details.SinceInception.ToString("P");
@@ -169,7 +169,7 @@ namespace FundManagementApplication.Services {
             var performanceTable = new PerformanceTableDto();
             performanceTable.Performances = new List<PerformanceTableColumnDto>();
 
-            if(FundId == "PRES_01") {
+            if(Currency == "SGD") {
                 var bidToBidData = await AzureDb.PrestigeBidToBid.OrderByDescending(b => b.Date).FirstAsync();
                 var bidToBid = new PerformanceTableColumnDto() {
                     Name = "Bid to Bid %",
@@ -205,7 +205,7 @@ namespace FundManagementApplication.Services {
                 performanceTable.Performances.Add(offerToBid);
                 performanceTable.Performances.Add(benchMark);
             }
-            else if(FundId == "GLOB_01") {
+            else if(Currency == "USD") {
                 var bidToBidData = await AzureDb.GlobalBidToBid.OrderByDescending(b => b.Date).FirstAsync();
                 var bidToBid = new PerformanceTableColumnDto() {
                     Name = "Bid to Bid %",

@@ -28,6 +28,9 @@ namespace FundManagementApplication.Models
         public DateTime InceptionDate { get; set; }
         [StringLength(1000)]
         public string FundProfile { get; set; }
+        [Required]
+        [StringLength(20)]
+        public string Currency { get; set; }
 
         [ForeignKey(nameof(FundManagerId))]
         [InverseProperty("Funds")]

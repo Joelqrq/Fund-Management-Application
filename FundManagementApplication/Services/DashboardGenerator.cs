@@ -20,20 +20,22 @@ namespace FundManagementApplication.Services {
 
             FundOverviewDto data = new FundOverviewDto();
             data.Date = DateTime.Parse(date);
+            var currency = await AzureDb.Funds.Where(f => f.PkFundId == fundId).Select(f => f.Currency).FirstAsync();
 
-            if(fundId == "PRES_01") {
 
-                var fundBB = await AzureDb.PrestigeBidToBid.OrderByDescending(b => b.Date).Select(b => new { b.Price, b.OneMonth }).FirstAsync();
+            if(currency == "SGD") {
+
+                var fundBB = await AzureDb.PrestigeBidToBid.Where(b => b.FundId == fundId).OrderByDescending(b => b.Date).Select(b => new { b.Price, b.OneMonth }).FirstAsync();
                 data.FundSize = fundBB.Price;
                 data.BidToBid = fundBB.OneMonth;
-                data.OfferToBid = await AzureDb.PrestigeOfferToBid.OrderByDescending(b => b.Date).Select(b => b.OneMonth).FirstAsync();
+                data.OfferToBid = await AzureDb.PrestigeOfferToBid.Where(b => b.FundId == fundId).OrderByDescending(b => b.Date).Select(b => b.OneMonth).FirstAsync();
                 data.BenchmarkBidToBid = await AzureDb.StiBidToBid.OrderByDescending(b => b.Date).Select(b => b.OneMonth).FirstAsync();
             }
-            else if(fundId == "GLOB_01") {
-                var fundBB = await AzureDb.GlobalBidToBid.OrderByDescending(b => b.Date).Select(b => new { b.Price, b.OneMonth }).FirstAsync();
+            else if(currency == "USD") {
+                var fundBB = await AzureDb.GlobalBidToBid.Where(b => b.FundId == fundId).OrderByDescending(b => b.Date).Select(b => new { b.Price, b.OneMonth }).FirstAsync();
                 data.FundSize = fundBB.Price;
                 data.BidToBid = fundBB.OneMonth;
-                data.OfferToBid = await AzureDb.GlobalOfferToBid.OrderByDescending(b => b.Date).Select(b => b.OneMonth).FirstAsync();
+                data.OfferToBid = await AzureDb.GlobalOfferToBid.Where(b => b.FundId == fundId).OrderByDescending(b => b.Date).Select(b => b.OneMonth).FirstAsync();
                 data.BenchmarkBidToBid = await AzureDb.NasdaqBidToBid.OrderByDescending(b => b.Date).Select(b => b.OneMonth).FirstAsync();
             }
 

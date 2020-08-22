@@ -33,7 +33,8 @@ namespace FundManagementApplication.Utilities {
                 yield return new Stock() {
                     Name = stock.ShareName,
                     Ticker = stock.Ticker,
-                    Industry = stock.Sector,
+                    Industry = stock.Industry,
+                    Currency = stock.Currency,
                     Weight = decimal.Parse(stock.ShareAllocation),
                     FundId = stock.FundId,
                 };

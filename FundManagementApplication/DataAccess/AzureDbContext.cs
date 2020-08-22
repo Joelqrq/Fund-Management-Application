@@ -29,6 +29,7 @@ namespace FundManagementApplication.DataAccess
         public virtual DbSet<PrestigeR> PrestigeR { get; set; }
         public virtual DbSet<StiBidToBid> StiBidToBid { get; set; }
         public virtual DbSet<Stock> Stock { get; set; }
+        public virtual DbSet<Search> Search { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -70,6 +71,8 @@ namespace FundManagementApplication.DataAccess
                 entity.Property(e => e.FundName).IsUnicode(false);
 
                 entity.Property(e => e.FundProfile).IsUnicode(false);
+
+                entity.Property(e => e.Currency).IsUnicode(false);
 
                 entity.HasOne(d => d.FundManager)
                     .WithMany(p => p.Funds)
@@ -212,6 +215,17 @@ namespace FundManagementApplication.DataAccess
                     .HasForeignKey(d => d.FundId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Stock_Funds");
+            });
+
+            modelBuilder.Entity<Search>(entity =>
+            {
+                entity.Property(e => e.ExchangeMarket).IsUnicode(false);
+
+                entity.Property(e => e.Industry).IsUnicode(false);
+
+                entity.Property(e => e.StockName).IsUnicode(false);
+
+                entity.Property(e => e.Ticker).IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -3,7 +3,12 @@
 @model FundViewModel
 
 @section Scripts{
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script type="text/javascript">
+        var rowCount = 0;
         $('#fundDropdown').on('change', function displayStock() {
             var fundId = this.value;
             toggleButtons(fundId);
@@ -18,11 +23,12 @@
                 dataType: "json",
                 success: function (json) {
                     $.each(json, function () {
+                        rowCount++;
                         $('#stocksList').append(
                             $(`<tr>
-                               <td>${this.name}</td>
-                               <td>${this.ticker}</td>
-                               <td id="${this.ticker}"><input type="text" placeholder="Enter New Allocation" value=${this.weight * 100} class="allocation form-control"></td>
+                               <td><input id="stockName${rowCount}" type="text" class="form-control" value=${this.name} readonly></td>
+                               <td><input id="stockTicker${rowCount}" type="text" class="form-control" value=${this.ticker} readonly></td>
+                               <td><input type="text" placeholder="Enter New Allocation" value=${this.weight} class="stockAllocation form-control"></td>
                                <td><button type="button" class="btn btn-danger">Delete</button></td>
                                </tr>`)
                         );
@@ -39,44 +45,35 @@
         $('#updateStockList').on('click', function updateStock(e) {
             e.preventDefault();
 
+            var hasError = allocationValidation();
+            if (hasError) return;
+
             var tbl = $('#stocksList tr').map(function (idxRow, ele) {
                 //
                 // start building the retVal object
                 //
-                var retVal = { };
+                var retVal = {};
                 //
                 // for each cell
                 //
                 var $td = $(ele).find('td').map(function (idxCell, ele) {
                     var input = $(ele).find(':input');
-                    var select = $(ele).find(':selected');
                     var button = $(ele).find(':button');
                     // continue if cell contains a button
                     if (button.length == 1) return;
                     //
                     // if cell contains an input or select....
                     //
-                    if(select.length == 1) {
-                        var attr = $('#stockTable thead tr th').eq(idxCell).text();
-                        attr = attr.replace(/[^A-Z0-9]+/ig, "");
-                        retVal[attr] = select.text();
-                    }
-                    else if (input.length == 1) {
+                    if (input.length == 1) {
                         var attr = $('#stockTable thead tr th').eq(idxCell).text();
                         attr = attr.replace(/[^A-Z0-9]+/ig, "");
                         retVal[attr] = input.val();
-                    }
-                    else {
-                        var attr = $('#stockTable thead tr th').eq(idxCell).text();
-                        attr = attr.replace(/[^A-Z0-9]+/ig, "");
-                        retVal[attr] = $(ele).text();
                     }
                     retVal['fundId'] = $('#fundDropdown').val();
                 });
                 return retVal;
             }).get();
 
-            console.log(tbl);
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("UpdateStockList", "Fund")",
@@ -86,8 +83,8 @@
                     "CSRF-TOKEN-ABC": $('input[name="CSRF-TOKEN-ABC-FORM"]').val()
                 },
                 dataType: "json",
-                success: function (json) {
-                    console.log(json);
+                success: function (data) {
+                    console.log(data);
                 }
             });
         });
@@ -95,57 +92,104 @@
         //Add stock button
         $('#addStock').on('click', function addStock(e) {
             e.preventDefault();
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("GetStaticStockList", "Fund")",
-                data: { 'fundId': $('#fundDropdown').val() },
-                dataType: "json",
-                success: function (json) {
-                    var currentRow = $("#stocksList td").closest("tr").length;
-                    var htmlString = '<tr><td><select id="stockDropdown'+currentRow+'" class="browser-default custom-select"><option value="">Select Stock</option>';
-                    $.each(json, function () {
-                        htmlString += '<option value ="'+this.ticker+'">'+this.shareName+'</option>';
-                    });
-                    //Close options
-                    htmlString += '</select></td><td><input id="stockTicker'+currentRow+'" type="text" class="form-control" readonly></td>'
-                        + '<td><input type="text" placeholder="Enter New Allocation" value=0 class="allocation form-control"></td>'
-                        + '<td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
+            rowCount++;
+            $('#stocksList').append((`<tr>
+                        <td><input id="stockName${rowCount}" type="text" class="form-control" placeholder="Enter stock name"></td>
+                        <td><input id="stockTicker${rowCount}" type="text" class="form-control" readonly></td>
+                        <td><input type="text" placeholder="Enter allocation" value=0 class="stockAllocation form-control"></td>
+                        <td><button type="button" class="btn btn-danger">Delete</button></td>
+                        <input id="stockIndustry${rowCount}" type="hidden">
+                        <input id="stockCurrency${rowCount}" type="hidden">
+                        </tr>`));
 
-                    $('#stocksList').append(htmlString);
-                    //Change ticker field according to selected stock
-                    $('#stocksList').on("change", "#stockDropdown"+currentRow+"", function () {
-                        $('#stockTicker' + currentRow + '').val(this.value);
+            //Change ticker field according to selected stock
+            $(`#stockName${rowCount}`).autocomplete({
+                //Query database for value
+                source: function (request, response) {
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("GetStockList", "Fund")",
+                        data: { fundId: $("#fundDropdown").val(), term: request.term },
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            response(data);
+                        }
                     });
+                },
+                minlength: 2,
+                change: function (e, ui) {
+                    if (!ui.item) {
+                        $(this).val("");
+                        $(`#stockTicker${rowCount}`).val("");
+                        $(`#stockIndustry${rowCount}`).val("");
+                        $(`#stockCurrency${rowCount}`).val("");
+                    }
+                },
+                select: function (e, ui) {
+                    $(`#stockTicker${rowCount}`).val(ui.item.ticker);
+                    $(`#stockIndustry${rowCount}`).val(ui.item.industry);
+                    $(`#stockCurrency${rowCount}`).val(ui.item.currency);
                 }
             });
         });
 
+        $('#stocksList').on({
+            keypress: function (e) {
+                var regex = /^[\d]/i;
+                if (!regex.test(e.key)) {
+                    e.preventDefault();
+                }
+            },
+            input: function () {
+                if (!isNaN(this.value)) {
+                    var total = 0;
+                    $('.stockAllocation').each(function () {
+                        total += parseInt(this.value);
+                    });
+
+                    if (total > 100) {
+                        this.value = 100 - (total - parseInt(this.value));
+                    }
+                }
+            },
+            focusout: function () {
+                var regex = /^\d{1,3}(\.\d{1,2})?$/i;
+                if (!regex.test(this.value)) {
+                    this.value = '';
+                }
+            }
+        }, '.stockAllocation');
+
         function toggleButtons(fundId) {
-            //Need to change back
             $('#addStock').prop('disabled', fundId === "");
-           // $('#addStock').prop('disabled', true);
             $('#updateStockList').prop('disabled', fundId === "");
         }
 
-        $('#stocksList').on('keypress', 'input', function (e) {
-            var regex = /^[\d]/i;
-            if (!regex.test(e.key)) {
-                e.preventDefault();
-            }
-        });
-
-        $('#stocksList').on('input', 'input', function (e) {
-            if (!isNaN(this.value)) {
-                var total = 0;
-                $('.allocation').each(function () {
-                    total += Number(this.value);
-                });
-
-                if (total > 100) {
-                    this.value = 100 - (total - Number(this.value));
+        function allocationValidation() {
+            var sum = 0;
+            var hasZero = false;
+            $('.stockAllocation').each(function () {
+                if (parseInt(this.value) === 0) {
+                    hasZero = true;
+                    return false;
                 }
+                sum += parseInt(this.value);
+            });
+
+            if (hasZero) {
+                $('#allocationError').html('All allocation must have a value.');
+                return true;
             }
-        });
+            if (sum < 100) {
+                $('#allocationError').html('Total allocation must be exactly 100%.');
+                return true;
+            }
+            else {
+                $('#allocationError').html('');
+                return false;
+            }
+        }
     </script>
 }
 
@@ -179,6 +223,8 @@
                 <tbody id="stocksList">
                 </tbody>
             </table>
+            <!--Validation Error-->
+            <span id="allocationError" class="small text-danger"></span>
         </div>
     </div>
     <!-- Go Button -->
@@ -186,6 +232,6 @@
         <!-- Add Button -->
         <button type="button" id="addStock" class="btn btn-success btn-block-success-secondary mx-5" disabled>Add Stock</button>
         <!-- Go Button -->
-        <button type="button" id="updateStockList" class="btn btn-success btn-block-success-secondary mx-5" disabled>Update</button>
+        <button type="submit" id="updateStockList" class="btn btn-success btn-block-success-secondary mx-5" disabled>Update</button>
     </div>
 </div>
