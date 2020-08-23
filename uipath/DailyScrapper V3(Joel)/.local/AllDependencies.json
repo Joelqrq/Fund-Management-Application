@@ -8116,8 +8116,8 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "global scrapper",
-      "projectName": "global scrapper",
+      "projectUniqueName": "Scrapper",
+      "projectName": "Scrapper",
       "projectPath": "C:\\Users\\JoelQ\\Desktop\\FundManagementApplication\\FundManagementApplication\\uipath\\DailyScrapper V3(Joel)\\.local",
       "packagesPath": "C:\\Users\\JoelQ\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\JoelQ\\Desktop\\FundManagementApplication\\FundManagementApplication\\uipath\\DailyScrapper V3(Joel)\\.local"

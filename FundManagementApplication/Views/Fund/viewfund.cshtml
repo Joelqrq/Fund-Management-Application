@@ -44,7 +44,7 @@
         //Update stock list
         $('#updateStockList').on('click', function updateStock(e) {
             e.preventDefault();
-
+            $('#updated').html('');
             var hasError = allocationValidation();
             if (hasError) return;
 
@@ -87,6 +87,9 @@
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     "CSRF-TOKEN-ABC": $('input[name="CSRF-TOKEN-ABC-FORM"]').val()
+                },
+                success: function () {
+                    $('#updated').html('Fund has been updated successfully.');
                 }
             });
         });
@@ -242,6 +245,7 @@
             </table>
             <!--Validation Error-->
             <span id="allocationError" class="small text-danger"></span>
+            <span id="updated" class="small text-success"></span>
         </div>
     </div>
     <!-- Go Button -->
