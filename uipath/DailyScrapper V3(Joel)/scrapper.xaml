@@ -1,0 +1,425 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_StockList" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_DatabaseConnection" Type="InArgument(ui:DatabaseConnection)" />
+    <x:Property Name="in_TableName" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1242,3977</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="26">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Database</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>System.Globalization</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="25">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>UiPath.Database</AssemblyReference>
+      <AssemblyReference>UiPath.Azure</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldCollapseAll">False</x:Boolean>
+      <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
+    </scg:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="Query Stock" sap:VirtualizedContainerService.HintSize="931,3812" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="str_Ticker" />
+      <Variable x:TypeArguments="ui:Browser" Name="browser" />
+      <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="dt_ScrappedTable" />
+      <Variable x:TypeArguments="x:Int32" Name="affectedTicker" />
+      <Variable x:TypeArguments="s:DateTime" Name="datetime_DateInSDT" />
+      <Variable x:TypeArguments="x:String" Name="str_Price" />
+      <Variable x:TypeArguments="x:Decimal" Name="decimal_Price" />
+      <Variable x:TypeArguments="x:Decimal" Name="decimal_YesterdayPrice" />
+      <Variable x:TypeArguments="x:Decimal" Name="decimal_DailyReturn" />
+      <Variable x:TypeArguments="x:String" Name="str_FundId" />
+      <Variable x:TypeArguments="x:String" Name="str_Weight" />
+      <Variable x:TypeArguments="x:Decimal" Name="decimal_Weight" />
+      <Variable x:TypeArguments="x:String" Name="str_Name" />
+      <Variable x:TypeArguments="x:String" Name="str_Currency" />
+      <Variable x:TypeArguments="x:String" Name="str_Industry" />
+      <Variable x:TypeArguments="x:Int32" Name="deletedRecords" />
+      <Variable x:TypeArguments="s:DateTime" Name="dateTime_YesterdayDate" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[in_StockList]" DisplayName="scrapper" sap:VirtualizedContainerService.HintSize="889,3337" sap2010:WorkflowViewState.IdRef="ForEachRow_8">
+      <ui:ForEachRow.Body>
+        <ActivityAction x:TypeArguments="sd:DataRow">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="839,3189" sap2010:WorkflowViewState.IdRef="Sequence_121">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="s:DateTime" Name="dateTime_DateInDb" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign DisplayName="Get fund id from database" sap:VirtualizedContainerService.HintSize="797,60" sap2010:WorkflowViewState.IdRef="Assign_63">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_FundId]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[row("fundId").ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Get stock ticker from database" sap:VirtualizedContainerService.HintSize="797,60" sap2010:WorkflowViewState.IdRef="Assign_37">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_Ticker]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[row("ticker").ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:OpenBrowser CommunicationMethod="{x:Null}" Hidden="{x:Null}" NewSession="{x:Null}" Private="{x:Null}" BrowserType="Chrome" DisplayName="data scraping" sap:VirtualizedContainerService.HintSize="797,461" sap2010:WorkflowViewState.IdRef="OpenBrowser_9" UiBrowser="[browser]" Url="[&quot;https://finance.yahoo.com/quote/&quot;+str_Ticker+&quot;/history?p=&quot;+str_Ticker]">
+              <ui:OpenBrowser.Body>
+                <ActivityAction x:TypeArguments="x:Object">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Data Scraping" sap:VirtualizedContainerService.HintSize="476,360" sap2010:WorkflowViewState.IdRef="Sequence_116">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Attach Browser" sap:VirtualizedContainerService.HintSize="434,268" sap2010:WorkflowViewState.IdRef="BrowserScope_12" Selector="&lt;html app='chrome.exe' title='* - Yahoo Finance' /&gt;">
+                      <ui:BrowserScope.Body>
+                        <ActivityAction x:TypeArguments="x:Object">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                          </ActivityAction.Argument>
+                          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,160" sap2010:WorkflowViewState.IdRef="Sequence_115">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:ExtractData DelayBetweenPagesMS="{x:Null}" NextLinkSelector="{x:Null}" ContinueOnError="True" DataTable="[dt_ScrappedTable]" DisplayName="Extract Structured Data 'TBODY'" ExtractMetadata="&lt;extract&gt;&lt;row exact='1'&gt;&lt;webctrl tag='tr' class='BdT Bdc($seperatorColor) Ta(end) Fz(s) Whs(nw)'/&gt;&lt;/row&gt;&lt;column exact='1' name='Date' attr='text'&gt;&lt;webctrl tag='tr' class='BdT Bdc($seperatorColor) Ta(end) Fz(s) Whs(nw)'/&gt;&lt;webctrl tag='td' class='Py(10px) Ta(start) Pend(10px)' idx='1'/&gt;&lt;webctrl tag='span' idx='1'/&gt;&lt;/column&gt;&lt;column exact='1' name='adjclose' attr='text'&gt;&lt;webctrl tag='tr' class='BdT Bdc($seperatorColor) Ta(end) Fz(s) Whs(nw)'/&gt;&lt;webctrl tag='td' class='Py(10px) Pstart(10px)' idx='5'/&gt;&lt;webctrl tag='span' idx='1'/&gt;&lt;/column&gt;&lt;/extract&gt;" sap:VirtualizedContainerService.HintSize="334,68" sap2010:WorkflowViewState.IdRef="ExtractData_12" MaxNumberOfResults="0" SimulateClick="True">
+                              <ui:ExtractData.Target>
+                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="5b02ecc1-65ef-43cd-a7c2-f075cf146ba7" Selector="&lt;webctrl parentid='Col1-1-HistoricalDataTable-Proxy' tag='TBODY' /&gt;" WaitForReady="COMPLETE">
+                                  <ui:Target.TimeoutMS>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:Target.TimeoutMS>
+                                </ui:Target>
+                              </ui:ExtractData.Target>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </ui:ExtractData>
+                          </Sequence>
+                        </ActivityAction>
+                      </ui:BrowserScope.Body>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:BrowserScope>
+                  </Sequence>
+                </ActivityAction>
+              </ui:OpenBrowser.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:OpenBrowser>
+            <ui:CloseTab Browser="[browser]" DisplayName="Close Tab" sap:VirtualizedContainerService.HintSize="797,22" sap2010:WorkflowViewState.IdRef="CloseTab_10" />
+            <Sequence DisplayName="filter table" sap:VirtualizedContainerService.HintSize="797,1009" sap2010:WorkflowViewState.IdRef="Sequence_117">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="x:Int32" Default="1" Name="tableRow" />
+                <Variable x:TypeArguments="x:String" Name="str_yesterdayprice" />
+              </Sequence.Variables>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign DisplayName="Get latest date from scrapped table" sap:VirtualizedContainerService.HintSize="340,60" sap2010:WorkflowViewState.IdRef="Assign_44">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="s:DateTime">[datetime_DateInSDT]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="s:DateTime">[DateTime.ParseExact(dt_ScrappedTable.Rows(0)("Date").ToString(), "MMM dd, yyyy", CultureInfo.InvariantCulture)]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="Latest price from scrapped table" sap:VirtualizedContainerService.HintSize="340,60" sap2010:WorkflowViewState.IdRef="Assign_47">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Decimal">[decimal_Price]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Decimal">[Convert.ToDecimal(dt_ScrappedTable.Rows(0)(1))]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <ui:InterruptibleDoWhile DisplayName="Prevent from getting dividend row for second latest price" sap:VirtualizedContainerService.HintSize="340,517" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_1">
+                <ui:InterruptibleDoWhile.Body>
+                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="304,352" sap2010:WorkflowViewState.IdRef="Sequence_137">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_65">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[str_yesterdayprice]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[dt_ScrappedTable.Rows(tableRow)(1).ToString()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_68">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="s:DateTime">[dateTime_YesterdayDate]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="s:DateTime">[DateTime.ParseExact(dt_ScrappedTable.Rows(tableRow)("Date").ToString(), "MMM dd, yyyy", CultureInfo.InvariantCulture)]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_66">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Int32">[tableRow]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Int32">[tableRow + 1]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </ui:InterruptibleDoWhile.Body>
+                <ui:InterruptibleDoWhile.Condition>
+                  <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="string.IsNullOrWhiteSpace(str_yesterdayprice)" sap2010:WorkflowViewState.IdRef="VisualBasicValue`1_1" />
+                </ui:InterruptibleDoWhile.Condition>
+              </ui:InterruptibleDoWhile>
+              <Assign DisplayName="Convert string to decimal" sap:VirtualizedContainerService.HintSize="340,60" sap2010:WorkflowViewState.IdRef="Assign_67">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Decimal">[decimal_YesterdayPrice]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Decimal">[decimal.Parse(str_yesterdayprice)]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="calculate dr" sap:VirtualizedContainerService.HintSize="340,60" sap2010:WorkflowViewState.IdRef="Assign_55">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Decimal">[decimal_DailyReturn]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Decimal">[(decimal_Price-decimal_YesterdayPrice)/decimal_yesterdayprice]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </Sequence>
+            <Sequence DisplayName="Get values from database" sap:VirtualizedContainerService.HintSize="797,452" sap2010:WorkflowViewState.IdRef="Sequence_132">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign DisplayName="Get weight" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_59">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Decimal">[decimal_Weight]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Decimal">[Convert.ToDecimal(row("weight"))]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="Get name" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_60">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[str_Name]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[row("name").ToString]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="Get currency" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_61">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[str_Currency]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[row("currency").ToString]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="Get industry" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_62">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[str_Industry]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[row("industry").ToString]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </Sequence>
+            <WriteLine DisplayName="Print all values for this ticker" sap:VirtualizedContainerService.HintSize="797,61" sap2010:WorkflowViewState.IdRef="WriteLine_18" Text="[&quot;Name: &quot; + str_Name + &quot;, Ticker: &quot; + str_Ticker + &quot;, Currency: &quot; + str_Currency + &quot;, Weight: &quot; + decimal_Weight.ToString() + &quot;, Industry: &quot; + str_Industry + &quot;, Fund ID: &quot; + str_FundId + &quot;, Daily Return: &quot; + decimal_DailyReturn.ToString() + &quot;, Price: &quot; +  decimal_Price.ToString() + &quot;, Latest Date:&quot; + datetime_DateInSDT.Date.ToString() + &quot;, Yesterday Price: &quot; + decimal_YesterdayPrice.ToString() + &quot;, Yesterday Date: &quot;+ dateTime_YesterdayDate.Date.ToString() + &quot;, Deleted Date: &quot; + dateTime_YesterdayDate.AddDays(-1).Date.ToString()]" />
+            <Assign DisplayName="Get latest date from database" sap:VirtualizedContainerService.HintSize="797,60" sap2010:WorkflowViewState.IdRef="Assign_64">
+              <Assign.To>
+                <OutArgument x:TypeArguments="s:DateTime">[dateTime_DateInDb]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="s:DateTime">[DateTime.Parse(row("date").ToString())]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="797,61" sap2010:WorkflowViewState.IdRef="WriteLine_19" Text="[row(&quot;ticker&quot;).ToString()+&quot; should do update instead? &quot;+(datetime_DateInSDT = dateTime_DateInDb).ToString+&quot;&quot;]" />
+            <If Condition="[datetime_DateInSDT = dateTime_DateInDb]" DisplayName="Continue if ticker is updated" sap:VirtualizedContainerService.HintSize="797,429" sap2010:WorkflowViewState.IdRef="If_8">
+              <If.Then>
+                <Sequence DisplayName="database" sap:VirtualizedContainerService.HintSize="376,281" sap2010:WorkflowViewState.IdRef="Sequence_139">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:ExecuteNonQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" AffectedRecords="[affectedTicker]" CommandType="Text" DisplayName="Execute Non Query" ExistingDbConnection="[in_DatabaseConnection]" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_22" Sql="UPDATE [dbo].[Stock] set Ticker = @Ticker, Name = @Name, Currency = @Currency, Industry = @Industry, Price = @Price, Weight = @Weight, DR = @DR, FundId = @fundid where Ticker = @Ticker AND Date = @Date">
+                    <ui:ExecuteNonQuery.Parameters>
+                      <InArgument x:TypeArguments="s:DateTime" x:Key="Date">[datetime_DateInSDT]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="Ticker">[str_Ticker]</InArgument>
+                      <InArgument x:TypeArguments="x:Decimal" x:Key="Price">[decimal_Price]</InArgument>
+                      <InArgument x:TypeArguments="x:Decimal" x:Key="DR">[decimal_DailyReturn]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="fundid">[str_FundId]</InArgument>
+                      <InArgument x:TypeArguments="x:Decimal" x:Key="Weight">[decimal_Weight]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="Name">[str_Name]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="Currency">[str_Currency]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="Industry">[str_Industry]</InArgument>
+                    </ui:ExecuteNonQuery.Parameters>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ExecuteNonQuery>
+                  <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="334,61" sap2010:WorkflowViewState.IdRef="WriteLine_20" Text="[affectedTicker.ToString+&quot; record updated as &quot;+str_Ticker]" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="database" sap:VirtualizedContainerService.HintSize="376,281" sap2010:WorkflowViewState.IdRef="Sequence_140">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:ExecuteNonQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" AffectedRecords="[affectedTicker]" CommandType="Text" DisplayName="Execute Non Query" ExistingDbConnection="[in_DatabaseConnection]" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_23" Sql="INSERT Into [dbo].[Stock] (Ticker, Name, Currency, Industry, date, Price, Weight, DR, FundId)VALUES(@Ticker, @Name, @Currency, @Industry, @Date, @Price, @Weight, @DR, @fundid)">
+                    <ui:ExecuteNonQuery.Parameters>
+                      <InArgument x:TypeArguments="s:DateTime" x:Key="Date">[datetime_DateInSDT]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="Ticker">[str_Ticker]</InArgument>
+                      <InArgument x:TypeArguments="x:Decimal" x:Key="Price">[decimal_Price]</InArgument>
+                      <InArgument x:TypeArguments="x:Decimal" x:Key="DR">[decimal_DailyReturn]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="fundid">[str_FundId]</InArgument>
+                      <InArgument x:TypeArguments="x:Decimal" x:Key="Weight">[decimal_Weight]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="Name">[str_Name]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="Currency">[str_Currency]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="Industry">[str_Industry]</InArgument>
+                    </ui:ExecuteNonQuery.Parameters>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ExecuteNonQuery>
+                  <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="334,61" sap2010:WorkflowViewState.IdRef="WriteLine_21" Text="[affectedTicker.ToString+&quot; record inserted as &quot;+str_Ticker]" />
+                </Sequence>
+              </If.Else>
+            </If>
+            <ui:ClearDataTable DataTable="[dt_ScrappedTable]" DisplayName="Clear Data Table" sap:VirtualizedContainerService.HintSize="797,22" sap2010:WorkflowViewState.IdRef="ClearDataTable_1" />
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEachRow.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:ForEachRow>
+    <Sequence DisplayName="clear records" sap:VirtualizedContainerService.HintSize="889,281" sap2010:WorkflowViewState.IdRef="Sequence_135">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:ExecuteNonQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" AffectedRecords="[deletedRecords]" CommandType="Text" DisplayName="clear records" ExistingDbConnection="[in_DatabaseConnection]" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_21" Sql="DELETE FROM [dbo].[Stock] WHERE date &lt;@in_Date AND FundId=@in_fundId">
+        <ui:ExecuteNonQuery.Parameters>
+          <InArgument x:TypeArguments="x:String" x:Key="in_fundId">[str_FundId]</InArgument>
+          <InArgument x:TypeArguments="s:DateTime" x:Key="in_Date">[dateTime_YesterdayDate.AddDays(-1)]</InArgument>
+        </ui:ExecuteNonQuery.Parameters>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </ui:ExecuteNonQuery>
+      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="334,61" sap2010:WorkflowViewState.IdRef="WriteLine_17" Text="[deletedRecords.ToString+&quot; records deleted where FundId=&quot;+str_FundId+&quot;&quot;]" />
+    </Sequence>
+    <ui:DatabaseDisconnect DatabaseConnection="[in_DatabaseConnection]" DisplayName="Disconnect" sap:VirtualizedContainerService.HintSize="889,22" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_3" />
+  </Sequence>
+</Activity>

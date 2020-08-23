@@ -27,7 +27,7 @@
                         $('#stocksList').append(
                             $(`<tr>
                                <td><input id="stockName${rowCount}" type="text" class="form-control" value=${this.name} readonly></td>
-                               <td><input id="stockTicker${rowCount}" type="text" class="form-control" value=${this.ticker} readonly></td>
+                               <td><input id="stockTicker${rowCount}" type="text" class="stockTicker form-control" value=${this.ticker} readonly></td>
                                <td><input type="text" placeholder="Enter New Allocation" value=${this.weight} class="stockAllocation form-control"></td>
                                <td><button type="button" class="btn btn-danger">Delete</button></td>
                                </tr>`)
@@ -71,9 +71,15 @@
                     }
                     retVal['fundId'] = $('#fundDropdown').val();
                 });
+
+                $(ele).find(':hidden').map(function (index, ele) {
+                    var attr = $(ele).prop('name');
+                    attr = attr.replace(/[^A-Z0-9]+/ig, "");
+                    retVal[attr] = $(ele).val();
+                });
+
                 return retVal;
             }).get();
-
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("UpdateStockList", "Fund")",
@@ -81,10 +87,6 @@
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     "CSRF-TOKEN-ABC": $('input[name="CSRF-TOKEN-ABC-FORM"]').val()
-                },
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
                 }
             });
         });
@@ -95,15 +97,17 @@
             rowCount++;
             $('#stocksList').append((`<tr>
                         <td><input id="stockName${rowCount}" type="text" class="form-control" placeholder="Enter stock name"></td>
-                        <td><input id="stockTicker${rowCount}" type="text" class="form-control" readonly></td>
+                        <td><input id="stockTicker${rowCount}" type="text" class="stockTicker form-control" readonly></td>
                         <td><input type="text" placeholder="Enter allocation" value=0 class="stockAllocation form-control"></td>
                         <td><button type="button" class="btn btn-danger">Delete</button></td>
-                        <input id="stockIndustry${rowCount}" type="hidden">
-                        <input id="stockCurrency${rowCount}" type="hidden">
+                        <input id="stockIndustry${rowCount}" name="industry" type="hidden">
+                        <input id="stockCurrency${rowCount}" name="currency" type="hidden">
                         </tr>`));
 
+            var currentRowCount = rowCount;
+
             //Change ticker field according to selected stock
-            $(`#stockName${rowCount}`).autocomplete({
+            $(`#stockName${currentRowCount}`).autocomplete({
                 //Query database for value
                 source: function (request, response) {
                     $.ajax({
@@ -112,7 +116,6 @@
                         data: { fundId: $("#fundDropdown").val(), term: request.term },
                         dataType: "json",
                         success: function (data) {
-                            console.log(data);
                             response(data);
                         }
                     });
@@ -121,15 +124,29 @@
                 change: function (e, ui) {
                     if (!ui.item) {
                         $(this).val("");
-                        $(`#stockTicker${rowCount}`).val("");
-                        $(`#stockIndustry${rowCount}`).val("");
-                        $(`#stockCurrency${rowCount}`).val("");
+                        $(`#stockTicker${currentRowCount}`).val("");
+                        $(`#stockIndustry${currentRowCount}`).val("");
+                        $(`#stockCurrency${currentRowCount}`).val("");
                     }
                 },
                 select: function (e, ui) {
-                    $(`#stockTicker${rowCount}`).val(ui.item.ticker);
-                    $(`#stockIndustry${rowCount}`).val(ui.item.industry);
-                    $(`#stockCurrency${rowCount}`).val(ui.item.currency);
+                    var ownId = `stockTicker${currentRowCount}`;
+                    var hasSame = false;
+                    $('.stockTicker').each(function (index, ele) {
+                        if (ui.item.ticker == $(ele).val() && $(ele).attr('id') != ownId) {
+                            hasSame = true;
+                            return false;
+                        }
+                    });
+
+                    if (hasSame) {
+                        e.preventDefault();
+                        $(this).val("");
+                        return;
+                    }
+                    $(`#stockTicker${currentRowCount}`).val(ui.item.ticker);
+                    $(`#stockIndustry${currentRowCount}`).val(ui.item.industry);
+                    $(`#stockCurrency${currentRowCount}`).val(ui.item.currency);
                 }
             });
         });

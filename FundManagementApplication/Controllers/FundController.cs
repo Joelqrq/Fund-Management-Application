@@ -60,8 +60,9 @@ namespace FundManagementApplication.Controllers {
             var stockListFromInput = stockModelList.ConvertIntoStock();
 
             //Retrieve existing stocks from database
-            var unsortedStockListInDb = await AzureDb.Stock.AsNoTracking().Where(s => s.FundId == fundId && s.Name != "STI" && s.Name != "DowsJones" && s.Name != "Nasdaq")
-                                                    .ToListAsync();
+            var unsortedStockListInDb = await AzureDb.Stock.AsNoTracking()
+                                                           .Where(s => s.FundId == fundId && s.Name != "STI" && s.Name != "DowsJones" && s.Name != "Nasdaq")
+                                                           .ToListAsync();
             var stockListInDb = unsortedStockListInDb.GroupBy(s => s.Ticker)
                                                      .Select(g => g.OrderByDescending(s => s.Date).First());
 
@@ -69,11 +70,21 @@ namespace FundManagementApplication.Controllers {
             var stocksTickerFromInput = stockListFromInput.Select(s => s.Ticker);
             //Get ticker from database list
             var stockTickerInDb = stockListInDb.Select(s => s.Ticker);
+            //Get weekday
+            DateTime latestDateInDb = DateTime.Today;
+            if(stockListInDb.Count() == 0) {
+                do {
+                    latestDateInDb = latestDateInDb.AddDays(-1);
+                } while(latestDateInDb.DayOfWeek == DayOfWeek.Saturday || latestDateInDb.DayOfWeek == DayOfWeek.Sunday);
+            }
+            else {
+                latestDateInDb = stockListInDb.Select(s => s.Date).First();
+            }
 
             //New stocks that are to be added
             var stockToBeAdded = stockListFromInput.Where(s => !stockTickerInDb.Contains(s.Ticker)).ToList();
             foreach(var stock in stockToBeAdded) {
-                stock.Date = DateTime.Today;
+                stock.Date = latestDateInDb;
                 stock.Weight = stock.Weight / 100;
                 stock.Currency = stock.Currency;
                 stock.Industry = stock.Industry;
@@ -112,7 +123,7 @@ namespace FundManagementApplication.Controllers {
             }
 
             await AzureDb.SaveChangesAsync();
-            return Ok(stockToBeUpdated);
+            return Ok();
         }
 
         [Produces("application/json")]
@@ -120,7 +131,13 @@ namespace FundManagementApplication.Controllers {
         public async Task<IActionResult> GetStockList(string fundId, string term) {
 
             var currency = await AzureDb.Funds.Where(f => f.PkFundId == fundId).Select(f => f.Currency).FirstAsync();
-            var stockNames = await AzureDb.Search.AsNoTracking().Where(s => (currency == "SGD" ? s.ExchangeMarket == "SGX" : s.ExchangeMarket != "SGX") && s.StockName.Contains(term)).Select(s => new { value = s.StockName, ticker = s.Ticker, industry = s.Industry, currency = s.ExchangeMarket == "SGX" ? "SGD" : "USD" }).ToListAsync();
+            var stockNames = await AzureDb.Search.AsNoTracking().Where(s => (currency == "SGD" ? s.ExchangeMarket == "SGX" : s.ExchangeMarket != "SGX") && s.StockName.Contains(term))
+                .Select(s => new {
+                    value = s.StockName,
+                    ticker = s.Ticker,
+                    industry = s.Industry,
+                    currency = s.ExchangeMarket == "SGX" ? "SGD" : "USD"
+                }).ToListAsync();
 
             return Ok(stockNames);
         }
